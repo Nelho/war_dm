@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition Breu
+# Application definitione
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
-    'avaliacao'
+    'avaliacao',
+    'capitulo',
 ]
 
 MIDDLEWARE = [

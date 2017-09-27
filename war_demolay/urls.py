@@ -21,6 +21,7 @@ from django.contrib.auth.views import login
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^avaliacao/', include("avaliacao.urls")),
     url(r'^', include("login.urls")),
-    url(r'^avaliacao/', include("avaliacao.urls"))
+    url(r'^capitulo/', include("capitulo.urls")),
 ]
