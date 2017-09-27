@@ -16,7 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+# responsável pelo redirecionamento caso o usuário tente visualizar uma página que seja nencessário realizar login
+from django.contrib.auth.views import login
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include("login.urls"))
+    url(r'^', include("login.urls")),
+    url(r'^avaliacao/', include("avaliacao.urls"))
 ]

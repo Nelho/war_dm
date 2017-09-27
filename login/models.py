@@ -27,6 +27,7 @@ class Usuario(models.Model):
 
 	user = models.OneToOneField(User)
 	regiao = models.CharField(max_length=2, choices=REGIONS_CHOICES, default = "R1")
+	foto = models.ImageField(upload_to="fotos/")
 	tipoUsuario = models.CharField(max_length=3, choices=CHOICES_TYPE_USERS, default= "AVA")
 
 class UsuarioCapitulo(models.Model):

@@ -1,0 +1,40 @@
+html,body,h1,h2,h3,h4,h5 {
+  font-family: "Raleway", sans-serif
+}
+
+a{
+  text-decoration: none;
+  font-size: 15px;
+  padding: 11px;
+}
+
+#link{
+  padding: 11px;
+}
+
+#mySidebar{
+	z-index:3;
+	width:300px;
+}
+
+#foto-perfil{
+	width:46px;
+}
+
+.opcoes-sidebar{
+	padding:0px;
+}
+
+.opcoes-sidebar .w3-dropdown-click, .btn-sidebar{
+	width: 100%;
+}
+
+#dropdown1, #dropdown2{
+	width:100%; 
+	z-index:1;
+}
+
+.w3-main{
+	margin-left:300px;
+	margin-top:43px;
+}
