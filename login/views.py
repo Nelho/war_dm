@@ -68,4 +68,4 @@ def cadastroCapitulo(request):
 	return render(request, "login/cadastro_capitulo.html")
 
 def gerenciaInicio(request):
-	return render(request, "login/base_html_gerente.html")
+	return render(request, "login/../templates/base_html_gerente.html")
