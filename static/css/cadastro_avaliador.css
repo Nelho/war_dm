@@ -1,2 +1,12 @@
+#lbl-button{
+	display: block;
+}
 
+.btn-clone{
+	width: 125px;
+}
+
+.w3-row-padding{
+	margin-top: 35px;
+}
 

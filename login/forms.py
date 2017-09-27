@@ -41,7 +41,7 @@ class AvaliadorForm(forms.Form):
 		"placeholder": "Senha avaliador"
 		}))
 	regiao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
-	regiao.widget.attrs["class"] = "w3-select w3-border w3-round-large w3-blue"
+	regiao.widget.attrs["class"] = "w3-select w3-border w3-button w3-blue btn-clone w3-hover-blue"
 	regiao.widget.attrs["name"] = "option"
 	email = forms.CharField(widget=forms.EmailInput(attrs={
 		"class": "w3-input",
