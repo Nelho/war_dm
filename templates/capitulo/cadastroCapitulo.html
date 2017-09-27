@@ -3,7 +3,7 @@
 {% block assets%}
 <script>
 function myFunction() {
-    var x = document.getElementById("Demo");
+    var x = document.getElementById("regiaoId");
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
     } else {
@@ -65,10 +65,7 @@ function myFunction() {
 
 <div class="w3-dropdown-click">
     <button onclick="myFunction()" class="w3-button w3-black"> Região! </button>
-    <div id="Demo" class="w3-dropdown-content w3-bar-block w3-border">
-      <a href="#" class="w3-bar-item w3-button">Link 1</a>
-      <a href="#" class="w3-bar-item w3-button">Link 2</a>
-      <a href="#" class="w3-bar-item w3-button">Link 3</a>
+    {{ form.regiao }}
     </div>
   </div>
 </div>

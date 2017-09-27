@@ -21,8 +21,9 @@ class CapituloUserForm(forms.Form):
     mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
 
-    ##regiao = forms.ChoiceField(label="região", choices=(REGIONS_CHOICES), widget=forms.ChoiceField(
-      ##  setattr({"id=":"Demo", "class":"w3-dropdown-content w3-bar-block w3-animate-zoom"})))
+    regiao = forms.ChoiceField(label="região", choices=(REGIONS_CHOICES))
+    regiao.widget.attrs["class"] = "w3-dropdown-content w3-bar-block w3-animate-zoom w3-button w3-black"
+    regiao.widget.attrs["id"]="regiaoId"
 
     numero = forms.IntegerField(label="numero", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"number", "placeholder" : "Número do Capítulo"}))
