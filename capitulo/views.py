@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from capitulo.forms import CapituloUserForm
-from login.models import *
+from main.models import *
+from capitulo.models import UsuarioCapitulo
 
 
 def cadastrarCapitulo(request):

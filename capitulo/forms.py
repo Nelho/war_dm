@@ -1,6 +1,7 @@
 import datetime
 from django import forms
-from login.models import Usuario, UsuarioCapitulo
+from main.models import Usuario
+from capitulo.models import UsuarioCapitulo
 
 class CapituloUserForm(forms.Form):
     REGIONS_CHOICES = (
