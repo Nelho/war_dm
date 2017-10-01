@@ -12,26 +12,40 @@ class CapituloUserForm(forms.Form):
         ("R6", "6º Região"),
         ("R7", "7º Região"),
     )
-    username = forms.CharField(label="username", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Usuario"}))
+    nomeCap = forms.CharField(label="username", widget=forms.TextInput(
+        attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Nome do capítulo"}))
 
     password = forms.CharField(label="password", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"password", "placeholder" : "Senha"}))
 
+    passwordConfirm = forms.CharField(label="password", widget=forms.TextInput(
+        attrs={"class":"w3-input w3-border", "type":"password", "placeholder" : "Confimar senha"}))
+
     mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
 
-    regiao = forms.ChoiceField(label="região", choices=(REGIONS_CHOICES))
-    regiao.widget.attrs["class"] = "w3-dropdown-content w3-bar-block w3-animate-zoom w3-button w3-black"
+    regiao = forms .ChoiceField(label="região", choices=REGIONS_CHOICES)
+    regiao.widget.attrs["class"] = "w3-white w3-border w3-border-red w3-round-large w3-large"
     regiao.widget.attrs["id"]="regiaoId"
+    regiao.widget.attrs["style"] = "width:50%"
 
-    numero = forms.IntegerField(label="numero", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"number", "placeholder" : "Número do Capítulo"}))
+    numero = forms.IntegerField(label="telefone" ,widget=forms.TextInput(
+        attrs={"maxlength": "4", "id": "numero", "class":"w3-input w3-border",
+               "type":"number", "placeholder" : "Número do Capítulo", "onkeyup":"funcCriarLogin()"}))
+
+    email = forms.CharField(label="emailCap", widget=forms.TextInput(
+        attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "E-mail"}))
+
+    telefone = forms.IntegerField(label="telefone", widget=forms.TextInput(
+        attrs={
+		"id":"telefone","class": "w3-input w3-border","placeholder": "Número de whatsapp"}))
 
     dataFundacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(
         attrs={"type": "date"}))
     dataInstalacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(attrs={"type": "date"}))
 
     avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
-
+    avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
+    avaliador.widget.attrs["id"]="regiaoId"
+    avaliador.widget.attrs["style"] = "width:15%"
 
