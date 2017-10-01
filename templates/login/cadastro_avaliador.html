@@ -6,11 +6,24 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="{% static "js/jquery.mask.js" %}"></script>
 <link rel="stylesheet" href="{% static "css/cadastro_avaliador.css" %}">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
   $(document).ready(function() {
     $("#telefone").mask("(00) 0.000-00000");
   });
 </script>
+
+<script>
+	
+	$(function() {
+		$(document).tooltip();
+	});
+</script>
+
+
 
 {% endblock %}
 
@@ -18,7 +31,7 @@
 	
 	<div class="w3-container">	  
 	  <div class="w3-card-4 w3-white">
-	    <div class="w3-container w3-blue">
+	    <div class="w3-container w3-red">
 	      <h2>Cadastro Avaliador</h2>
 	    </div>
 			<div class="w3-row">
@@ -31,36 +44,65 @@
 
 			  		      <div class="w3-row-padding">
 			  		        <div class="w3-half">
-			  		          <label>Nome</label>
-			  		          {{form.nome}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.nome}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
 
 			  		        <div class="w3-half">
-			  		          <label>Sobrenome</label>
-			  		          {{form.sobrenome}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.sobrenome}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
 			  		      </div>
 
 			  		      <div class="w3-row-padding">
 			  		        <div class="w3-half">
-			  		          	<label>Id DeMolay</label>     
-			  					{{form.login}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.login}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
-
 			  		        <div class="w3-half">
-			  		          	<label>Senha</label>
-			  					{{form.senha}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.senha}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
 			  		      </div>
 			  		      <div class="w3-row-padding">
 			  		        <div class="w3-half">
-			  		          <label>E-mail</label>
-			  		          {{form.email}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.email}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
 
 			  		        <div class="w3-half">
-			  		          <label>Telefone</label>
-			  		          {{form.telefone}}
+			  		        	<div class="w3-row w3-section">
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-whatsapp"></i></div>
+			  		            	<div class="w3-rest">
+			  		            		{{form.telefone}}
+			  		            	</div>
+			  		        	</div>
+			  		          
 			  		        </div>
 			  		      </div>	
 			  		      <div class="w3-row-padding">
@@ -71,15 +113,16 @@
 
 			  		        <div class="w3-half">
 			  		          <label id="lbl-button">Foto</label>
-			  		          <label for="foto" class="w3-button w3-blue w3-hover-blue">Escolher foto <i class="fa fa-camera" aria-hidden="true"></i></label>
+			  		          <label for="foto" class="w3-btn w3-red w3-hover-red">Escolher foto <i class="fa fa-camera" aria-hidden="true"></i></label>
 			  		          {{form.foto}}
 			  		        </div>
 			  		      </div>
 			  		      <hr class="w3-gray w3-border">
 			  			<div class="w3-container w3-white w3-center">
 			  						
-			  		     	<button type="submit" style="margin-bottom:15px" class="btn-clone w3-button w3-green w3-center w3-hover-green">Registrar <i class="fa fa-arrow-right"></i></button>
+			  		     	<button type="submit" style="margin-bottom:15px" class="w3-ripple btn-clone w3-btn w3-red w3-center w3-hover-red">Registrar <i class="fa fa-arrow-right"></i></button>
 			  			</div>
+
 			  		    </form>
 			  </div>
 
