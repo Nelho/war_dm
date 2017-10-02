@@ -11,31 +11,37 @@ class AvaliadorForm(forms.Form):
 		("R7", "7º Região"),
 		)
 	nome = forms.CharField(label="Nome", max_length=50, widget=forms.TextInput(attrs={
-		"class": "w3-input",
+		"class": "w3-input w3-border",
 		"placeholder": "Nome do avaliador"
 		}))
-	sobrenome = forms.CharField(label="Sobrenome", max_length=50, widget=forms.TextInput(attrs={
-		"class": "w3-input",
-		"placeholder": "Nome do avaliador"
-		}))
+
 	login = forms.CharField(label="Identidade DeMolay", max_length=50, widget=forms.NumberInput(attrs={
-		"class": "w3-input",
-		"placeholder": "ID avaliador"
+		"class": "w3-input w3-border",
+		"placeholder": "ID sisdm"
 		}))
 	senha = forms.CharField(label="senha", max_length=50, widget=forms.PasswordInput(attrs={
-		"class": "w3-input",
-		"placeholder": "Senha avaliador"
+		"class": "w3-input w3-border",
+		"placeholder": "Senha",
+		"id": "senha"
 		}))
+
+	confirmar_senha = forms.CharField(label="confirmar_senha", max_length=50, widget=forms.PasswordInput(attrs={
+		"class": "w3-input w3-border",
+		"placeholder": "Confirmar senha",
+		"id": "confirmar_senha",
+		"onblur": "validar_senhas()"
+		}))
+
 	regiao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
-	regiao.widget.attrs["class"] = "w3-select w3-border w3-btn w3-red btn-clone w3-hover-red"
+	regiao.widget.attrs["class"] = "w3-select w3-border btn-clone w3-red"
 	regiao.widget.attrs["name"] = "option"
 	email = forms.CharField(widget=forms.EmailInput(attrs={
-		"class": "w3-input",
+		"class": "w3-input w3-border",
 		"placeholder": "E-mail avaliador"
 		}))
 	telefone = forms.CharField(label="telefone", max_length=20, widget=forms.TextInput(attrs={
 		"id":"telefone",
-		"class": "w3-input",
+		"class": "w3-input w3-border",
 		"placeholder": "Número de whatsapp"}))
 	foto = forms.ImageField(label="Foto", required=False)
 	foto.widget.attrs["id"] = "foto"

@@ -12,9 +12,9 @@ def cadastroAvaliador(request):
 		form = AvaliadorForm(request.POST, request.FILES)
 		if form.is_valid():
 			form_nome = form.cleaned_data["nome"]
-			form_sobrenome = form.cleaned_data["sobrenome"]
 			form_login = form.cleaned_data["login"]
 			form_senha = form.cleaned_data["senha"]
+			form_confirmar_senha = form.cleaned_data["confirmar_senha"]
 			form_regiao = form.cleaned_data["regiao"]
 			form_email = form.cleaned_data["email"]
 			form_telefone = form.cleaned_data["telefone"]

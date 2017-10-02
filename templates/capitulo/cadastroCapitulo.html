@@ -1,18 +1,175 @@
 {% extends 'base_gerente.html' %}
+{% load staticfiles%}
 
 {% block assets %}
     <script>
         function funcCriarLogin() {
             var numero = document.getElementById("numero");
             var login = document.getElementById("loginId");
-            login.value = "Cap_" + numero.value
+            login.value = "cap_" + numero.value
         }
 
     </script>
+
+    <link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
 {% endblock %}
 
 {% block conteudo %}
 
+    <div class="w3-container">    
+      <div class="w3-card-4 w3-gray-ligth">
+        <div class="w3-container w3-red">
+          <h2>Cadastro Capítulo</h2>
+        </div>
+            <div class="w3-row">
+
+              <div class="w3-col m1 w3-center w3-gray-ligth"><button class="w3-gray-ligth w3-button w3-show"> </button>
+              </div>
+
+              <div class="w3-col m10">
+                <form action="{% url 'cadastro_avaliador' %}" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+
+                          <div class="w3-row-padding">
+                            <div class="w3-half w3-col m8">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-address-card-o"></i></div>
+                                    <div class="w3-rest">
+                                        {{form.nomeCap}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+
+                            <div class="w3-half w3-col m4">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
+                                    <div class="w3-rest">
+                                        {{form.numero}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+                          </div>
+
+                          <div class="w3-row-padding">
+                            <div class="w3-half w3-col m8">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+                                    <div class="w3-rest">
+                                        {{form.mestreCosenheiro}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+
+                            <div class="w3-half w3-col m4">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+                                    <div class="w3-rest">
+                                        <input class="w3-input w3-border" id="loginId" disabled name="login" type="text"
+                                                                       placeholder="Login"
+                                                                       onkeyup="funcCriarLogin()">
+                                    </div>
+                                </div>
+                              
+                            </div>
+                          </div>
+
+                          <div class="w3-row-padding">
+                            <div class="w3-half w3-col m6">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
+                                    <div class="w3-rest">
+                                        {{form.password}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+
+                            <div class="w3-half w3-col m6">
+                                <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
+                                    <div class="w3-rest">
+                                        {{form.passwordConfirm}}
+                                    </div>
+                                </div>
+                              
+                            </div>
+                          </div>
+                                
+                        <div class="w3-row-padding">
+                          <div class="w3-half w3-col m6">
+                              <div class="w3-row w3-section">
+                              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-whatsapp"></i></div>
+                                  <div class="w3-rest">
+                                      {{form.telefone}}
+                                  </div>
+                              </div>
+                            
+                          </div>
+
+                          <div class="w3-half w3-col m6">
+                              <div class="w3-row w3-section">
+                              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+                                  <div class="w3-rest">
+                                      {{form.email}}
+                                  </div>
+                              </div>
+                            
+                          </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                          <div class="w3-half w3-col m4">
+                              <div class="w3-row w3-section">
+                              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i></div>
+                                  <div class="w3-rest">
+                                      {{form.dataInstalacao}}
+                                  </div>
+                              </div>
+                            
+                          </div>
+
+                          <div class="w3-half w3-col m4">
+                              <div class="w3-row w3-section">
+                              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i></div>
+                                  <div class="w3-rest">
+                                      {{form.dataFundacao}}
+                                  </div>
+                              </div>
+                            
+                          </div>
+
+                          <div class="w3-half w3-col m4">
+                              <div class="w3-row w3-section">
+                              <div class="w3-col" style="width:50px"></div>
+                                  <div class="w3-rest">
+                                      {{form.regiao}}
+                                  </div>
+                              </div>
+                            
+                          </div>
+                        </div>
+
+
+                          <hr class="w3-gray w3-border">
+                        <div class="w3-container w3-gray-ligth w3-center">
+                                    
+                            <button type="submit" style="margin-bottom:15px" class="w3-ripple btn-clone w3-btn w3-red w3-center w3-hover-red">Registrar <i class="fa fa-arrow-right"></i></button>
+                        </div>
+
+                        </form>
+              </div>
+
+              <div class="w3-col m1 w3-center w3-white"></div>
+            </div>
+            
+        </div>
+        
+      </div>
+    <!--
     <form action="{% url 'cadastroCapitulo' %}" method="POST"
           class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
         <div class="w3-container w3-red">
@@ -128,6 +285,6 @@
                 </button>
             </div>
         </div>
-
+    -->
 
 {% endblock %}

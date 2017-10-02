@@ -28,7 +28,7 @@ class CapituloUserForm(forms.Form):
     regiao = forms .ChoiceField(label="região", choices=REGIONS_CHOICES)
     regiao.widget.attrs["class"] = "w3-white w3-border w3-border-red w3-round-large w3-large"
     regiao.widget.attrs["id"]="regiaoId"
-    regiao.widget.attrs["style"] = "width:50%"
+    regiao.widget.attrs["style"] = "width:65%"
 
     numero = forms.IntegerField(label="telefone" ,widget=forms.TextInput(
         attrs={"maxlength": "4", "id": "numero", "class":"w3-input w3-border",
