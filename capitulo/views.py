@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from capitulo.forms import CapituloUserForm
+from capitulo.forms import CapituloUserForm, FormularioForm
 from main.models import *
 from capitulo.models import UsuarioCapitulo
 
@@ -34,3 +34,8 @@ def cadastrarCapitulo(request):
     form = CapituloUserForm()
     context = {"form" : form}
     return render(request, 'capitulo/cadastroCapitulo.html', context=context)
+
+def cadastrarFormulario(request):
+    form = FormularioForm()
+    context = {"form":form}
+    return render(request, 'capitulo/relatorio_form.html', context= context)
