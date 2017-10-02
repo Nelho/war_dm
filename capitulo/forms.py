@@ -50,3 +50,23 @@ class CapituloUserForm(forms.Form):
     avaliador.widget.attrs["id"]="regiaoId"
     avaliador.widget.attrs["style"] = "width:15%"
 
+class FormularioForm(forms.Form):
+
+    STATUS_CHOICES = (
+        ("S1", "Aprovado"),
+        ("S2", "Negado"),
+        ("S3", "Correção"),
+        ("S4", "Enviado"),
+    )
+
+    resumo = forms.CharField(label="resumo",widget=forms.Textarea(attrs={'rows':3}))
+    planejamento = forms.CharField(label="planejamento",widget=forms.Textarea(attrs={'rows':3}))
+    abrangencia = forms.CharField(label="abrangencia",widget=forms.Textarea(attrs={'rows':3}))
+    resultado = forms.CharField(label="resumo",widget=forms.Textarea(attrs={'rows':3}))
+    dataRealizacao = forms.DateField()
+    ##dataEnvio = forms.DateField()
+    fotos = forms.ImageField()
+    ##territorio
+    observacoes = forms.CharField(label="observacoes",widget=forms.Textarea(attrs={'rows':3}))
+    status = forms.ChoiceField(label="status",choices=STATUS_CHOICES)
+    pontuacaoBonus = forms.IntegerField()

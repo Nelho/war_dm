@@ -1,0 +1,95 @@
+{% extends 'base_gerente.html' %}
+{% load widget_tweaks %}
+
+{% block assets %}
+
+{% endblock %}
+
+{% block conteudo %}
+
+    <form action="{% url 'cadastroCapitulo' %}" method="POST"
+          class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
+        <div class="w3-container w3-red">
+            <h2>Cadastro Capítulo</h2>
+        </div>
+        {% csrf_token %}
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
+            <div class="w3-rest">
+                {{ form.resumo|add_class:"w3-input w3-border" |attr:"placeholder:Resumo"}}
+            </div>
+        </div>
+
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
+            <div class="w3-rest">
+                {{ form.planejamento|add_class:"w3-input w3-border"|attr:"placeholder:Planejamento" }}
+            </div>
+        </div>
+
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
+            <div class="w3-rest">
+                {{ form.abrangencia|add_class:"w3-input w3-border"|attr:"placeholder:Abrangencia" }}
+            </div>
+        </div>
+
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
+            <div class="w3-rest">
+                {{ form.resultado|add_class:"w3-input w3-border"|attr:"placeholder:Resultados" }}
+            </div>
+        </div>
+
+        <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
+            <div class="w3-rest">
+                {{ form.observacoes|add_class:"w3-input w3-border"|attr:"placeholder:Observações" }}
+            </div>
+        </div>
+
+        <div class="w3-col s4 w3- w3-center"><p></p>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
+                <div class="w3-rest">
+                    {{ form.dataRealizacao| add_class:"w3-input w3-border" }}
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-col s4 w3- w3-center"><p></p>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
+                <div class="w3-rest">
+                    {{ form.pontuacaoBonus| add_class:"w3-input w3-border" |attr:"placeholder:Pontuação bonus" }}
+                </div>
+            </div>
+        </div>
+
+        <div class="w3-col s4 w3- w3-center"><p></p>
+            <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
+                <div class="w3-rest">
+                    {{ form.fotos| add_class:"w3-input w3-border"}}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="w3-row">
+            <div class="w3-col s12 w3-center">
+                <button type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large"
+                        style="padding-left: 50px; padding-right: 50px; margin-bottom: 10px;">Send
+                </button>
+            </div>
+        </div>
+
+
+
+
+
+{% endblock %}
