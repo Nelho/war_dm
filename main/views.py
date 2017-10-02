@@ -3,9 +3,6 @@ from main.forms import LoginForm
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_authenticate
-from django.contrib.auth.models import User
-from main.models import Usuario
-from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 def login(request):
@@ -25,8 +22,8 @@ def login(request):
 				context = {"error": True, 
 				"msg_error": "Login/senha incorretos!", 
 				"form": form}
-				return render(request, "login/login.html", context=context)
+				return render(request, "main/login.html", context=context)
 	form = LoginForm()
 	context = {"form":form}
 
-	return render(request, "login/login.html", context=context)
+	return render(request, "main/login.html", context=context)

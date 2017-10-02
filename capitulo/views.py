@@ -36,6 +36,11 @@ def cadastrarCapitulo(request):
     return render(request, 'capitulo/cadastroCapitulo.html', context=context)
 
 def cadastrarFormulario(request):
-    form = FormularioForm()
-    context = {"form":form}
-    return render(request, 'capitulo/relatorio_form.html', context= context)
+    if(request.method=="POST"):
+        form = FormularioForm(request.POST)
+        print(form.is_valid())
+        return render(request, 'capitulo/relatorio_form.html')
+    else:
+        form = FormularioForm()
+        context = {"form":form}
+        return render(request, 'capitulo/relatorio_form.html', context= context)

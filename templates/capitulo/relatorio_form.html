@@ -7,7 +7,7 @@
 
 {% block conteudo %}
 
-    <form action="{% url 'cadastroCapitulo' %}" method="POST"
+    <form action="{% url 'cadastroFormulario' %}" method="POST"
           class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
         <div class="w3-container w3-red">
             <h2>Cadastro Capítulo</h2>
@@ -63,7 +63,7 @@
 
         <div class="w3-col s4 w3- w3-center"><p></p>
             <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-sort-numeric-asc"></i></div>
                 <div class="w3-rest">
                     {{ form.pontuacaoBonus| add_class:"w3-input w3-border" |attr:"placeholder:Pontuação bonus" }}
                 </div>
@@ -72,7 +72,7 @@
 
         <div class="w3-col s4 w3- w3-center"><p></p>
             <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
+                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-picture-o"></i></div>
                 <div class="w3-rest">
                     {{ form.fotos| add_class:"w3-input w3-border"}}
                 </div>
@@ -88,6 +88,8 @@
             </div>
         </div>
 
+
+    {{ form }}
 
 
 

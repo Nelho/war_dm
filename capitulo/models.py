@@ -35,7 +35,7 @@ class Formulario(models.Model):
     resultado = models.CharField(max_length=500)
     dataRealizacao = models.DateField()
     dataEnvio = models.DateField()
-    ###fotos
+    ###fotos-zip
     territorio = models.CharField(max_length=30)
     ##capituloUser = models.ForeignKey(Usuario,related_name="usuario_cap", db_column="usuario_capitulo_id")
     observacoes = models.CharField(max_length=500)
