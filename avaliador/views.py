@@ -36,4 +36,4 @@ def cadastroAvaliador(request):
 
 	form = AvaliadorForm()
 	context = {"form": form}
-	return render(request, "login/cadastro_avaliador.html", context=context)
+	return render(request, "avaliador/cadastro_avaliador.html", context=context)
