@@ -38,7 +38,7 @@
 			  		        	<div class="w3-row w3-section">
 			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
 			  		            	<div class="w3-rest">
-			  		            		{{form.nome|add_class:"w3-input w3-border"|attr:"placeholder:Nome avaliador"}}
+			  		            		{{form.nome|add_class:"w3-input w3-border"|attr:"placeholder:Nome avaliador"|attr:"id:nome"}}
 			  		            	</div>
 			  		        	</div>
 			  		          
@@ -46,9 +46,9 @@
 
 			  		        <div class="w3-half">
 			  		        	<div class="w3-row w3-section">
-			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
+			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
 			  		            	<div class="w3-rest">
-			  		            		{{form.login|add_class:"w3-input w3-border"|attr:"placeholder:ID sisdm"}}
+			  		            		{{form.sobrenome|add_class:"w3-input w3-border"|attr:"placeholder:Sobrenome avaliador"}}
 			  		            	</div>
 			  		        	</div>
 			  		          
@@ -56,25 +56,26 @@
 			  		      </div>
 
 			  		      <div class="w3-row-padding">
+
+			  		      	<div class="w3-half">
+			  		      		<div class="w3-row w3-section">
+			  		      	  	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
+			  		      	    	<div class="w3-rest">
+			  		      	    		{{form.login|add_class:"w3-input w3-border"|attr:"placeholder:ID sisdm"|attr:"id:idDemolay"}}
+			  		      	    	</div>
+			  		      		</div>
+			  		      	  
+			  		      	</div>
 			  		        <div class="w3-half">
 			  		        	<div class="w3-row w3-section">
 			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
 			  		            	<div class="w3-rest">
-			  		            		{{form.senha|add_class:"w3-input w3-border"|attr:"placeholder:Senha"|attr:"id:senha"}}
+			  		            		{{form.senha|add_class:"w3-input w3-border"|attr:"placeholder:Senha"|attr:"id:senha"|attr:"disabled"}}
 			  		            	</div>
 			  		        	</div>
 			  		          
 			  		        </div>
-			  		        <div class="w3-half">
-			  		        	<div class="w3-row w3-section">
-			  		          	<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
-			  		            	<div class="w3-rest">
-			  		            		{{form.confirmar_senha|add_class:"w3-input w3-border"|attr:"placeholder:Confirmar senha"|attr:"id:confirmar_senha"|attr:"onblur:validar_senhas()"}}
-			  		            		<label style="display:none" id="lbl_confirmar_senha" class="w3-text-red w3-animate-zoom">Senhas diferentes</label>
-			  		            	</div>
-			  		        	</div>
-			  		          
-			  		        </div>
+			  		       
 			  		      </div>
 			  		      <div class="w3-row-padding">
 			  		        <div class="w3-half">
@@ -125,18 +126,14 @@
 		
 	  </div>
 	  <script>
-	  	var password = document.getElementById("senha")
-	  	var confirm_password = document.getElementById("confirmar_senha");
-	  	var element_senhas_diferentes = document.getElementById("lbl_confirmar_senha")
-
-	  	function validar_senhas(){
-	  		if(password.value != confirm_password.value){
-	  			element_senhas_diferentes.style.display = "block";
-	  		}else{
-	  			element_senhas_diferentes.style.display = "none";
-	  		}
-	  		console.log("pegou")
-	  	}
+	  	var nome = document.getElementById("nome");
+	  	var senha = document.getElementById("senha");
+	  	var id = document.getElementById("idDemolay");
+	  	var func = function(){
+	  		senha.value = id.value + "_" + nome.value;
+	  	};
+	  	id.onkeyup = func;
+	  	nome.onkeyup = func;
 	  </script>
 	</div>
 

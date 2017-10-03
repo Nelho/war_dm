@@ -11,9 +11,9 @@ class AvaliadorForm(forms.Form):
 		("R7", "7º Região"),
 		)
 	nome = forms.CharField(label="Nome", max_length=50, widget=forms.TextInput())
+	sobrenome = forms.CharField(label="Sobrenome", max_length=50, widget=forms.TextInput())
 	login = forms.CharField(label="Identidade DeMolay", max_length=50, widget=forms.NumberInput())
-	senha = forms.CharField(label="senha", max_length=50, widget=forms.PasswordInput())
-	confirmar_senha = forms.CharField(label="confirmar_senha", max_length=50, widget=forms.PasswordInput())
+	senha = forms.CharField(label="senha", max_length=50, widget=forms.TextInput())
 	email = forms.CharField(widget=forms.EmailInput())
 	telefone = forms.CharField(label="telefone", max_length=20, widget=forms.TextInput())
 	regiao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
