@@ -37,10 +37,19 @@ def cadastrarCapitulo(request):
 
 def cadastrarFormulario(request):
     if(request.method=="POST"):
-        form = FormularioForm(request.POST)
+        form = FormularioForm(request.POST, request.FILES)
         print(form.is_valid())
-        return render(request, 'capitulo/relatorio_form.html')
-    else:
-        form = FormularioForm()
-        context = {"form":form}
-        return render(request, 'capitulo/relatorio_form.html', context= context)
+        if form.is_valid():
+            resumo = form.cleaned_data['resumo']
+            planejamento = form.cleaned_data['planejamento']
+            abrangencia = form.cleaned_data['abrangencia']
+            resultado = form.cleaned_data['resultado']
+            
+            dataRealizacao = form.cleaned_data['dataRealizacao']
+            zip_formulario = request.FILES('documentos')
+            relatorio = Formulario(resumo = resumo, planejamento = planejamento, abrangencia = abrangencia, resultado = resultado, dataRealizacao = dataRealizacao, zip_formulario = documentos)
+            relatorio.save()
+
+    form = FormularioForm()
+    context = {"form":form}
+    return render(request, 'capitulo/relatorio_form.html', context= context)
