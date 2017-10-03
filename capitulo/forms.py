@@ -3,6 +3,7 @@ from django import forms
 from main.models import Usuario
 from capitulo.models import UsuarioCapitulo
 
+
 class CapituloUserForm(forms.Form):
     REGIONS_CHOICES = (
         ("R1", "1º Região"),
@@ -51,13 +52,12 @@ class CapituloUserForm(forms.Form):
     avaliador.widget.attrs["style"] = "width:15%"
 
 class FormularioForm(forms.Form):
-    resumo = forms.CharField(label="resumo")
+    resumo = forms.CharField(label="resumo", widget=forms.Textarea())
     planejamento = forms.CharField(label="planejamento")
     abrangencia = forms.CharField(label="abrangencia")
-    resultado = forms.CharField(label="resumo")
+    resultado = forms.CharField(label="resultado")
     dataRealizacao = forms.DateField(widget=forms.TextInput(
         attrs={"type": "date"}))
-    fotos = forms.ImageField()
+    documentos = forms.FileField()
     ##territorio/
-    observacoes = forms.CharField(label="observacoes")
-    pontuacaoBonus = forms.IntegerField()
+    conclusao = forms.CharField(label="conclusao")

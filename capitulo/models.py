@@ -42,3 +42,4 @@ class Formulario(models.Model):
     observacoes = models.CharField(max_length=500)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default = "S4")
     pontuacaoBonus = models.IntegerField()
+
