@@ -100,20 +100,20 @@
 			  		      </div>	
 			  		      <div class="w3-row-padding">
 			  		        <div class="w3-half">
-			  		          <label id="lbl-button">Região</label>
+			  		          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-map-marker"></i></div>
 			  		          {{form.regiao|add_class:"w3-select w3-border btn-clone w3-red"|attr:"name:option"}}
 			  		        </div>
 
 			  		        <div class="w3-half">
-			  		          <label id="lbl-button">Foto</label>
-			  		          <label for="foto" class="w3-btn w3-red w3-hover-red">Escolher foto <i class="fa fa-camera" aria-hidden="true"></i></label>
+			  		          <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-camera"></i></div>
+			  		          <label for="foto" class="w3-btn w3-red w3-hover-red">Escolher foto <i aria-hidden="true"></i></label>
 			  		          {{form.foto|attr:"id:foto"|attr:"style:display:none"|attr:"accept:image/x-png,image/jpeg"}}
 			  		        </div>
 			  		      </div>
 			  		      <hr class="w3-gray w3-border">
 			  			<div class="w3-container w3-gray-ligth w3-center">
 			  						
-			  		     	<button type="submit" style="margin-bottom:15px" class="w3-ripple btn-clone w3-btn w3-red w3-center w3-hover-red">Registrar <i class="fa fa-arrow-right"></i></button>
+			  		     	<button type="submit" style="margin-bottom:22px" class="w3-btn  w3-red">Registrar <i class="fa fa-arrow-right"></i></button>
 			  			</div>
 
 			  		    </form>
