@@ -83,12 +83,16 @@ def profile_edit(request):
 	elif request.method == "GET":
 		usuario = Usuario.objects.get(user_id=request.user.id)
 		user = User.objects.get(pk=request.user.id)
-		contato = Contato.objects.get(usuario_id=request.user.id)
-		form = AvaliadorEditForm(initial={
-			"nome": user.first_name, 
+		form_initial = {"nome": user.first_name, 
 			"sobrenome":user.last_name,
-			"email": user.email,
-			"telefone": contato.contato})
+			"email": user.email}
+		try:
+			contato = Contato.objects.get(usuario_id=request.user.id)
+			form_context["contato"] = contato.contato
+		except:
+			print("Contato não cadastrado para usuário")
+
+		form = AvaliadorEditForm(initial=form_initial)
 
 	context = {"form": form}
 	return render(request, "avaliador/avaliador_edit_profile.html", context=context)
