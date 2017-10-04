@@ -22,6 +22,6 @@ from django.contrib.auth.views import login
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^avaliador/', include("avaliador.urls")),
-    url(r'^', include("main.urls")),
+    url(r'^', include("main.urls", namespace="main")),
     url(r'^capitulo/', include("capitulo.urls")),
 ]

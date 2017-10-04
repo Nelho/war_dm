@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load staticfiles%}
+<html>
+<title>War DeMolay - Gerencia</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="{% static "css/w3-v4.css" %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{% static "css/base_html_gerente.css" %}">
+
+{% block assets%}
+{% endblock%}
+
+<body class="w3-light-grey">
+
+<!-- Top container -->
+
+<div id="top-container" class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+  <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
+  <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
+  <a id="link" href="{% url "profile_avaliador" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
+  <a id="link" href="{% url "profile_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
+  <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>
+
+</div>
+
+<!--
+<div class="w3-container w3-black" id="top-container" style="z-index:4">
+  <div class="w3-bar w3-black w3-large">
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
+    <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
+    <a id="link" href="{% url "profile_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
+    <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
+    <div class="w3-dropdown-hover">
+      <a class="w3-bar-item w3-right w3-hover-blue">Dropdown</a>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4" style="z-index:1000">
+        <a href="#" class="w3-bar-item w3-button">Editar Senha</a>
+        <a href="#" class="w3-bar-item w3-button">Editar Informações Básicas</a>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img id="foto-perfil" src="{% static "imagens/avatar-demolay.png" %}" class="w3-circle w3-margin-right">
+    </div>
+    <div class="w3-col s8 w3-bar">
+      <span>Bem-vindo, <strong>{{user.first_name}} </strong><a href="#"><i class="fa fa-cog"></i></a></span>
+      
+      <span style="display: block;">MCA - PB</span>
+    </div>
+  </div>
+  <hr>
+  
+  <div class="w3-container">
+    <h5>Capítulos</h5>
+  </div>
+  <div class="w3-bar-block">
+    
+    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Filhos do Imperador <span class="w3-badge w3-green">1</span></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Defensores do Rio Vermelho <span class="w3-badge w3-red">8</span></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Deus, pátria e familia <span class="w3-badge w3-orange">5</span></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  João Pessoa <span class="w3-badge w3-green">2</span></a>
+  </div>
+
+</nav>
+
+
+<!-- efeito de escurecimento da tela quando ficar responsiva-->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main">
+
+  <!-- Header -->
+  <br>
+  {% block conteudo %}
+
+  {% endblock %}
+
+  
+
+</div>
+  <!-- End page content -->
+
+<script src="{% static "js/base_html_gerente.js" %}"></script>
+</body>
+</html>
