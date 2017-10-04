@@ -94,10 +94,7 @@ def profile_edit(request):
 	return render(request, "avaliador/avaliador_edit_profile.html", context=context)
 
 def password_edit(request):
-	form = AvaliadorEditPasswordForm()
 	if request.method == "POST":
-		senha_validada = True
-		msg_error = ""
 		form = AvaliadorEditPasswordForm(request.POST)
 		if form.is_valid():
 			form_senha_atual = form.cleaned_data["senha_atual"]
@@ -106,7 +103,9 @@ def password_edit(request):
 
 			if form_nova_senha != form_repetir_senha:
 				senha_validada = False
-				msg_error = "Senhas diferentes!"
+				#msg_error = "Senhas diferentes!"
+				context = {"form": form, "error": True, "msg_error": "Senhas diferentes!"}
+				return render(request, "avaliador/avaliador_edit_password.html", context=context)
 			else:
 				user = User.objects.get(pk=request.user.id)
 
@@ -114,11 +113,16 @@ def password_edit(request):
 					user.set_password(form_nova_senha)
 					user.save()
 					login(request, user)
-					context = {"form": form, "senha_validada": senha_validada, "msg_error": msg_error}
+					senha_validada = True
+					context = {"form": form, "senha_validada": senha_validada, "method":"POST"}
+					return render(request, "avaliador/avaliador_edit_password.html", context=context)
 				else:
-					msg_error = "Senha atual incorreta!"
 					senha_validada = False
-	elif request.method == "GET":
-		context = {"form": form}
+					context = {"form": form, "error": True, "msg_error": "Senha atual incorreta!"}
+
+				return render(request, "avaliador/avaliador_edit_password.html", context=context)
+	form = AvaliadorEditPasswordForm()
+	senha_validada = True
+	context = {"form": form, "senha_validada":senha_validada ,"method":"GET"}
 
 	return render(request, "avaliador/avaliador_edit_password.html", context=context)
