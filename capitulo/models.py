@@ -36,10 +36,13 @@ class Formulario(models.Model):
     resultado = models.CharField(max_length=500)
     dataRealizacao = models.DateField()
     dataEnvio = models.DateField()
-    arquivoZip = models.FileField(upload_to="documentos/")
+    conclusao = models.CharField(max_length=500)
+
+    arquivozip = models.FileField(upload_to='arquivozip/')
+
     territorio = models.CharField(max_length=30)
-    ##capituloUser = models.ForeignKey(Usuario,related_name="usuario_cap", db_column="usuario_capitulo_id")
-    observacoes = models.CharField(max_length=500)
+    capituloUser = models.ForeignKey(Usuario,related_name="usuario_cap_form", db_column="usuario_capitulo_form_id")
+    observacoes = models.CharField(max_length=500, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default = "S4")
-    pontuacaoBonus = models.IntegerField()
+    pontuacaoBonus = models.IntegerField(null=True)
 

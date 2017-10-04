@@ -2,22 +2,35 @@
 {% load widget_tweaks %}
 
 {% block assets %}
+<script>
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
 
+if(dd<10) {
+    dd = '0'+dd
+}
+
+if(mm<10) {
+    mm = '0'+mm
+}
+
+today = yyyy + '-' + mm + '-' + dd;
+//alert(today)
+</script>
 {% endblock %}
 
 {% block conteudo %}
 
 
-    <form action="{% url 'cadastroFormulario' %}" method="POST"
+    <form action="{% url 'cadastroFormulario' %}" method="POST" enctype="multipart/form-data"
           class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
         <div class="w3-container w3-red">
             <h2>Cadastro Capítulo</h2>
         </div>
         {% csrf_token %}
-        {{ form.as_p }}
 
-        <button type="submit"> enviar</button>
-<!--
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
             <div class="w3-rest">
@@ -29,7 +42,7 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
             <div class="w3-rest">
-                {{ form.planejamento|add_class:"w3-input w3-border"|attr:"placeholder:Planejamento" }}
+                {{ form.planejamento|add_class:"w3-input w3-border"|attr:"placeholder:Planejamento" | attr:"style: resize:none" | attr:"rows: 3" }}
             </div>
         </div>
 
@@ -37,7 +50,7 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
             <div class="w3-rest">
-                {{ form.abrangencia|add_class:"w3-input w3-border"|attr:"placeholder:Abrangencia" }}
+                {{ form.abrangencia|add_class:"w3-input w3-border"|attr:"placeholder:Abrangencia"| attr:"style: resize:none" | attr:"rows: 3" }}
             </div>
         </div>
 
@@ -45,31 +58,22 @@
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
             <div class="w3-rest">
-                {{ form.resultado|add_class:"w3-input w3-border"|attr:"placeholder:Resultados" }}
+                {{ form.resultado|add_class:"w3-input w3-border"|attr:"placeholder:Resultados" | attr:"style: resize:none" | attr:"rows: 3"}}
             </div>
         </div>
 
         <div class="w3-row w3-section">
             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i></div>
             <div class="w3-rest">
-                {{ form.observacoes|add_class:"w3-input w3-border"|attr:"placeholder:Observações" }}
+                {{ form.conclusao|add_class:"w3-input w3-border"|attr:"placeholder:Conclusão"| attr:"style: resize:none" | attr:"rows: 3" }}
             </div>
         </div>
 
         <div class="w3-col s4 w3- w3-center"><p></p>
             <div class="w3-row w3-section">
                 <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
-                <div class="w3-rest">
+                <div class="w3-rest">Data da realização
                     {{ form.dataRealizacao| add_class:"w3-input w3-border" }}
-                </div>
-            </div>
-        </div>
-
-        <div class="w3-col s4 w3- w3-center"><p></p>
-            <div class="w3-row w3-section">
-                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-sort-numeric-asc"></i></div>
-                <div class="w3-rest">
-                    {{ form.pontuacaoBonus| add_class:"w3-input w3-border" |attr:"placeholder:Pontuação bonus" }}
                 </div>
             </div>
         </div>
@@ -78,7 +82,7 @@
             <div class="w3-row w3-section">
                 <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-picture-o"></i></div>
                 <div class="w3-rest">
-                    {{ form.fotos| add_class:"w3-input w3-border"}}
+                    {{ form.arquivozip  | add_class:"w3-input w3-border"}}
                 </div>
             </div>
         </div>
@@ -91,8 +95,6 @@
                 </button>
             </div>
         </div>
-
--->
 </form>
 
 
