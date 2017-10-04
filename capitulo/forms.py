@@ -46,18 +46,17 @@ class CapituloUserForm(forms.Form):
         attrs={"type": "date"}))
     dataInstalacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(attrs={"type": "date"}))
 
-    avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
-    avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
-    avaliador.widget.attrs["id"]="regiaoId"
-    avaliador.widget.attrs["style"] = "width:15%"
+    ##avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
+    ##avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
+    ##avaliador.widget.attrs["id"]="regiaoId"
+    ##avaliador.widget.attrs["style"] = "width:15%"
 
 class FormularioForm(forms.Form):
     resumo = forms.CharField(label="resumo", widget=forms.Textarea())
-    planejamento = forms.CharField(label="planejamento")
-    abrangencia = forms.CharField(label="abrangencia")
-    resultado = forms.CharField(label="resultado")
-    dataRealizacao = forms.DateField(widget=forms.TextInput(
+    planejamento = forms.CharField(label="planejamento", widget=forms.Textarea())
+    abrangencia = forms.CharField(label="abrangencia", widget=forms.Textarea())
+    resultado = forms.CharField(label="resultado", widget=forms.Textarea())
+    dataRealizacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(
         attrs={"type": "date"}))
-    documentos = forms.FileField()
-    ##territorio/
-    conclusao = forms.CharField(label="conclusao")
+    arquivozip = forms.FileField(label="arquivozip", required=False)
+    conclusao = forms.CharField(label="conclusao", widget=forms.Textarea())

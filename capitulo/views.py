@@ -1,12 +1,16 @@
+import datetime
 from django.shortcuts import render, HttpResponseRedirect
 from capitulo.forms import CapituloUserForm, FormularioForm
 from main.models import *
-from capitulo.models import UsuarioCapitulo
+from capitulo.models import UsuarioCapitulo, Formulario
 
 
 def cadastrarCapitulo(request):
+
     if(request.method == 'POST'):
         form = CapituloUserForm(request.POST)
+        cont = {"form" : form}
+        return render(request, 'capitulo/cadastroCapitulo.html', context=cont)
         print(form.is_valid())
         if form.is_valid():
             nomeCap = form.cleaned_data['nomeCap']
@@ -23,7 +27,7 @@ def cadastrarCapitulo(request):
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
 
-            avaliador = form.cleaned_data['avaliador']
+            avaliador = Usuario.objects.filter(user=User.objects.get(username='sergio.ewerton'))
             dataFundacao = form.cleaned_data['dataFundacao']
             dataInstacao = form.cleaned_data['dataInstalacao']
             mestreConsenheiro = form.cleaned_data['mestreCosenheiro']
@@ -36,6 +40,7 @@ def cadastrarCapitulo(request):
     return render(request, 'capitulo/cadastroCapitulo.html', context=context)
 
 def cadastrarFormulario(request):
+    ##print(datetime.date.da)
     if(request.method=="POST"):
         form = FormularioForm(request.POST, request.FILES)
         print(form.is_valid())
@@ -44,10 +49,15 @@ def cadastrarFormulario(request):
             planejamento = form.cleaned_data['planejamento']
             abrangencia = form.cleaned_data['abrangencia']
             resultado = form.cleaned_data['resultado']
-            
+            arquivozip = request.FILES['arquivozip']
+            conclusao = form.cleaned_data['conclusao']
+            usuarioLogado = Usuario.objects.filter(user=request.user.pk)[0]
+
             dataRealizacao = form.cleaned_data['dataRealizacao']
-            zip_formulario = request.FILES('documentos')
-            relatorio = Formulario(resumo = resumo, planejamento = planejamento, abrangencia = abrangencia, resultado = resultado, dataRealizacao = dataRealizacao, zip_formulario = documentos)
+            relatorio = Formulario(resumo = resumo, planejamento = planejamento,
+                                   abrangencia = abrangencia, resultado = resultado,
+                                   dataRealizacao = dataRealizacao, dataEnvio=datetime.date.today(),
+                                   territorio="Brasil",capituloUser=usuarioLogado, conclusao=conclusao,arquivozip=arquivozip)
             relatorio.save()
 
     form = FormularioForm()
