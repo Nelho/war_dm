@@ -30,10 +30,10 @@ def cadastro_avaliador(request):
 				form_foto = ""
 			#form_foto.name = form_login + form_foto.name[form_foto.name.find("."):]
 
-			new_user = User.objects.create_user(form_login, password=form_senha, 
+			new_user = User.objects.create_user(form_login, password=form_senha,
 				first_name=form_nome, last_name=form_sobrenome, email=form_email)
 			new_user.save()
-			new_usuario = Usuario(user=new_user, 
+			new_usuario = Usuario(user=new_user,
 				regiao=form_regiao,
 				tipoUsuario=TIPO_USUARIO,
 				foto=form_foto)
@@ -57,38 +57,40 @@ def profile_edit(request):
 		if form.is_valid():
 			user = User.objects.get(pk=request.user.id)
 			usuario = Usuario.objects.get(user_id=request.user.id)
-			contato = Contato.objects.get(usuario_id=usuario.id)
 
 			form_nome = form.cleaned_data["nome"]
 			form_sobrenome = form.cleaned_data["sobrenome"]
 			form_email = form.cleaned_data["email"]
 			form_telefone = form.cleaned_data["telefone"]
+			form_regiao = form.cleaned_data["regiao"]
 			try:
 				form_foto = request.FILES["foto"]
 			except MultiValueDictKeyError:
 				form_foto = usuario.foto
-			
+
 			user.first_name = form_nome
 			user.last_name = form_sobrenome
 			user.email = form_email
 
 			usuario.foto = form_foto
+			usuario.regiao = form_regiao
 
-			contato.contato = form_telefone
+
+			##contato.contato = form_telefone
 
 			user.save()
 			usuario.save()
-			contato.save()
+			##contato.save()
 			return HttpResponseRedirect('/avaliador/profile')
 	elif request.method == "GET":
 		usuario = Usuario.objects.get(user_id=request.user.id)
 		user = User.objects.get(pk=request.user.id)
-		form_initial = {"nome": user.first_name, 
+		form_initial = {"nome": user.first_name,
 			"sobrenome":user.last_name,
-			"email": user.email}
+			"email": user.email, "regiao": usuario.regiao}
 		try:
 			contato = Contato.objects.get(usuario_id=request.user.id)
-			form_context["contato"] = contato.contato
+			form_initial["contato"] = contato.contato
 		except:
 			print("Contato não cadastrado para usuário")
 

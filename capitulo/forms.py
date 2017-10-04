@@ -18,10 +18,10 @@ class CapituloUserForm(forms.Form):
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Nome do capítulo"}))
 
     password = forms.CharField(label="password", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"password", "placeholder" : "Senha"}))
+        attrs={"class":"w3-input w3-border", "id":"senha", "type":"password", "placeholder" : "Senha"}))
 
     passwordConfirm = forms.CharField(label="password", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"password", "placeholder" : "Confimar senha"}))
+        attrs={"class":"w3-input w3-border","id":"conf_senha", "type":"password", "placeholder" : "Confimar senha"}))
 
     mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
@@ -32,13 +32,13 @@ class CapituloUserForm(forms.Form):
     regiao.widget.attrs["style"] = "width:65%"
 
     numero = forms.IntegerField(label="telefone" ,widget=forms.TextInput(
-        attrs={"maxlength": "4", "id": "numero", "class":"w3-input w3-border",
+        attrs={"maxlength":4, "id": "numero", "class":"w3-input w3-border",
                "type":"number", "placeholder" : "Número do Capítulo", "onkeyup":"funcCriarLogin()"}))
 
     email = forms.CharField(label="emailCap", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "E-mail"}))
+        attrs={"class":"w3-input w3-border", "type":"email", "placeholder" : "E-mail"}))
 
-    telefone = forms.IntegerField(label="telefone", widget=forms.TextInput(
+    telefone = forms.CharField(label="telefone", widget=forms.TextInput(
         attrs={
 		"id":"telefone","class": "w3-input w3-border","placeholder": "Número de whatsapp"}))
 

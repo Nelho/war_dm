@@ -9,14 +9,13 @@ def cadastrarCapitulo(request):
 
     if(request.method == 'POST'):
         form = CapituloUserForm(request.POST)
-        cont = {"form" : form}
-        return render(request, 'capitulo/cadastroCapitulo.html', context=cont)
         print(form.is_valid())
+        print(form.errors)
         if form.is_valid():
             nomeCap = form.cleaned_data['nomeCap']
             password = form.cleaned_data['password']
             numero = form.cleaned_data['numero']
-            user = User(username='Cap_'+str(numero), first_name=nomeCap , password=password,
+            user = User(username='cap_'+str(numero), first_name=nomeCap , password=password,
                         email='capitulo_'+str(numero)+'@demolaypb.com.br')
             user.save()
 
@@ -27,7 +26,9 @@ def cadastrarCapitulo(request):
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
 
-            avaliador = Usuario.objects.filter(user=User.objects.get(username='sergio.ewerton'))
+            avaliador = Usuario.objects.filter(user=User.objects.get(username='44416'))[0]
+            ##user = User.objects.get(pk=6)
+            ##avaliador = Usuario.objects.get(user_id=user.id)
             dataFundacao = form.cleaned_data['dataFundacao']
             dataInstacao = form.cleaned_data['dataInstalacao']
             mestreConsenheiro = form.cleaned_data['mestreCosenheiro']
@@ -51,7 +52,9 @@ def cadastrarFormulario(request):
             resultado = form.cleaned_data['resultado']
             arquivozip = request.FILES['arquivozip']
             conclusao = form.cleaned_data['conclusao']
-            usuarioLogado = Usuario.objects.filter(user=request.user.pk)[0]
+            ##usuarioLogado = Usuario.objects.filter(user=request.user.pk)[0]
+            user = User.objects.get(pk=request.user.pk)
+            usuarioLogado = Usuario.objects.get(user_id=user.id)
 
             dataRealizacao = form.cleaned_data['dataRealizacao']
             relatorio = Formulario(resumo = resumo, planejamento = planejamento,
