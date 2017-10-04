@@ -1,0 +1,114 @@
+{% extends 'base_avaliador.html' %}
+{% load widget_tweaks %}
+{% load staticfiles%}
+
+{% block assets%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static "js/jquery.mask.js" %}"></script>
+<link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script>
+  $(document).ready(function() {
+    $("#telefone").mask("(83) 0.000-00000");
+  });
+
+</script>
+
+{% endblock %}
+
+{% block conteudo%} 
+  <div class="w3-container">
+
+  <div class="w3-container">  
+    <div class="w3-card-4 w3-gray-ligth">
+      <div class="w3-container w3-red">
+        <h2>Editar Informações Básicas</h2>
+      </div>
+      <div class="w3-row">
+
+
+        <div class="w3-col m1 w3-center w3-gray-ligth"><button class="w3-gray-ligth w3-button w3-show"> </button>
+        </div>
+
+        <div class="w3-col m10">
+          <form action="{% url 'profile_edit' %}" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+
+                  <div class="w3-row-padding">
+                    <div class="w3-half">
+                      <div class="w3-row w3-section">
+                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+                          <div class="w3-rest">
+                            {{form.nome|add_class:"w3-input w3-border"|attr:"placeholder:Nome avaliador"|attr:"id:nome"}}
+                          </div>
+                      </div>
+                      
+                    </div>
+
+                    <div class="w3-half">
+                      <div class="w3-row w3-section">
+                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
+                          <div class="w3-rest">
+                            {{form.sobrenome|add_class:"w3-input w3-border"|attr:"placeholder:Sobrenome avaliador"}}
+                          </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  <div class="w3-row-padding">
+                    <div class="w3-half">
+                      <div class="w3-row w3-section">
+                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+                          <div class="w3-rest">
+                            {{form.email|add_class:"w3-input w3-border"|attr:"placeholder:E-mail"}}
+                          </div>
+                      </div>
+                      
+                    </div>
+
+                    <div class="w3-half">
+                      <div class="w3-row w3-section">
+                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-whatsapp"></i></div>
+                          <div class="w3-rest">
+                            {{form.telefone|add_class:"w3-input w3-border"|attr:"id:telefone"|attr:"placeholder:Número whatsapp"}}
+                          </div>
+                      </div>
+                      
+                    </div>
+                  </div>  
+                  <div class="w3-row-padding">
+                    <div class="w3-half">
+                      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-map-marker"></i></div>
+                      {{form.regiao|add_class:"w3-select w3-border btn-clone w3-red"|attr:"name:option"}}
+                    </div>
+
+                    <div class="w3-half">
+                      <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-camera"></i></div>
+                      <label for="foto" class="w3-btn w3-red w3-hover-red">Escolher foto <i aria-hidden="true"></i></label>
+                      {{form.foto|attr:"id:foto"|attr:"style:display:none"|attr:"accept:image/x-png,image/jpeg"}}
+                    </div>
+                  </div>
+                  <hr class="w3-gray w3-border">
+              <div class="w3-container w3-gray-ligth w3-center">
+                    
+                  <button type="submit" style="margin-bottom:22px" class="w3-btn  w3-red">Atualizar <i class="fa fa-arrow-right"></i></button>
+            
+            
+              </div>
+          
+
+                </form>
+        </div>
+
+        <div class="w3-col m1 w3-center w3-white"></div>
+      </div>
+      
+      </div>
+    
+    </div>
+    
+  </div>
+
+{% endblock conteudo%}

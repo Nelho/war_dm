@@ -46,10 +46,10 @@ class CapituloUserForm(forms.Form):
         attrs={"type": "date"}))
     dataInstalacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(attrs={"type": "date"}))
 
-    #avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
-    #avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
-    #avaliador.widget.attrs["id"]="regiaoId"
-    #avaliador.widget.attrs["style"] = "width:15%"
+    ##avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
+    ##avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
+    ##avaliador.widget.attrs["id"]="regiaoId"
+    ##avaliador.widget.attrs["style"] = "width:15%"
 
 class FormularioForm(forms.Form):
     resumo = forms.CharField(label="resumo", widget=forms.Textarea())

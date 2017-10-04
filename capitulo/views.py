@@ -6,8 +6,11 @@ from capitulo.models import UsuarioCapitulo, Formulario
 
 
 def cadastrarCapitulo(request):
+
     if(request.method == 'POST'):
         form = CapituloUserForm(request.POST)
+        cont = {"form" : form}
+        return render(request, 'capitulo/cadastroCapitulo.html', context=cont)
         print(form.is_valid())
         if form.is_valid():
             nomeCap = form.cleaned_data['nomeCap']
@@ -24,7 +27,7 @@ def cadastrarCapitulo(request):
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
 
-            avaliador = form.cleaned_data['avaliador']
+            avaliador = Usuario.objects.filter(user=User.objects.get(username='sergio.ewerton'))
             dataFundacao = form.cleaned_data['dataFundacao']
             dataInstacao = form.cleaned_data['dataInstalacao']
             mestreConsenheiro = form.cleaned_data['mestreCosenheiro']

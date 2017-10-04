@@ -23,7 +23,7 @@
 					<img id="avatar" src="{% static "imagens/avatar-demolay.png" %}" class="img-circle" alt="Avatar DeMolay">
 
 				  	<div class="w3-container w3-center">
-				    	<form action="{% url 'login' %}" method="POST">
+				    	<form action="{% url 'main:login' %}" method="POST">
 				    		{%csrf_token%}
 				    		<div class="form-group">
 				    			{{form.login}}

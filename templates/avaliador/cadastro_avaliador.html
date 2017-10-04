@@ -10,21 +10,28 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script>
   $(document).ready(function() {
-    $("#telefone").mask("(00) 0.000-00000");
+    $("#telefone").mask("(83) 0.000-00000");
   });
 
 </script>
 
 {% endblock %}
 
-{% block conteudo%}
-	
-	<div class="w3-container">	  
+{% block conteudo%}	
+	<div class="w3-container">	
+		{% if cadastro == True %}  
+		<div id="cadastro-sucesso" class="w3-animate-zoom">
+		  	<div class="w3-panel w3-green w3-card-4" style="margin-top:-10px">
+		  		<p>Usuário cadastrado com sucesso! </p>
+		  	</div>
+		</div>
+		{% endif%}
 	  <div class="w3-card-4 w3-gray-ligth">
 	    <div class="w3-container w3-red">
 	      <h2>Cadastro Avaliador</h2>
 	    </div>
 			<div class="w3-row">
+
 
 			  <div class="w3-col m1 w3-center w3-gray-ligth"><button class="w3-gray-ligth w3-button w3-show"> </button>
 			  </div>
@@ -114,7 +121,10 @@
 			  			<div class="w3-container w3-gray-ligth w3-center">
 			  						
 			  		     	<button type="submit" style="margin-bottom:22px" class="w3-btn  w3-red">Registrar <i class="fa fa-arrow-right"></i></button>
+							
+							
 			  			</div>
+						
 
 			  		    </form>
 			  </div>
@@ -134,6 +144,17 @@
 	  	};
 	  	id.onkeyup = func;
 	  	nome.onkeyup = func;
+
+	  	window.onload = function(){
+	  		var segundos = 2;
+	  		setTimeout(function(){
+	  			//var elemento = document.getElementById("cadastro-sucesso");
+	  			//elemento.style.display = "none";
+	  			//$("#cadastro-sucesso").hide(1000);
+	  			$("#cadastro-sucesso").fadeOut("slow")
+	  				
+	  		}, 1000 * segundos)
+	  	};
 	  </script>
 	</div>
 

@@ -13,9 +13,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="{% static "js/jquery.mask.js" %}"></script>
     <script>
-    $(document).ready(function() {
-    $("#telefone").mask("(00) 0.000-00000");
-    });
+        $(document).ready(function () {
+            $("#telefone").mask("(00) 0.000-00000");
+        });
     </script>
 
     <link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
@@ -30,93 +30,75 @@
                 <div class="w3-container w3-red">
                     <h2>Cadastro Capítulo</h2>
                 </div>
-                <div class="w3-row">
+                <div class="w3-col m10">
+                    <form action="{% url 'cadastroCapitulo' %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
 
-                    <div class="w3-col m1 w3-center w3-gray-ligth">
-                        <button class="w3-gray-ligth w3-button w3-show"></button>
-                    </div>
-
-                    <div class="w3-col m10">
-                        <form action="{% url 'cadastro_avaliador' %}" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-
-                            <div class="w3-row-padding">
-                                <div class="w3-half w3-col m8">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i
-                                                class="w3-xxlarge fa fa-address-card-o"></i></div>
-                                        <div class="w3-rest">
-                                            {{ form.nomeCap }}
-                                        </div>
+                        <div class="w3-row-padding">
+                            <div class="w3-half w3-col m8">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i
+                                            class="w3-xxlarge fa fa-address-card-o"></i></div>
+                                    <div class="w3-rest">
+                                        {{ form.nomeCap }}
                                     </div>
-
                                 </div>
 
-                                <div class="w3-half w3-col m4">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i
-                                                class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
-                                        <div class="w3-rest">
-                                            {{ form.numero }}
-                                        </div>
-                                    </div>
-
-
-                                </div>
                             </div>
 
-                            <div class="w3-row-padding">
-                                <div class="w3-half w3-col m8">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i>
-                                        </div>
-                                        <div class="w3-rest">
-                                            {{ form.mestreCosenheiro }}
-                                        </div>
+                            <div class="w3-half w3-col m4">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i
+                                            class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
+                                    <div class="w3-rest">
+                                        {{ form.numero }}
                                     </div>
-
                                 </div>
 
-                                <div class="w3-half w3-col m4">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i>
-                                        </div>
-                                        <div class="w3-rest">
-                                            <input class="w3-input w3-border" id="loginId" disabled name="login"
-                                                   type="text"
-                                                   placeholder="Login"
-                                                   onkeyup="funcCriarLogin()">
-                                        </div>
-                                    </div>
 
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-half w3-col m8">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.mestreCosenheiro }}
+                                    </div>
                                 </div>
+
                             </div>
 
-                            <div class="w3-row-padding">
-                                <div class="w3-half w3-col m6">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i>
-                                        </div>
-                                        <div class="w3-rest">
-                                            {{ form.password }}
-                                        </div>
+                            <div class="w3-half w3-col m4">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <input class="w3-input w3-border" id="loginId" disabled name="login"
+                                               type="text"
+                                               placeholder="Login"
+                                               onkeyup="funcCriarLogin()">
                                     </div>
                                 </div>
 
-                                <div class="w3-half w3-col m6">
-                                    <div class="w3-row w3-section">
-                                        <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i>
-                                        </div>
-                                        <div class="w3-rest">
-                                            {{ form.passwordConfirm }}
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
+                        </div>
 
-                    </div>
                 </div>
                 <div class="w3-row-padding">
+
+
+                    <div class="w3-half w3-col m6">
+                        <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+                            <div class="w3-rest">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="w3-half w3-col m6">
                         <div class="w3-row w3-section">
                             <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-whatsapp"></i></div>
@@ -126,15 +108,27 @@
                         </div>
 
                     </div>
+                </div>
+
+                <div class="w3-row-padding">
+                    <div class="w3-half w3-col m6">
+                        <div class="w3-row w3-section">
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i>
+                            </div>
+                            <div class="w3-rest">
+                                {{ form.password }}
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="w3-half w3-col m6">
                         <div class="w3-row w3-section">
-                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o"></i></div>
+                            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i>
+                            </div>
                             <div class="w3-rest">
-                                {{ form.email }}
+                                {{ form.passwordConfirm }}
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -177,130 +171,11 @@
 
                 </form>
             </div>
-
-            <div class="w3-col m1 w3-center w3-white"></div>
         </div>
 
     </div>
 
     </div>
-    </div>
-    <!--
-    <form action="{% url 'cadastroCapitulo' %}" method="POST"
-          class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
-        <div class="w3-container w3-red">
-            <h2>Cadastro Capítulo</h2>
-        </div>
-        {% csrf_token %}
 
-        <div class="w3-row">
-            <div class="w3-col s8 w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-address-card-o"></i></div>
-                    <div class="w3-rest">
-                        {{ form.nomeCap }}
-                    </div>
-                </div>
-            </div>
-            <div class="w3-col s4  w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-sort-numeric-asc"></i></div>
-                    <div class="w3-rest">
-                        {{ form.numero }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w3-row">
-            <div class="w3-col s8 w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user-o"></i></div>
-                    <div class="w3-rest">
-                        {{ form.mestreCosenheiro }}
-                    </div>
-                </div>
-            </div>
-            <div class="w3-col s4  w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
-                    <div class="w3-rest">
-                        <input class="w3-input w3-border" id="loginId" disabled name="login" type="text"
-                               placeholder="Login"
-                               onkeyup="funcCriarLogin()">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w3-row">
-            <div class="w3-col s6 w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
-                    <div class="w3-rest">
-                        {{ form.password }}
-                    </div>
-                </div>
-            </div>
-            <div class="w3-col s6  w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
-                    <div class="w3-rest">
-                        {{ form.passwordConfirm }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="w3-row">
-            <div class="w3-col s6 w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-whatsapp"></i></div>
-                    <div class="w3-rest">
-                        {{ form.telefone }}
-                    </div>
-                </div>
-            </div>
-            <div class="w3-col s6  w3-center">
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-envelope-o""></i></div>
-                    <div class="w3-rest">
-                        {{ form.email }}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="w3-row w3-center">
-            <div class="w3-col s4 w3- w3-center"><p></p>
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
-                    <div class="w3-rest">
-                        {{ form.dataInstalacao }} <h6>Data de Instalação</h6>
-                    </div>
-                </div>
-            </div>
-
-            <div class="w3-col s4 w3-dark- w3-center"><p></p>
-                <div class="w3-row w3-section">
-                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
-                    <div class="w3-rest">
-                        {{ form.dataFundacao }} <h6> Data de Fundação</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="w3-col s4 w3- w3-center"><p></p>
-                {{ form.regiao }}
-            </div>
-        </div>
-
-        <div class="w3-row">
-            <div class="w3-col s12 w3-center">
-                <button type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large"
-                        style="padding-left: 50px; padding-right: 50px; margin-bottom: 10px;">Send
-                </button>
-            </div>
-        </div>
-    -->
 
 {% endblock %}

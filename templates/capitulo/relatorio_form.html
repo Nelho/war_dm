@@ -2,23 +2,7 @@
 {% load widget_tweaks %}
 
 {% block assets %}
-<script>
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth()+1; //January is 0!
-var yyyy = today.getFullYear();
 
-if(dd<10) {
-    dd = '0'+dd
-}
-
-if(mm<10) {
-    mm = '0'+mm
-}
-
-today = yyyy + '-' + mm + '-' + dd;
-//alert(today)
-</script>
 {% endblock %}
 
 {% block conteudo %}
@@ -27,7 +11,7 @@ today = yyyy + '-' + mm + '-' + dd;
     <form action="{% url 'cadastroFormulario' %}" method="POST" enctype="multipart/form-data"
           class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
         <div class="w3-container w3-red">
-            <h2>Cadastro Capítulo</h2>
+            <h2>Cadastro de Formulário</h2>
         </div>
         {% csrf_token %}
 
@@ -72,8 +56,8 @@ today = yyyy + '-' + mm + '-' + dd;
         <div class="w3-col s4 w3- w3-center"><p></p>
             <div class="w3-row w3-section">
                 <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-calendar"></i></div>
-                <div class="w3-rest">Data da realização
-                    {{ form.dataRealizacao| add_class:"w3-input w3-border" }}
+                <div class="w3-rest">
+                    {{ form.dataRealizacao| add_class:"w3-input w3-border" }}<b>Data da realização</b>
                 </div>
             </div>
         </div>
@@ -82,7 +66,7 @@ today = yyyy + '-' + mm + '-' + dd;
             <div class="w3-row w3-section">
                 <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa a fa-picture-o"></i></div>
                 <div class="w3-rest">
-                    {{ form.arquivozip  | add_class:"w3-input w3-border"}}
+                    {{ form.arquivozip  | add_class:"w3-input w3-border" | attr:"required"}}<b>Anexar zip com fotos</b>
                 </div>
             </div>
         </div>
@@ -90,8 +74,8 @@ today = yyyy + '-' + mm + '-' + dd;
 
         <div class="w3-row">
             <div class="w3-col s12 w3-center">
-                <button type="submit" class="w3-button w3-white w3-border w3-border-green w3-round-large"
-                        style="padding-left: 50px; padding-right: 50px; margin-bottom: 10px;">Send
+                <button type="submit" class="w3-button w3-red w3-border w3-border-red w3-round-large"
+                        style="padding-left: 50px; padding-right: 50px; margin-bottom: 10px;">Registrar
                 </button>
             </div>
         </div>
