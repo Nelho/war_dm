@@ -1,5 +1,5 @@
 from django import forms
-from main.models import Usuario
+from avaliador.models import Gabinete_User
 
 class LoginForm(forms.Form):
 	login = forms.CharField(label="login", max_length=50, 

@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from main.forms import LoginForm
-from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_authenticate
 from django.contrib.auth import logout as logout_request
 from django.http import HttpResponseRedirect
-from main.models import Usuario
+from avaliador.models import Gabinete_User
+from capitulo.models import Capitulo_User
+
+LIST_MODELS_AUTH = [[Gabinete_User, "/avaliador/profile/"],
+					[Capitulo_User, "/"]]
 
 # Create your views here.
 def login(request):
@@ -19,9 +22,15 @@ def login(request):
 
 			if(user is not None):
 				login_authenticate(request, user)
-				usuario = Usuario.objects.get(user_id=request.user.id)
-				if usuario.tipoUsuario == "AVA":
-					return HttpResponseRedirect("/avaliador/profile")
+				for models in LIST_MODELS_AUTH:
+					try:
+						models[0].objects.get(user_id=request.user.id)
+						return HttpResponseRedirect(models[1])
+					except:
+						print("Nao deu redirect")
+				#usuario = Gabinete_User.objects.get(user_id=request.user.id)
+				#if usuario.tipoUsuario == "AVA":
+				#	return HttpResponseRedirect("/avaliador/profile")
 					#return HttpResponse(user)
 			else:
 				context = {"error": True, 

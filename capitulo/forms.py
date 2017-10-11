@@ -1,8 +1,5 @@
 import datetime
 from django import forms
-from main.models import Usuario
-from capitulo.models import UsuarioCapitulo
-
 
 class CapituloUserForm(forms.Form):
     REGIONS_CHOICES = (
@@ -17,11 +14,12 @@ class CapituloUserForm(forms.Form):
     nomeCap = forms.CharField(label="username", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Nome do capítulo"}))
 
+    numero = forms.IntegerField(label="telefone" ,widget=forms.TextInput(
+        attrs={"maxlength":4, "id": "numero", "class":"w3-input w3-border",
+               "type":"number", "placeholder" : "Número do Capítulo", "onkeyup":"funcCriarLogin()"}))
+
     password = forms.CharField(label="password", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "id":"senha", "type":"password", "placeholder" : "Senha"}))
-
-    passwordConfirm = forms.CharField(label="password", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border","id":"conf_senha", "type":"password", "placeholder" : "Confimar senha"}))
 
     mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
@@ -31,13 +29,6 @@ class CapituloUserForm(forms.Form):
     regiao.widget.attrs["id"]="regiaoId"
     regiao.widget.attrs["style"] = "width:65%"
 
-    numero = forms.IntegerField(label="telefone" ,widget=forms.TextInput(
-        attrs={"maxlength":4, "id": "numero", "class":"w3-input w3-border",
-               "type":"number", "placeholder" : "Número do Capítulo", "onkeyup":"funcCriarLogin()"}))
-
-    email = forms.CharField(label="emailCap", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "type":"email", "placeholder" : "E-mail"}))
-
     telefone = forms.CharField(label="telefone", widget=forms.TextInput(
         attrs={
 		"id":"telefone","class": "w3-input w3-border","placeholder": "Número de whatsapp"}))
@@ -46,10 +37,7 @@ class CapituloUserForm(forms.Form):
         attrs={"type": "date"}))
     dataInstalacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(attrs={"type": "date"}))
 
-    ##avaliador = forms.ModelChoiceField(queryset = Usuario.objects.filter(tipoUsuario="AVA"))
-    ##avaliador.widget.attrs["class"] = "w3-select w3-btn w3-ripple w3-red"
-    ##avaliador.widget.attrs["id"]="regiaoId"
-    ##avaliador.widget.attrs["style"] = "width:15%"
+    foto = forms.ImageField()
 
 class FormularioForm(forms.Form):
     resumo = forms.CharField(label="resumo", widget=forms.Textarea())

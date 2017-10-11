@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from main.models import Usuario
 from django.forms import ModelForm
 
 REGIONS_CHOICES = (
@@ -22,6 +21,7 @@ class AvaliadorForm(forms.Form):
 	email = forms.CharField(widget=forms.EmailInput())
 	telefone = forms.CharField(label="telefone", max_length=20, widget=forms.TextInput(), required=False)
 	regiao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
+	regiao_correcao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
 	foto = forms.ImageField(label="Foto", required=False)
 
 class AvaliadorEditForm(forms.Form):
