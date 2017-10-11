@@ -14,25 +14,23 @@ def cadastrarCapitulo(request):
         print(form.errors)
         if form.is_valid():
             nomeCap = form.cleaned_data['nomeCap']
-            password = form.cleaned_data['password']
             numero = form.cleaned_data['numero']
-            user = User(username='cap_'+str(numero), first_name=nomeCap , password=password,
+            login = 'cap_'+str(numero)
+            senha = 'cap_'+str(numero)
+            user = User(username=login, first_name=nomeCap , password=senha,
                         email='capitulo_'+str(numero)+'@demolaypb.com.br')
             user.save()
 
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
 
-            gabinete_user = Gabinete_User.objects.filter(user=User.objects.get(username='44416'))[0]
-            ##user = User.objects.get(pk=6)
-            ##avaliador = Usuario.objects.get(user_id=user.id)
             foto = request.FILES['foto']
             regiao = form.cleaned_data['regiao']
             dataFundacao = form.cleaned_data['dataFundacao']
             dataInstacao = form.cleaned_data['dataInstalacao']
             mestreConsenheiro = form.cleaned_data['mestreCosenheiro']
-            capitulo_user = Capitulo_User(numero=numero, dataFundacao=dataFundacao, dataInstalacao=dataInstacao,
-                                         mestreConselheiro=mestreConsenheiro, regiao=regiao, foto=foto)
+            capitulo_user = Capitulo_User(numero=numero,data_fundacao=dataFundacao,data_instalacao=dataInstacao,
+                                          mestre_conselheiro=mestreConsenheiro, regiao=regiao, foto=foto, user=user)
             capitulo_user.save()
         return HttpResponseRedirect('/capitulo/cadastro/')
     form = CapituloUserForm()

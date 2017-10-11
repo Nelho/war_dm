@@ -18,9 +18,6 @@ class CapituloUserForm(forms.Form):
         attrs={"maxlength":4, "id": "numero", "class":"w3-input w3-border",
                "type":"number", "placeholder" : "Número do Capítulo", "onkeyup":"funcCriarLogin()"}))
 
-    password = forms.CharField(label="password", widget=forms.TextInput(
-        attrs={"class":"w3-input w3-border", "id":"senha", "type":"password", "placeholder" : "Senha"}))
-
     mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
         attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
 
@@ -37,7 +34,7 @@ class CapituloUserForm(forms.Form):
         attrs={"type": "date"}))
     dataInstalacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(attrs={"type": "date"}))
 
-    foto = forms.ImageField()
+    foto = forms.ImageField(label='foto', required=False)
 
 class FormularioForm(forms.Form):
     resumo = forms.CharField(label="resumo", widget=forms.Textarea())
