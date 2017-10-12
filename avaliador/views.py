@@ -13,15 +13,19 @@ def cadastro_avaliador(request):
     cadastro = False
     if request.method == "POST":
         form = AvaliadorForm(request.POST, request.FILES)
-        if form.is_valid():
+        if form.is_valid():            
+            form_regiao = form.cleaned_data["regiao"]
+            form_regiao_correcao = form.cleaned_data["regiao_correcao"]
+            if(form_regiao == 'default' or form_regiao_correcao == 'default'):
+                context = {"form": form, "cadastro": cadastro, "regiao_error": True}
+                return render(request, "avaliador/cadastro_avaliador.html", context=context)
+
             form_nome = form.cleaned_data["nome"]
             form_sobrenome = form.cleaned_data["sobrenome"]
             form_login = form.cleaned_data["login"]
             form_senha = form_login + "_" + form_nome
-            form_regiao = form.cleaned_data["regiao"]
             form_email = form.cleaned_data["email"]
             form_telefone = form.cleaned_data["telefone"]
-            form_regiao_correcao = form.cleaned_data["regiao_correcao"]
             TIPO_USUARIO = "AV"
 
             try:
@@ -37,12 +41,10 @@ def cadastro_avaliador(request):
                                 foto=form_foto,
                                 tipo_usuario=TIPO_USUARIO)
             new_usuario.save()
-            new_contato = Contato(usuario=new_user, contato=form_telefone)
-            new_contato.save()
-
-            # return HttpResponseRedirect('/avaliador/cadastro')
+            if len(form_telefone) != 0:
+                new_contato = Contato(usuario=new_user, contato=form_telefone)
+                new_contato.save()
             cadastro = True
-
 
     form = AvaliadorForm()
     context = {"form": form, "cadastro": cadastro }
@@ -63,12 +65,20 @@ def profile_edit(request):
             form_nome = form.cleaned_data["nome"]
             form_sobrenome = form.cleaned_data["sobrenome"]
             form_email = form.cleaned_data["email"]
-            form_telefone = form.cleaned_data["telefone"]
             form_regiao = form.cleaned_data["regiao"]
+            form_telefone = form.cleaned_data["telefone"]
             try:
                 form_foto = request.FILES["foto"]
             except MultiValueDictKeyError:
                 form_foto = usuario.foto
+
+            try:
+                contato = Contato.objects.get(usuario_id=request.user.id)
+                contato.contato = form_telefone
+                contato.save()
+            except Contato.DoesNotExist:
+                contato = Contato(usuario=user, contato=form_telefone)
+                contato.save()
 
             user.first_name = form_nome
             user.last_name = form_sobrenome
@@ -77,23 +87,21 @@ def profile_edit(request):
             usuario.foto = form_foto
             usuario.regiao = form_regiao
 
-            ##contato.contato = form_telefone
-
             user.save()
             usuario.save()
-            ##contato.save()
             return HttpResponseRedirect('/avaliador/profile')
     elif request.method == "GET":
         usuario = Gabinete_User.objects.get(user_id=request.user.id)
-        user = User.objects.get(pk=request.user.id)
-        form_initial = {"nome": user.first_name,
-                        "sobrenome": user.last_name,
-                        "email": user.email, "regiao": usuario.regiao}
         try:
-            contato = Contato.objects.get(usuario_id=request.user.id)
-            form_initial["contato"] = contato.contato
-        except:
-            print("Contato não cadastrado para usuário")
+            telefone = Contato.objects.get(usuario_id=request.user.id)
+        except Contato.DoesNotExist:
+            telefone = ""
+            print("usuário sem telefone")
+        form_initial = {"nome": request.user.first_name,
+                        "sobrenome": request.user.last_name,
+                        "email": request.user.email, 
+                        "regiao": usuario.regiao,
+                        "telefone": telefone.contato}
 
         form = AvaliadorEditForm(initial=form_initial)
 

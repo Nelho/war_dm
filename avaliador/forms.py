@@ -13,15 +13,14 @@ REGIONS_CHOICES = (
 	)
 
 class AvaliadorForm(forms.Form):
-	
 	nome = forms.CharField(label="Nome", max_length=50, widget=forms.TextInput())
 	sobrenome = forms.CharField(label="Sobrenome", max_length=50, widget=forms.TextInput(), required=False)
 	login = forms.CharField(label="Identidade DeMolay", max_length=50, widget=forms.NumberInput())
 	senha = forms.CharField(label="senha", max_length=50, widget=forms.TextInput(), required=False)
-	email = forms.CharField(widget=forms.EmailInput())
+	email = forms.CharField(widget=forms.EmailInput(), required=False)
 	telefone = forms.CharField(label="telefone", max_length=20, widget=forms.TextInput(), required=False)
-	regiao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
-	regiao_correcao = forms.ChoiceField(label="região", choices=REGIONS_CHOICES)
+	regiao = forms.ChoiceField(label="região", choices=(("default", "Região do corretor"),) + REGIONS_CHOICES)
+	regiao_correcao = forms.ChoiceField(label="região", choices=(("default", "Região para correção"),) + REGIONS_CHOICES)
 	foto = forms.ImageField(label="Foto", required=False)
 
 class AvaliadorEditForm(forms.Form):

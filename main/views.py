@@ -26,12 +26,12 @@ def login(request):
 					try:
 						models[0].objects.get(user_id=request.user.id)
 						return HttpResponseRedirect(models[1])
-					except:
-						print("Nao deu redirect")
-				#usuario = Gabinete_User.objects.get(user_id=request.user.id)
-				#if usuario.tipoUsuario == "AVA":
-				#	return HttpResponseRedirect("/avaliador/profile")
-					#return HttpResponse(user)
+					except models[0].DoesNotExist:
+						print("Nao deu redirect ")
+				context = {"error": True, 
+				"msg_error": "Nenhum usuário cadastro no sistema!", 
+				"form": form}
+				return render(request, "main/login.html", context=context)
 			else:
 				context = {"error": True, 
 				"msg_error": "Login/senha incorretos!", 
