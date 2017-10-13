@@ -86,7 +86,7 @@ def corrigirFormulario(request, id):
             "pontuacaoBonus" : formulario.pontuacao_bonus,
         }
         form = FormularioForm(initial=formulario_initial)
-        context = {'form' : form}
+        context = {'form' : form, "id_relatorio":id}
         return render(request, 'capitulo/correcao_relatorio.html', context=context)
     else:
         form = FormularioForm(request.POST, request.FILES)
