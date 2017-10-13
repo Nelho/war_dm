@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.contrib.auth.models import User
+from mapa.models import Territorio
 
 
 # Create your models here.
@@ -48,7 +49,7 @@ class Formulario(models.Model):
     data_envio = models.DateField()
     conclusao = models.CharField(max_length=500)
     arquivo_zip = models.FileField(upload_to='arquivozip/')
-    territorio = models.CharField(max_length=30)
+    territorio = models.ForeignKey(Territorio, related_name="territorio", db_column="territorio")
     capitulo = models.ForeignKey(Capitulo_User,related_name="capitulo_user", db_column="usuario_capitulo")
     observacoes = models.CharField(max_length=500, null=True)
     status = models.CharField(max_length=2, choices=STATUS_CHOICES, default = "S4")

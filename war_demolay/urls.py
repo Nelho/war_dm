@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^avaliador/', include("avaliador.urls")),
     url(r'^', include("main.urls", namespace="main")),
     url(r'^capitulo/', include("capitulo.urls")),
+    url(r'^territorio/', include("mapa.urls")),
 ]

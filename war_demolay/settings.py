@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'main',
     'avaliador',
     'capitulo',
+    'mapa',
 ]
 
 MIDDLEWARE = [

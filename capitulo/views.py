@@ -2,7 +2,7 @@ import datetime
 from django.shortcuts import render, HttpResponseRedirect
 from capitulo.forms import CapituloUserForm, FormularioForm
 from main.models import *
-from avaliador.models import Gabinete_User
+from mapa.models import Territorio
 from capitulo.models import *
 
 
@@ -41,11 +41,11 @@ def cadastrarCapitulo(request):
     context = {"form" : form}
     return render(request, 'capitulo/cadastroCapitulo.html', context=context)
 
-def cadastrarFormulario(request):
-    ##print(datetime.date.da)
+def cadastrarFormulario(request, id):
+    cadastro = False
+    territorio = Territorio.objects.get(pk=id)
     if(request.method=="POST"):
         form = FormularioForm(request.POST, request.FILES)
-        print(form.is_valid())
         if form.is_valid():
             resumo = form.cleaned_data['resumo']
             planejamento = form.cleaned_data['planejamento']
@@ -53,7 +53,6 @@ def cadastrarFormulario(request):
             resultado = form.cleaned_data['resultado']
             arquivozip = request.FILES['arquivozip']
             conclusao = form.cleaned_data['conclusao']
-            ##usuarioLogado = Usuario.objects.filter(user=request.user.pk)[0]
             user = User.objects.get(pk=request.user.pk)
             capitulo_logado = Capitulo_User.objects.get(user_id=user.id)
 
@@ -61,11 +60,11 @@ def cadastrarFormulario(request):
             relatorio = Formulario(resumo = resumo, planejamento = planejamento,
                                    abrangencia = abrangencia, resultado = resultado,
                                    data_realizacao=dataRealizacao, data_envio=datetime.date.today(),
-                                   territorio="Brasil",capitulo=capitulo_logado, conclusao=conclusao,arquivo_zip=arquivozip)
+                                   territorio=territorio,capitulo=capitulo_logado, conclusao=conclusao,arquivo_zip=arquivozip)
             relatorio.save()
-
+            cadastro = True
     form = FormularioForm()
-    context = {"form":form}
+    context = {"form":form, "cadastro" : cadastro ,"id_territorio" : id, "nome_territorio" : str.upper(territorio.nome)}
     return render(request, 'capitulo/relatorio_form.html', context= context)
 
 
