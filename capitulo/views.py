@@ -60,8 +60,8 @@ def cadastrarFormulario(request):
             dataRealizacao = form.cleaned_data['dataRealizacao']
             relatorio = Formulario(resumo = resumo, planejamento = planejamento,
                                    abrangencia = abrangencia, resultado = resultado,
-                                   dataRealizacao = dataRealizacao, dataEnvio=datetime.date.today(),
-                                   territorio="Brasil",capitulo=capitulo_logado, conclusao=conclusao,arquivozip=arquivozip)
+                                   data_realizacao=dataRealizacao, data_envio=datetime.date.today(),
+                                   territorio="Brasil",capitulo=capitulo_logado, conclusao=conclusao,arquivo_zip=arquivozip)
             relatorio.save()
 
     form = FormularioForm()
