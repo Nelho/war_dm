@@ -1,0 +1,159 @@
+{% extends 'base_gerente.html' %}
+{% load widget_tweaks %}
+
+{% block assets %}
+
+{% endblock %}
+
+{% block conteudo %}
+
+
+
+    <div class="w3-container">
+
+        <div class="w3-card-4 w3-gray-ligth">
+            <div class="w3-container w3-red">
+                <h2>Cadastro de Formulário</h2>
+            </div>
+            <div class="w3-row">
+                <div class="w3-col m1 w3-center w3-gray-ligth">
+                    <button class="w3-gray-ligth w3-button w3-show"></button>
+                </div>
+                <div class="w3-col m10">
+                    <form action="{% url 'corrigirFormulario' 1 %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i
+                                            class="w3-xxlarge fa fa-file-text-o"></i></div>
+                                    <div class="w3-rest">
+                                        {{ form.resumo|add_class:"w3-input w3-border" |attr:"placeholder:Resumo" | attr:"style: resize:none" | attr:"rows: 3" | attr:"disabled"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.planejamento|add_class:"w3-input w3-border"|attr:"placeholder:Planejamento" | attr:"style: resize:none" | attr:"rows: 3" | attr:"disabled"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-half" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.abrangencia|add_class:"w3-input w3-border"|attr:"placeholder:Abrangencia"| attr:"style: resize:none" | attr:"rows: 3" | attr:"disabled"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.resultado|add_class:"w3-input w3-border"|attr:"placeholder:Resultados" | attr:"style: resize:none" | attr:"rows: 3" | attr:"disabled"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.conclusao|add_class:"w3-input w3-border"|attr:"placeholder:Conclusão"| attr:"style: resize:none" | attr:"rows: 3" | attr:"disabled"}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:50%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.dataRealizacao| add_class:"w3-input w3-border" | attr:"disabled"}}<b>Data da
+                                        realização</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-col" style="width:50%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-picture-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.arquivozip  | add_class:"w3-input w3-border" | attr:"required" | attr:"disabled"}}<b>Anexar
+                                        zip com fotos</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:100%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.observacao|add_class:"w3-input w3-border"|attr:"placeholder:Observação"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:50%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.pontuacaoBonus|add_class:"w3-input w3-border"|attr:"placeholder:Pontuação bônus"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-col" style="width:50%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        {{ form.status|add_class:"w3-input w3-border"|attr:"placeholder:Status"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="w3-gray w3-border">
+
+                        <div class="w3-container w3-gray-ligth w3-center">
+                            <button type="submit" style="margin-bottom:15px"
+                                    class="w3-ripple btn-clone w3-btn w3-red w3-center w3-hover-red">Cadastrar <i
+                                    class="fa fa-arrow-right"></i></button>
+                        </div>
+
+
+                    </form>
+                </div>
+
+                <div class="w3-col m1 w3-center w3-white"></div>
+            </div>
+
+        </div>
+
+{% endblock %}

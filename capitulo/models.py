@@ -40,7 +40,6 @@ class Formulario(models.Model):
         ("S3", "Correção"),
         ("S4", "Enviado"),
     )
-
     resumo = models.CharField(max_length=500)
     planejamento = models.CharField(max_length=500)
     abrangencia = models.CharField(max_length=500)

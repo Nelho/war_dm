@@ -37,11 +37,21 @@ class CapituloUserForm(forms.Form):
     foto = forms.ImageField(label='foto', required=False)
 
 class FormularioForm(forms.Form):
-    resumo = forms.CharField(label="resumo", widget=forms.Textarea())
-    planejamento = forms.CharField(label="planejamento", widget=forms.Textarea())
-    abrangencia = forms.CharField(label="abrangencia", widget=forms.Textarea())
-    resultado = forms.CharField(label="resultado", widget=forms.Textarea())
+    STATUS_CHOICES = (
+        ("S1", "Aprovado"),
+        ("S2", "Negado"),
+        ("S3", "Correção"),
+        ("S4", "Enviado"),
+    )
+    resumo = forms.CharField(label="resumo", widget=forms.Textarea(),required=False)
+    planejamento = forms.CharField(label="planejamento", widget=forms.Textarea(),required=False)
+    abrangencia = forms.CharField(label="abrangencia", widget=forms.Textarea(),required=False)
+    resultado = forms.CharField(label="resultado", widget=forms.Textarea(),required=False)
     dataRealizacao = forms.DateField(initial=datetime.date.today, widget=forms.TextInput(
-        attrs={"type": "date"}))
+        attrs={"type": "date"}),required=False)
     arquivozip = forms.FileField(label="arquivozip", required=False)
-    conclusao = forms.CharField(label="conclusao", widget=forms.Textarea())
+    conclusao = forms.CharField(label="conclusao", widget=forms.Textarea(),required=False)
+    pontuacaoBonus = forms.IntegerField(label="pontuacaoBonus", required=False)
+    observacao = forms.CharField(label="observacao", max_length=256,  widget=forms.Textarea(), required=False)
+    status = forms.ChoiceField(label="status",choices=STATUS_CHOICES, required=False)
+
