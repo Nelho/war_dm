@@ -17,14 +17,18 @@ def cadastrarCapitulo(request):
             numero = form.cleaned_data['numero']
             login = 'cap_'+str(numero)
             senha = 'cap_'+str(numero)
+            print(login)
+            print(senha)
             user = User(username=login, first_name=nomeCap , password=senha,
                         email='capitulo_'+str(numero)+'@demolaypb.com.br')
             user.save()
 
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
-
-            foto = request.FILES['foto']
+            try:
+                foto = request.FILES['foto']
+            except:
+                foto = None
             regiao = form.cleaned_data['regiao']
             dataFundacao = form.cleaned_data['dataFundacao']
             dataInstacao = form.cleaned_data['dataInstalacao']

@@ -26,7 +26,7 @@ class Capitulo_User(models.Model):
     data_instalacao = models.DateField()
     mestre_conselheiro = models.CharField(max_length=128)
     regiao = models.CharField(max_length=2 ,choices=REGIONS_CHOICES, default="R1")
-    foto = models.ImageField(upload_to="fotos/")
+    foto = models.ImageField(upload_to="fotos/", null=True)
     user = models.OneToOneField(User)
 
 class Formulario(models.Model):
