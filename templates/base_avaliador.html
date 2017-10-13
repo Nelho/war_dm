@@ -19,10 +19,11 @@
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
   <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
   <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
-  <a id="link" href="{% url "profile_avaliador" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
+  <a id="link" href="{% url "avaliador_home" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
   <a id="link" href="{% url "profile_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
+  <!--
   <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>
-
+  -->
 </div>
 
 <!--
@@ -50,7 +51,7 @@
       <img id="foto-perfil" src="{% static "imagens/avatar-demolay.png" %}" class="w3-circle w3-margin-right">
     </div>
     <div class="w3-col s8 w3-bar">
-      <span>Bem-vindo, <strong>{{user.first_name}} </strong><a href="#"><i class="fa fa-cog"></i></a></span>
+      <span>Bem-vindo, <strong>{{user.first_name}} </strong><a href="{% url "password_edit" %}"><i class="fa fa-cog"></i></a></span>
       
       <span style="display: block;">MCA - PB</span>
     </div>
@@ -61,11 +62,14 @@
     <h5>Capítulos</h5>
   </div>
   <div class="w3-bar-block">
-    
+    {% block capitulos%}
+    {% endblock%}
+    <!--
     <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Filhos do Imperador <span class="w3-badge w3-green">1</span></a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Defensores do Rio Vermelho <span class="w3-badge w3-red">8</span></a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Deus, pátria e familia <span class="w3-badge w3-orange">5</span></a>
     <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  João Pessoa <span class="w3-badge w3-green">2</span></a>
+    -->
   </div>
 
 </nav>

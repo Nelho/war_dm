@@ -2,6 +2,7 @@ from django.shortcuts import render
 from avaliador.forms import AvaliadorForm, AvaliadorEditForm, AvaliadorEditPasswordForm
 from django.contrib.auth.models import User
 from avaliador.models import Gabinete_User
+from capitulo.models import Capitulo_User, Formulario
 from main.models import Contato
 from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
@@ -50,9 +51,36 @@ def cadastro_avaliador(request):
     context = {"form": form, "cadastro": cadastro }
     return render(request, "avaliador/cadastro_avaliador.html", context=context)
 
+# função criada para reutilização de código. Ela busca os capítulos e
+# quantos relatórios ele possui
+def conf_home(request, corretor, status='S4'):
+    capitulos = Capitulo_User.objects.all()
+    capitulos_corrigir = []
+    for capitulo in capitulos:
+        if capitulo.regiao == corretor.regiao_correcao:
+            aux = [capitulo, Formulario.objects.filter(capitulo=capitulo.numero, status=status).count()]
+            capitulos_corrigir.append(aux)
+        else:
+            aux = [capitulo, 0]
+            capitulos_corrigir.append(aux)
+    return capitulos_corrigir
 
-def profile_avaliador(request):
-    return render(request, "avaliador/avaliador_profile.html")
+def avaliador_home(request):
+    corretor = Gabinete_User.objects.get(id=request.user.id)
+    capitulos_corrigir = conf_home(request, corretor)
+    print(corretor.foto.url)
+    relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor}
+    return render(request, "avaliador/avaliador_home.html", context=context)
+
+def avaliar_cap(request, numero_cap):
+    corretor = Gabinete_User.objects.get(id=request.user.id)
+    capitulo = Capitulo_User.objects.get(numero=numero_cap)
+    capitulos_corrigir = conf_home(request, corretor)
+    relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
+                "abrir": corretor.regiao_correcao == capitulo.regiao}
+    return render(request, "avaliador/avaliador_cap.html", context=context)
 
 
 def profile_edit(request):
@@ -89,13 +117,14 @@ def profile_edit(request):
 
             user.save()
             usuario.save()
-            return HttpResponseRedirect('/avaliador/profile')
+            return HttpResponseRedirect('/avaliador/home')
     elif request.method == "GET":
         usuario = Gabinete_User.objects.get(user_id=request.user.id)
+        capitulos_corrigir = conf_home(request, usuario)
         try:
             telefone = Contato.objects.get(usuario_id=request.user.id)
         except Contato.DoesNotExist:
-            telefone = ""
+            telefone = Contato()
             print("usuário sem telefone")
         form_initial = {"nome": request.user.first_name,
                         "sobrenome": request.user.last_name,
@@ -105,11 +134,13 @@ def profile_edit(request):
 
         form = AvaliadorEditForm(initial=form_initial)
 
-    context = {"form": form}
+    context = {"form": form, "capitulos":capitulos_corrigir}
     return render(request, "avaliador/avaliador_edit_profile.html", context=context)
 
 
 def password_edit(request):
+    usuario = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulos_corrigir = conf_home(request, usuario)
     if request.method == "POST":
         form = AvaliadorEditPasswordForm(request.POST)
         if form.is_valid():
@@ -120,7 +151,7 @@ def password_edit(request):
             if form_nova_senha != form_repetir_senha:
                 senha_validada = False
                 # msg_error = "Senhas diferentes!"
-                context = {"form": form, "error": True, "msg_error": "Senhas diferentes!"}
+                context = {"form": form, "error": True, "msg_error": "Senhas diferentes!", "capitulos":capitulos_corrigir}
                 return render(request, "avaliador/avaliador_edit_password.html", context=context)
             else:
                 user = User.objects.get(pk=request.user.id)
@@ -130,15 +161,15 @@ def password_edit(request):
                     user.save()
                     login(request, user)
                     senha_validada = True
-                    context = {"form": form, "senha_validada": senha_validada, "method": "POST"}
+                    context = {"form": form, "senha_validada": senha_validada, "method": "POST", "capitulos":capitulos_corrigir}
                     return render(request, "avaliador/avaliador_edit_password.html", context=context)
                 else:
                     senha_validada = False
-                    context = {"form": form, "error": True, "msg_error": "Senha atual incorreta!"}
+                    context = {"form": form, "error": True, "msg_error": "Senha atual incorreta!", "capitulos":capitulos_corrigir}
 
                 return render(request, "avaliador/avaliador_edit_password.html", context=context)
     form = AvaliadorEditPasswordForm()
     senha_validada = True
-    context = {"form": form, "senha_validada": senha_validada, "method": "GET"}
+    context = {"form": form, "senha_validada": senha_validada, "method": "GET", "capitulos":capitulos_corrigir}
 
     return render(request, "avaliador/avaliador_edit_password.html", context=context)

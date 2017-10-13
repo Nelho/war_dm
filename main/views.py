@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from avaliador.models import Gabinete_User
 from capitulo.models import Capitulo_User
 
-LIST_MODELS_AUTH = [[Gabinete_User, "/avaliador/profile/"],
+LIST_MODELS_AUTH = [[Gabinete_User, "/avaliador/home/"],
 					[Capitulo_User, "/"]]
 
 # Create your views here.

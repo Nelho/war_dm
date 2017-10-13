@@ -1,0 +1,73 @@
+{% extends 'base_avaliador.html' %}
+{% load widget_tweaks %}
+{% load staticfiles%}
+
+{% block assets%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static "js/jquery.mask.js" %}"></script>
+<link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+{% endblock %}
+
+{% block conteudo%}	
+	<div class="w3-container">	
+	  <div class="w3-card-4 w3-gray-ligth">
+	    <div class="w3-container w3-red">
+	      <h2>Lista de Relatórios</h2>
+	    </div>
+			<div class="w3-row">
+
+			<!--	
+			  <div class="w3-col m1 w3-center w3-gray-ligth"><button class="w3-gray-ligth w3-button w3-show"> </button>
+			  </div>
+			-->
+			 
+			
+			   <table class="w3-table-all w3-hoverable">
+			     <thead>
+			       <tr class="w3-light-gray">
+			         <th>Capítulo</th>
+			         <th>Data Envio</th>
+			         <th>Território</th>
+			         <th>Ação</th>
+			       </tr>
+			     </thead>
+			    {%for relatorio in relatorios%}
+					<tr>
+						<td>{{relatorio.capitulo.user.first_name}}</td>
+						<td>{{relatorio.data_envio}}</td>
+						<td>{{relatorio.territorio}}</td>
+						<td><a href="{% url "corrigirFormulario" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
+					</tr>
+			    {% endfor%}
+			   </table>
+			
+			
+			 <!-- <div class="w3-col m1 w3-center w3-white"></div>-->
+			</div>
+			
+	    </div>
+		
+	  </div>
+	  
+	</div>
+
+{% endblock conteudo%}
+
+{% block capitulos%}
+	{% for capitulo in capitulos%}
+
+		<a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}} 
+		{% if capitulo.1 == 0%}
+
+		{%elif capitulo.1 < 5%}
+			<span class="w3-badge w3-green">{{capitulo.1}}</span>
+		{% elif capitulo.1 < 10%}
+			<span class="w3-badge w3-orange">{{capitulo.1}}</span>
+		{%else %}
+			<span class="w3-badge w3-red">{{capitulo.1}}</span>
+		{%endif%}
+		</a>		
+	{% endfor %}
+{% endblock capitulos%}
