@@ -212,8 +212,10 @@ def mapa(request):
         "BRASIL":{"largura": 1270, "altura": 1930},
         "ARGENTINA":{"largura": 1085, "altura": 2270}
     }
-    import json
-    teste = json.dumps(coordenadas_mapa)
-    territorios = Territorio.objects.all()
-    context = {"territorios": territorios, "coordenadas": coordenadas_mapa, "teste":teste, "brasil" : territorios[0]}
+    territorios_bd = Territorio.objects.all()
+    territorios = []
+    for territorio in territorios_bd:
+        aux = [territorio, coordenadas_mapa[territorio.nome.upper()]]
+        territorios.append(aux)
+    context = {"territorios": territorios}
     return render(request, "avaliador/mapa.html", context=context)
