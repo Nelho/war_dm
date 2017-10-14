@@ -1,0 +1,98 @@
+{% extends 'base_gerente.html' %}
+{% load staticfiles %}
+
+{% block assets %}
+{% endblock %}
+
+{% block conteudo %}
+
+    <div class="w3-container ">
+
+
+        <div class="w3-container w3-red ">
+            <h2>Mapa de Territórios</h2>
+        </div>
+        <div class="w3-row">
+
+            <div>
+                <img style="position: relative" width="100%" height="600px" usemap="#mapaTerritorios"
+                     src="{% static "imagens/WarDM_map.png" %}"
+                     alt="Mapa de Territórios">
+                <map name="mapaTerritorios">
+                    <area shape="rect" coords="0,0,82,126" alt="Sun"
+                          onclick="document.getElementById('id01').style.display='block', escolhendoTerritorio()">
+                </map>
+            </div>
+
+            <div id="id01" class="w3-modal" >
+                <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
+                    <header class="w3-container w3-red">
+                    <span onclick="document.getElementById('id01').style.display='none'"
+                          class="w3-button w3-red w3-xxlarge w3-display-topright">&times;</span>
+                        <h1>Brasil</h1>
+                    </header>
+                        <div class="w3-row-padding">
+                            <div class="w3-col" style="width:42%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-rest">
+                                        <img src="{% static "imagens/brasil.png"%}" alt="brasil">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="w3-col" style="width:58%">
+                                <div class="w3-row w3-section">
+                                    <div class="w3-rest">
+                                    <div class="w3-topbar w3-large"><b>Território: {{ brasil.nome }}</b><br></div>
+                                        <div class="w3-topbar w3-large"><b>Missão: {{ brasil.descricao }}</b><br></div>
+                                        <div class="w3-topbar w3-large"><b>Pontuação: {{ brasil.pontuacao }}</b><br></div>
+                                        <div class="w3-topbar w3-large"><b>Bônus: {{ brasil.bonus_max }}</b><br></div>
+                                        <div class="w3-topbar w3-large"><b>Data abertura: {{ brasil.data_abertura }}</b><br></div>
+                                        <div class="w3-topbar w3-large"><b>Data encerramento: {{ brasil.data_encerramento }}</b><br></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="w3-row-padding">
+
+                    </div>
+                    <div class="w3-container w3-light-grey w3-padding">
+                        <a id="id_cadastrar" class="w3-button w3-red w3-left w3-border w3-large"
+                                href="{% url 'cadastroFormulario' brasil.pk %}">Cadastrar relatório
+                        </a>
+                        <button class="w3-button w3-right w3-white w3-border "
+                                onclick="document.getElementById('id01').style.display='none'">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                        <ul class="w3-ul w3-large">
+                            {% for t in territorios %}
+                                <article>
+                                    <li>
+                                        {{ t.nome }}
+                                        <a class="w3-margin-left w3-button w3-hover-border-red" href="
+                {% url 'cadastroFormulario' t.id %}">Cadastrar relatório</a>
+                                    </li>
+                                </article>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+
+                </div>
+            -->
+    </div>
+
+
+    </div>
+
+{% endblock %}
+

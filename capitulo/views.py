@@ -66,33 +66,3 @@ def cadastrarFormulario(request, id):
     form = FormularioForm()
     context = {"form":form, "cadastro" : cadastro ,"id_territorio" : id, "nome_territorio" : str.upper(territorio.nome)}
     return render(request, 'capitulo/relatorio_form.html', context= context)
-
-
-def corrigirFormulario(request, id):
-    if request.method == "GET":
-        formulario = Formulario.objects.get(pk=id)
-        print(formulario.observacoes)
-        formulario_initial = {
-            "resumo": formulario.resultado,
-            "planejamento" : formulario.planejamento,
-            "abrangencia" : formulario.abrangencia,
-            "resultado" : formulario.resultado,
-            "conclusao" : formulario.conclusao,
-            "dataRealizacao" : formulario.data_realizacao,
-            "arquivozip" : formulario.arquivo_zip,
-            "status" : formulario.status,
-            "observacao" : formulario.observacoes,
-            "pontuacaoBonus" : formulario.pontuacao_bonus,
-        }
-        form = FormularioForm(initial=formulario_initial)
-        context = {'form' : form, "id_relatorio":id}
-        return render(request, 'capitulo/correcao_relatorio.html', context=context)
-    else:
-        form = FormularioForm(request.POST, request.FILES)
-        if form.is_valid():
-            formulario = Formulario.objects.get(pk=id)
-            formulario.pontuacao_bonus = form.cleaned_data['pontuacaoBonus']
-            formulario.observacoes = form.cleaned_data['observacao']
-            formulario.status = form.cleaned_data['status']
-            formulario.save()
-            return HttpResponseRedirect('/capitulo/formulario/')
