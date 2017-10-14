@@ -37,9 +37,9 @@
 					<tr>
 						<td>{{relatorio.capitulo.user.first_name}}</td>
 						<td>{{relatorio.data_envio}}</td>
-						<td>{{relatorio.territorio}}</td>
+						<td>{{relatorio.territorio.nome}}</td>
 						{% if abrir == True %}
-							<td><a href="{% url "corrigirFormulario" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
+							<td><a href="{% url "corrigir_relatorio" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
 						{% else%}
 							<td><button class="w3-btn w3-green" disabled>Abrir</button></td>
 						{% endif %}

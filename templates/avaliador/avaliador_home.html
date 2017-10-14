@@ -37,8 +37,8 @@
 					<tr>
 						<td>{{relatorio.capitulo.user.first_name}}</td>
 						<td>{{relatorio.data_envio}}</td>
-						<td>{{relatorio.territorio}}</td>
-						<td><a href="{% url "corrigirFormulario" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
+						<td>{{relatorio.territorio.nome}}</td>
+						<td><a href="{% url "corrigir_relatorio" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
 					</tr>
 			    {% endfor%}
 			   </table>

@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from avaliador.forms import AvaliadorForm, AvaliadorEditForm, AvaliadorEditPasswordForm
+from capitulo.forms import FormularioForm
 from django.contrib.auth.models import User
 from avaliador.models import Gabinete_User
 from capitulo.models import Capitulo_User, Formulario
@@ -50,38 +51,6 @@ def cadastro_avaliador(request):
     form = AvaliadorForm()
     context = {"form": form, "cadastro": cadastro }
     return render(request, "avaliador/cadastro_avaliador.html", context=context)
-
-# função criada para reutilização de código. Ela busca os capítulos e
-# quantos relatórios ele possui
-def conf_home(request, corretor, status='S4'):
-    capitulos = Capitulo_User.objects.all()
-    capitulos_corrigir = []
-    for capitulo in capitulos:
-        if capitulo.regiao == corretor.regiao_correcao:
-            aux = [capitulo, Formulario.objects.filter(capitulo=capitulo.numero, status=status).count()]
-            capitulos_corrigir.append(aux)
-        else:
-            aux = [capitulo, 0]
-            capitulos_corrigir.append(aux)
-    return capitulos_corrigir
-
-def avaliador_home(request):
-    corretor = Gabinete_User.objects.get(id=request.user.id)
-    capitulos_corrigir = conf_home(request, corretor)
-    print(corretor.foto.url)
-    relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor}
-    return render(request, "avaliador/avaliador_home.html", context=context)
-
-def avaliar_cap(request, numero_cap):
-    corretor = Gabinete_User.objects.get(id=request.user.id)
-    capitulo = Capitulo_User.objects.get(numero=numero_cap)
-    capitulos_corrigir = conf_home(request, corretor)
-    relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
-                "abrir": corretor.regiao_correcao == capitulo.regiao}
-    return render(request, "avaliador/avaliador_cap.html", context=context)
-
 
 def profile_edit(request):
     if request.method == "POST":
@@ -173,3 +142,66 @@ def password_edit(request):
     context = {"form": form, "senha_validada": senha_validada, "method": "GET", "capitulos":capitulos_corrigir}
 
     return render(request, "avaliador/avaliador_edit_password.html", context=context)
+
+# função criada para reutilização de código. Ela busca os capítulos e
+# quantos relatórios ele possui3
+############################################
+def conf_home(request, corretor, status='S4'):
+    capitulos = Capitulo_User.objects.all()
+    capitulos_corrigir = []
+    for capitulo in capitulos:
+        if capitulo.regiao == corretor.regiao_correcao:
+            aux = [capitulo, Formulario.objects.filter(capitulo=capitulo.numero, status=status).count()]
+            capitulos_corrigir.append(aux)
+        else:
+            aux = [capitulo, 0]
+            capitulos_corrigir.append(aux)
+    return capitulos_corrigir
+############################################
+def avaliador_home(request):
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulos_corrigir = conf_home(request, corretor)
+    relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir}
+    return render(request, "avaliador/avaliador_home.html", context=context)
+
+def avaliar_cap(request, numero_cap):
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulo = Capitulo_User.objects.get(numero=numero_cap)
+    capitulos_corrigir = conf_home(request, corretor)
+    relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
+                "abrir": corretor.regiao_correcao == capitulo.regiao}
+    return render(request, "avaliador/avaliador_list_relatorio_cap.html", context=context)
+
+def corrigir_relatorio(request, id):
+    if request.method == "GET":
+        corretor = Gabinete_User.objects.get(user_id=request.user.id)
+        capitulos_corrigir = conf_home(request, corretor)
+
+        formulario = Formulario.objects.get(pk=id)
+        print(formulario.observacoes)
+        formulario_initial = {
+            "resumo": formulario.resultado,
+            "planejamento" : formulario.planejamento,
+            "abrangencia" : formulario.abrangencia,
+            "resultado" : formulario.resultado,
+            "conclusao" : formulario.conclusao,
+            "dataRealizacao" : formulario.data_realizacao,
+            "arquivozip" : formulario.arquivo_zip,
+            "status" : formulario.status,
+            "observacao" : formulario.observacoes,
+            "pontuacaoBonus" : formulario.pontuacao_bonus,
+        }
+        form = FormularioForm(initial=formulario_initial)
+        context = {'form' : form, "id_relatorio":id, "capitulos": capitulos_corrigir}
+        return render(request, 'avaliador/avaliador_correcao_relatorio.html', context=context)
+    else:
+        form = FormularioForm(request.POST, request.FILES)
+        if form.is_valid():
+            formulario = Formulario.objects.get(pk=id)
+            formulario.pontuacao_bonus = form.cleaned_data['pontuacaoBonus']
+            formulario.observacoes = form.cleaned_data['observacao']
+            formulario.status = form.cleaned_data['status']
+            formulario.save()
+            return HttpResponseRedirect('/avaliador/home')
