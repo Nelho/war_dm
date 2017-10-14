@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import login
 
+from mapa.models import Territorio
 
 # Create your views here.
 def cadastro_avaliador(request):
@@ -205,3 +206,14 @@ def corrigir_relatorio(request, id):
             formulario.status = form.cleaned_data['status']
             formulario.save()
             return HttpResponseRedirect('/avaliador/home')
+
+def mapa(request):
+    coordenadas_mapa = {
+        "BRASIL":{"largura": 1270, "altura": 1930},
+        "ARGENTINA":{"largura": 1085, "altura": 2270}
+    }
+    import json
+    teste = json.dumps(coordenadas_mapa)
+    territorios = Territorio.objects.all()
+    context = {"territorios": territorios, "coordenadas": coordenadas_mapa, "teste":teste}
+    return render(request, "avaliador/mapa.html", context=context)
