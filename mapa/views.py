@@ -6,7 +6,7 @@ from mapa.models import Territorio
 def listTerritorios(request):
     territorios = Territorio.objects.all()
     context = {"territorios": territorios}
-    return render(request, "mapa/list_territorios.html", context=context)
+    return render(request, "mapa/war_territorios.html", context=context)
 
 def territorioDetail(request, id):
     territorio = Territorio.objects.get(pk=id)
