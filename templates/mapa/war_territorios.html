@@ -2,7 +2,17 @@
 {% load staticfiles %}
 
 {% block assets %}
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="{% static "css/war_map_conf.css" %}">
+<script src="https://cdn.rawgit.com/stowball/jQuery-rwdImageMaps/master/jquery.rwdImageMaps.min.js"></script>
+<script rel="stylesheet" type="text/css" href="{static}"></script>
+<script>
+    $(document).ready(function(e) {
+    $('img[usemap]').rwdImageMaps();
+});
+</script>
 {% endblock %}
 
 {% block conteudo %}
@@ -17,8 +27,33 @@
                 
                     <div>
                         
-                         <img width="100%" height="600px" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa de Territórios">
+                         <img  id="resol-mapa" src="{% static "imagens/WarDM_map.png" %}" usemap="#war_map" alt="Mapa de Territórios">
+                         <div class="w3-container">
+                           
+                           
+                           <map name="war_map">
+                               <area coords="1185, 1882, 1429, 2062" onclick="document.getElementById('id01').style.display='block'">
+
+                           </map>
+                           <div id="id01" class="w3-modal">
+                             <div class="w3-modal-content">
+                               <header class="w3-container w3-teal"> 
+                                 <span onclick="document.getElementById('id01').style.display='none'" 
+                                 class="w3-button w3-display-topright">&times;</span>
+                                 <h2>Modal Header</h2>
+                               </header>
+                               <div class="w3-container">
+                                 <p>Some text..</p>
+                                 <p>Some text..</p>
+                               </div>
+                               <footer class="w3-container w3-teal">
+                                 <p>Modal Footer</p>
+                               </footer>
+                             </div>
+                           </div>
+                         </div>
                     </div>
+
                    
                     <!--
                     <div class="w3-row-padding">
@@ -35,7 +70,6 @@
                         </ul>
                         </div>
                     </div>
-
                 </div>
             -->
             </div>
