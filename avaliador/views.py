@@ -215,5 +215,5 @@ def mapa(request):
     import json
     teste = json.dumps(coordenadas_mapa)
     territorios = Territorio.objects.all()
-    context = {"territorios": territorios, "coordenadas": coordenadas_mapa, "teste":teste}
+    context = {"territorios": territorios, "coordenadas": coordenadas_mapa, "teste":teste, "brasil" : territorios[0]}
     return render(request, "avaliador/mapa.html", context=context)
