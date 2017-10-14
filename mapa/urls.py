@@ -3,7 +3,7 @@ from mapa.views import *
 
 urlpatterns = [
     url(r'^(?P<id>\d+)/$', territorioDetail, name="territorioDetail"),
-    url(r'^list/$', listTerritorios, name="listTerritorios"),
+    url(r'^territorios/$', listTerritorios, name="listTerritorios"),
 
 
 ]
