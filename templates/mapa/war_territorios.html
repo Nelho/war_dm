@@ -27,31 +27,41 @@
                 
                     <div>
                         
-                         <img  id="resol-mapa" src="{% static "imagens/WarDM_map.png" %}" usemap="#war_map" alt="Mapa de Territórios">
-                         <div class="w3-container">
+                        <img  id="resol-mapa" src="{% static "imagens/WarDM_map.png" %}" usemap="#war_map" alt="Mapa de Territórios">
+                        <div class="w3-container">
                            
                            
                            <map name="war_map">
                                <area coords="1185, 1882, 1429, 2062" onclick="document.getElementById('id01').style.display='block'">
 
-                           </map>
-                           <div id="id01" class="w3-modal">
-                             <div class="w3-modal-content">
-                               <header class="w3-container w3-teal"> 
-                                 <span onclick="document.getElementById('id01').style.display='none'" 
-                                 class="w3-button w3-display-topright">&times;</span>
-                                 <h2>Modal Header</h2>
-                               </header>
-                               <div class="w3-container">
-                                 <p>Some text..</p>
-                                 <p>Some text..</p>
-                               </div>
-                               <footer class="w3-container w3-teal">
-                                 <p>Modal Footer</p>
-                               </footer>
-                             </div>
+                            </map>
+                            <div id="id01" class="w3-modal">
+                                <div class="w3-modal-content w3-animate-zoom">
+                                    <header class="w3-container w3-red"> 
+                                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                       <p id = "titulo_regiao">Brasil</p>
+                                    </header>
+                                    <div class="w3-container">
+                                        <img  id="brasil" src="{% static "imagens/bandeira_brasil.jpg" %}">
+                                        <div id="inform">
+                                            <header class="w3-container w3-red">
+                                                <h1>Header</h1>
+                                            </header>
+
+                                            <div class="w3-container">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="w3-container">
+                                        <button id="enviar_relatorio" class="w3-button w3-red">Enviar relatório</button>
+                                    </div>
+                                    <br>
+                                </div>
                            </div>
-                         </div>
+                        </div>
                     </div>
 
                    
