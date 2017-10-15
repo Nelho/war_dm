@@ -19,7 +19,10 @@
     </style>
 
     <script>
-        function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id) {
+        function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id, foto) {
+            var url = window.location.protocol + "//" + window.location.host;
+            var img = document.getElementById("profile_territorio");
+            img.setAttribute("src", url + foto)
             document.getElementById("titulo_modal_id").innerHTML = nome.toUpperCase()
             var href = document.getElementById("id_cadastrar").getAttribute('href')
             document.getElementById("id_cadastrar").setAttribute("href", href.substr(0,href.length-1) + territorio_id)
@@ -50,11 +53,11 @@
                 <img id="img_mapa" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa" usemap="#mapa_war">
                 {% for territorio in territorios %}
                     <a onclick="document.getElementById('id01').style.display='block',
-                            pegarTerritorio('{{ territorio.0.nome}}','{{ territorio.0.descricao.lower }}','{{ territorio.0.pontuacao }}',
-                            '{{ territorio.0.bonus_max }}','{{ territorio.0.data_abertura }}','{{ territorio.0.data_encerramento }}',
-                            '{{ territorio.0.pk }}')">
-                        <img style="position:absolute" id="{{ territorio.0.nome.upper }}"
-                                     largura="{{ territorio.1.largura }}" altura="{{ territorio.1.altura }}"
+                            pegarTerritorio('{{ territorio.nome}}','{{ territorio.descricao.lower }}','{{ territorio.pontuacao }}',
+                            '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
+                            '{{ territorio.pk }}','{{territorio.foto.url}}')">
+                        <img style="position:absolute" id="{{ territorio.nome.upper }}"
+                                     largura="{{ territorio.coord_top }}" altura="{{ territorio.coord_left }}"
                                      src="{% static "imagens/point.png" %}" width="2%" href="#"></a>
                 {% endfor %}
             </div>
@@ -64,36 +67,36 @@
     </div>
 
 
-     <!- – Modal – ->
+     <!-- Modal -->
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
             <header class="w3-container w3-red">
                     <span onclick="document.getElementById('id01').style.display='none'"
-                          class="w3-button w3-red w3-xxlarge w3-display-topright">&times;</span>
+                          class="w3-btn w3-red w3-hover-red w3-xxlarge w3-display-topright">&times;</span>
                 <h1 id="titulo_modal_id"></h1>
             </header>
             <div class="w3-row-padding">
                 <div class="w3-col" style="width:42%">
                     <div class="w3-row w3-section">
                         <div class="w3-rest">
-                            <img src="{% static "imagens/brasil.png" %}" alt="brasil">
+                            <img id="profile_territorio" width="100%" height="100%" src="{% static "imagens/brasil.png" %}" alt="brasil">
                         </div>
                     </div>
                 </div>
                 <div class="w3-col" style="width:58%">
                     <div id="modal_id" class="w3-row w3-section">
-                        <!- – o modal é inserido aqui – ->
+                        <!-- o modal é inserido aqui -->
                     </div>
                 </div>
             </div>
             <div class="w3-row-padding">
             </div>
             <div id="modal_barra_inferior_id" class="w3-container w3-light-grey w3-padding">
-                <a id="id_cadastrar" class="w3-button w3-red w3-left w3-border w3-large"
+                <a id="id_cadastrar" class="w3-btn w3-red w3-left w3-border w3-large w3-hover-red"
                    href="{% url 'cadastroFormulario' 0 %}">Cadastrar relatório
                 </a>
-                <button class="w3-button w3-right w3-white w3-border "
-                        onclick="document.getElementById('id01').style.display='none'">Close
+                <button class="w3-btn w3-right w3-white w3-border "
+                        onclick="document.getElementById('id01').style.display='none'">Fechar
                 </button>
             </div>
         </div>

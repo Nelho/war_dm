@@ -103,14 +103,14 @@ def profile_edit(request):
                         "telefone": telefone.contato}
 
         form = AvaliadorEditForm(initial=form_initial)
-
-    context = {"form": form, "capitulos":capitulos_corrigir}
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    context = {"form": form, "capitulos":capitulos_corrigir, "corretor": corretor}
     return render(request, "avaliador/avaliador_edit_profile.html", context=context)
 
 
 def password_edit(request):
-    usuario = Gabinete_User.objects.get(user_id=request.user.id)
-    capitulos_corrigir = conf_home(request, usuario)
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulos_corrigir = conf_home(request, corretor)
     if request.method == "POST":
         form = AvaliadorEditPasswordForm(request.POST)
         if form.is_valid():
@@ -121,7 +121,7 @@ def password_edit(request):
             if form_nova_senha != form_repetir_senha:
                 senha_validada = False
                 # msg_error = "Senhas diferentes!"
-                context = {"form": form, "error": True, "msg_error": "Senhas diferentes!", "capitulos":capitulos_corrigir}
+                context = {"form": form, "error": True, "msg_error": "Senhas diferentes!", "capitulos":capitulos_corrigir, "corretor": corretor}
                 return render(request, "avaliador/avaliador_edit_password.html", context=context)
             else:
                 user = User.objects.get(pk=request.user.id)
@@ -131,16 +131,16 @@ def password_edit(request):
                     user.save()
                     login(request, user)
                     senha_validada = True
-                    context = {"form": form, "senha_validada": senha_validada, "method": "POST", "capitulos":capitulos_corrigir}
+                    context = {"form": form, "senha_validada": senha_validada, "method": "POST", "capitulos":capitulos_corrigir, "corretor": corretor}
                     return render(request, "avaliador/avaliador_edit_password.html", context=context)
                 else:
                     senha_validada = False
-                    context = {"form": form, "error": True, "msg_error": "Senha atual incorreta!", "capitulos":capitulos_corrigir}
+                    context = {"form": form, "error": True, "msg_error": "Senha atual incorreta!", "capitulos":capitulos_corrigir, "corretor": corretor}
 
                 return render(request, "avaliador/avaliador_edit_password.html", context=context)
     form = AvaliadorEditPasswordForm()
     senha_validada = True
-    context = {"form": form, "senha_validada": senha_validada, "method": "GET", "capitulos":capitulos_corrigir}
+    context = {"form": form, "senha_validada": senha_validada, "method": "GET", "capitulos":capitulos_corrigir, "corretor": corretor}
 
     return render(request, "avaliador/avaliador_edit_password.html", context=context)
 
@@ -163,7 +163,7 @@ def avaliador_home(request):
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulos_corrigir = conf_home(request, corretor)
     relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir}
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor}
     return render(request, "avaliador/avaliador_home.html", context=context)
 
 def avaliar_cap(request, numero_cap):
@@ -172,7 +172,7 @@ def avaliar_cap(request, numero_cap):
     capitulos_corrigir = conf_home(request, corretor)
     relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
     context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
-                "abrir": corretor.regiao_correcao == capitulo.regiao}
+                "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor}
     return render(request, "avaliador/avaliador_list_relatorio_cap.html", context=context)
 
 def corrigir_relatorio(request, id):
@@ -181,6 +181,7 @@ def corrigir_relatorio(request, id):
         capitulos_corrigir = conf_home(request, corretor)
 
         formulario = Formulario.objects.get(pk=id)
+        print(formulario.observacoes)
         formulario_initial = {
             "resumo": formulario.resultado,
             "planejamento" : formulario.planejamento,
@@ -194,7 +195,7 @@ def corrigir_relatorio(request, id):
             "pontuacaoBonus" : formulario.pontuacao_bonus,
         }
         form = FormularioForm(initial=formulario_initial)
-        context = {'form' : form, "id_relatorio":id, "capitulos": capitulos_corrigir}
+        context = {'form' : form, "id_relatorio":id, "capitulos": capitulos_corrigir, "corretor": corretor}
         return render(request, 'avaliador/avaliador_correcao_relatorio.html', context=context)
     else:
         form = FormularioForm(request.POST, request.FILES)
@@ -207,54 +208,6 @@ def corrigir_relatorio(request, id):
             return HttpResponseRedirect('/avaliador/home')
 
 def mapa(request):
-    coordenadas_mapa = {
-        "BRASIL":{"largura": 1242, "altura": 1789},
-        "ARGENTINA":{"largura": 1085, "altura": 2190},
-        "PERU": {"largura": 910, "altura": 1859},
-        "VENEZUELA": {"largura": 975, "altura": 1506},
-        "MÉXICO": {"largura": 461, "altura": 1257},
-        "CALIFÓRNIA": {"largura": 500, "altura": 959},
-        "VANCOUVER": {"largura": 544, "altura": 761},
-        "ALASKA": {"largura": 280, "altura": 560},
-        "MACKENZIE": {"largura": 656, "altura": 574},
-        "LABRADOR": {"largura": 1178, "altura": 712},
-        "OTAWA": {"largura": 887, "altura": 777},
-        "GROENLÂNDIA": {"largura": 1665, "altura": 409},
-        "NOVA IORQUE": {"largura": 777, "altura": 959},
-        "ISLÂNDIA": {"largura": 1839, "altura": 597},
-        "REINO UNIDO": {"largura": 2037, "altura": 721},
-        "FRANÇA": {"largura": 2022, "altura": 899},
-        "ESCANDINÁVIA": {"largura": 2320, "altura": 533},
-        "ALEMANHA": {"largura": 2248, "altura": 750},
-        "MOSCOU": {"largura": 2599, "altura": 654},
-        "ARGÉLIA": {"largura": 2031, "altura": 1309},
-        "ÉGITO": {"largura": 2410, "altura": 1158},
-        "SUDÃO": {"largura": 2607, "altura": 1416},
-        "CONGO": {"largura": 2373, "altura": 1639},
-        "ÁFRICA DO SUL": {"largura": 2412, "altura": 1970},
-        "MADAGASCAR": {"largura": 2771, "altura": 2090},
-        "VIETNÃ": {"largura": 3615, "altura": 1371},
-        "INDIA": {"largura": 3233, "altura": 1172},
-        "ORIENTE MÉDIO": {"largura": 2737, "altura": 1106},
-        "ARAL": {"largura": 2998, "altura": 851},
-        "CHINA": {"largura": 3612, "altura": 1065},
-        "MONGÓLIA": {"largura": 3653, "altura": 853},
-        "TCHITA": {"largura": 3460, "altura": 707},
-        "SIBÉRIA": {"largura": 3636, "altura": 566},
-        "OMSK": {"largura": 2931, "altura": 587},
-        "DUDINKA": {"largura": 3198, "altura": 513},
-        "JAPÃO": {"largura": 4151, "altura": 1029},
-        "VIADISOSTOK": {"largura": 4019, "altura": 658},
-        "SUMATRA": {"largura": 3820, "altura": 1671},
-        "NOVA GUINÊ": {"largura": 4246, "altura": 1725},
-        "AUSTRÁLIA OCIDENTAL": {"largura": 3819, "altura": 2037},
-        "AUSTRÁLIA ORIENTAL": {"largura": 4201, "altura": 1952},
-        "ITÁLIA" : {"largura": 2277, "altura": 965},
-    }
-    territorios_bd = Territorio.objects.all()
-    territorios = []
-    for territorio in territorios_bd:
-        aux = [territorio, coordenadas_mapa[territorio.nome.upper()]]
-        territorios.append(aux)
-    context = {"territorios": territorios,}
+    territorios = Territorio.objects.all()
+    context = {"territorios": territorios}
     return render(request, "avaliador/mapa.html", context=context)

@@ -11,3 +11,6 @@ class Territorio (models.Model):
     data_abertura = models.DateField()
     data_encerramento = models.DateField()
     repeticao = models.BooleanField(default=False)
+    coord_top = models.CharField(max_length=20)
+    coord_left = models.CharField(max_length=20)
+    foto = models.ImageField(upload_to="fotos/territorios/")
