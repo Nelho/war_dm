@@ -181,7 +181,6 @@ def corrigir_relatorio(request, id):
         capitulos_corrigir = conf_home(request, corretor)
 
         formulario = Formulario.objects.get(pk=id)
-        print(formulario.observacoes)
         formulario_initial = {
             "resumo": formulario.resultado,
             "planejamento" : formulario.planejamento,
@@ -209,13 +208,53 @@ def corrigir_relatorio(request, id):
 
 def mapa(request):
     coordenadas_mapa = {
-        "BRASIL":{"largura": 1270, "altura": 1930},
-        "ARGENTINA":{"largura": 1085, "altura": 2270}
+        "BRASIL":{"largura": 1242, "altura": 1789},
+        "ARGENTINA":{"largura": 1085, "altura": 2190},
+        "PERU": {"largura": 910, "altura": 1859},
+        "VENEZUELA": {"largura": 975, "altura": 1506},
+        "MÉXICO": {"largura": 461, "altura": 1257},
+        "CALIFÓRNIA": {"largura": 500, "altura": 959},
+        "VANCOUVER": {"largura": 544, "altura": 761},
+        "ALASKA": {"largura": 280, "altura": 560},
+        "MACKENZIE": {"largura": 656, "altura": 574},
+        "LABRADOR": {"largura": 1178, "altura": 712},
+        "OTAWA": {"largura": 887, "altura": 777},
+        "GROENLÂNDIA": {"largura": 1665, "altura": 409},
+        "NOVA IORQUE": {"largura": 777, "altura": 959},
+        "ISLÂNDIA": {"largura": 1839, "altura": 597},
+        "REINO UNIDO": {"largura": 2037, "altura": 721},
+        "FRANÇA": {"largura": 2022, "altura": 899},
+        "ESCANDINÁVIA": {"largura": 2320, "altura": 533},
+        "ALEMANHA": {"largura": 2248, "altura": 750},
+        "MOSCOU": {"largura": 2599, "altura": 654},
+        "ARGÉLIA": {"largura": 2031, "altura": 1309},
+        "ÉGITO": {"largura": 2410, "altura": 1158},
+        "SUDÃO": {"largura": 2607, "altura": 1416},
+        "CONGO": {"largura": 2373, "altura": 1639},
+        "ÁFRICA DO SUL": {"largura": 2412, "altura": 1970},
+        "MADAGASCAR": {"largura": 2771, "altura": 2090},
+        "VIETNÃ": {"largura": 3615, "altura": 1371},
+        "INDIA": {"largura": 3233, "altura": 1172},
+        "ORIENTE MÉDIO": {"largura": 2737, "altura": 1106},
+        "ARAL": {"largura": 2998, "altura": 851},
+        "CHINA": {"largura": 3612, "altura": 1065},
+        "MONGÓLIA": {"largura": 3653, "altura": 853},
+        "TCHITA": {"largura": 3460, "altura": 707},
+        "SIBÉRIA": {"largura": 3636, "altura": 566},
+        "OMSK": {"largura": 2931, "altura": 587},
+        "DUDINKA": {"largura": 3198, "altura": 513},
+        "JAPÃO": {"largura": 4151, "altura": 1029},
+        "VIADISOSTOK": {"largura": 4019, "altura": 658},
+        "SUMATRA": {"largura": 3820, "altura": 1671},
+        "NOVA GUINÊ": {"largura": 4246, "altura": 1725},
+        "AUSTRÁLIA OCIDENTAL": {"largura": 3819, "altura": 2037},
+        "AUSTRÁLIA ORIENTAL": {"largura": 4201, "altura": 1952},
+        "ITÁLIA" : {"largura": 2277, "altura": 965},
     }
     territorios_bd = Territorio.objects.all()
     territorios = []
     for territorio in territorios_bd:
         aux = [territorio, coordenadas_mapa[territorio.nome.upper()]]
         territorios.append(aux)
-    context = {"territorios": territorios}
+    context = {"territorios": territorios,}
     return render(request, "avaliador/mapa.html", context=context)

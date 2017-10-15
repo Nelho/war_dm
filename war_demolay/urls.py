@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 # responsável pelo redirecionamento caso o usuário tente visualizar uma página que seja nencessário realizar login
 from django.contrib.auth.views import login
@@ -25,4 +27,4 @@ urlpatterns = [
     url(r'^', include("main.urls", namespace="main")),
     url(r'^capitulo/', include("capitulo.urls")),
     url(r'^territorio/', include("mapa.urls")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

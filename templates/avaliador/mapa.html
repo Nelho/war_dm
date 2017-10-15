@@ -20,9 +20,9 @@
 
     <script>
         function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id) {
-            alert(nome)
             document.getElementById("titulo_modal_id").innerHTML = nome.toUpperCase()
-            document.getElementById("id_cadastrar").setAttribute("href", "{% url 'cadastroFormulario' 12%}")
+            var href = document.getElementById("id_cadastrar").getAttribute('href')
+            document.getElementById("id_cadastrar").setAttribute("href", href.substr(0,href.length-1) + territorio_id)
             document.getElementById("modal_id").innerHTML = "" +
                 "                            <div class=\"w3-rest\">\n" +
                 "                            <div class=\"w3-topbar w3-large\"><b>Território: " + nome + "</b><br></div>" +
@@ -50,14 +50,13 @@
                 <img id="img_mapa" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa" usemap="#mapa_war">
                 {% for territorio in territorios %}
                     <a onclick="document.getElementById('id01').style.display='block',
-                            pegarTerritorio('{{ territorio.nome }}','{{ territorio.descricao }}','{{ territorio.pontuacao }}',
-                            '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
-                            '{{ territorio.pk }}')">
+                            pegarTerritorio('{{ territorio.0.nome}}','{{ territorio.0.descricao.lower }}','{{ territorio.0.pontuacao }}',
+                            '{{ territorio.0.bonus_max }}','{{ territorio.0.data_abertura }}','{{ territorio.0.data_encerramento }}',
+                            '{{ territorio.0.pk }}')">
                         <img style="position:absolute" id="{{ territorio.0.nome.upper }}"
                                      largura="{{ territorio.1.largura }}" altura="{{ territorio.1.altura }}"
                                      src="{% static "imagens/point.png" %}" width="2%" href="#"></a>
                 {% endfor %}
-
             </div>
         </div>
 
@@ -65,7 +64,7 @@
     </div>
 
 
-
+     <!- – Modal – ->
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
             <header class="w3-container w3-red">
