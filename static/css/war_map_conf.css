@@ -7,8 +7,8 @@
 }
 
 
-#brasil{
-	width: 50%;
+#img_regiao{
+	width: 42%;
 	margin-top: 20px;
 	border-right: 20px solid #ffffff;
 	float: left;
@@ -24,7 +24,7 @@
 }
 
 #inform{
-	width: 50%;
+	width: 58%;
 	margin-top: 20px;
 	float: left;
 
@@ -34,3 +34,11 @@
 	float: right;
 
 }
+
+#comp{
+
+
+	font-size: 16px;
+}
+
+
