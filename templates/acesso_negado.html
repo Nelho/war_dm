@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-container w3-center" style="margin-top:10px">
+  <div class="w3-card-4">
+    <header class="w3-container w3-orange">
+      <h1>Acesso restrito!</h1>
+    </header>
+
+    <div class="w3-container">
+      <p>Você não tem permissão para acessar a URL: <strong> {{url}}</strong></p>
+    </div>
+
+    <footer class="w3-container w3-orange">
+      <h5 url_redirect="{{url_redirect}}" id="cronometro">Redirecionamento em ...</h5>
+      <a style="margin-bottom: 10px" class="w3-btn w3-green" href="{{url_redirect}}">Redirecionar agora</a>
+    </footer>
+  </div>
+</div>
+
+  <script>
+      var i = 4; // segundos
+      function contagemRegressiva(){
+      if(i == 0){
+        window.location= window.location.protocol + "//" + window.location.host + document.getElementById("cronometro").getAttribute("url_redirect");
+      }else{
+        i--;
+        var cronometro =  document.getElementById('cronometro');
+        cronometro.innerHTML = "Redirecionamento em " + i + " ...";
+      }
+      }
+      setInterval("contagemRegressiva()", 1000);
+  </script>
+
+</body>
+</html>

@@ -9,6 +9,9 @@ class Gabinete_User(models.Model):
 
 	class Meta:
 		db_table = "gabinete_user" #isso define o nome da tabela no banco
+		permissions = (
+		            ('pode_avaliar_capitulo', 'Pode avaliar os relatórios dos capítulos'),
+		        )
 
 	REGIONS_CHOICES = (
 		("R1", "1º Região"),

@@ -8,7 +8,8 @@ from main.models import Contato
 from django.http import HttpResponseRedirect
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth import login
-
+from django.contrib.auth.decorators import permission_required, login_required
+from main.views import redirect
 from mapa.models import Territorio
 
 # Create your views here.
@@ -53,7 +54,11 @@ def cadastro_avaliador(request):
     context = {"form": form, "cadastro": cadastro }
     return render(request, "avaliador/cadastro_avaliador.html", context=context)
 
+@login_required()
 def profile_edit(request):
+    controle = controle_acesso(request)
+    if controle != True:
+        return controle
     if request.method == "POST":
         form = AvaliadorEditForm(request.POST, request.FILES)
         if form.is_valid():
@@ -107,8 +112,11 @@ def profile_edit(request):
     context = {"form": form, "capitulos":capitulos_corrigir, "corretor": corretor}
     return render(request, "avaliador/avaliador_edit_profile.html", context=context)
 
-
+@login_required()
 def password_edit(request):
+    controle = controle_acesso(request)
+    if controle != True:
+        return controle
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulos_corrigir = conf_home(request, corretor)
     if request.method == "POST":
@@ -158,30 +166,49 @@ def conf_home(request, corretor, status='S4'):
             aux = [capitulo, 0]
             capitulos_corrigir.append(aux)
     return capitulos_corrigir
+
+def controle_acesso(request):
+    if not request.user.has_perm('avaliador.pode_avaliar_capitulo'):
+        url_redirect = redirect(request)
+        context = {"url":request.build_absolute_uri(), "url_redirect": url_redirect}
+        return render(request, "acesso_negado.html", context=context)
+    return True
 ############################################
+@login_required()
 def avaliador_home(request):
+    ##request.user.email_user('TESTE',"TESTE")
+    controle = controle_acesso(request)
+    if controle != True:
+        return controle
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulos_corrigir = conf_home(request, corretor)
     relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor}
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor, "next": request.path}
     return render(request, "avaliador/avaliador_home.html", context=context)
 
+@login_required()
 def avaliar_cap(request, numero_cap):
+    controle = controle_acesso(request)
+    if controle != True:
+        return controle
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulo = Capitulo_User.objects.get(numero=numero_cap)
     capitulos_corrigir = conf_home(request, corretor)
     relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
     context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
-                "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor}
+                "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor, "next": request.path}
     return render(request, "avaliador/avaliador_list_relatorio_cap.html", context=context)
 
+@login_required()
 def corrigir_relatorio(request, id):
+    controle = controle_acesso(request)
+    if controle != True:
+        return controle
     if request.method == "GET":
         corretor = Gabinete_User.objects.get(user_id=request.user.id)
         capitulos_corrigir = conf_home(request, corretor)
 
         formulario = Formulario.objects.get(pk=id)
-        print(formulario.observacoes)
         formulario_initial = {
             "resumo": formulario.resultado,
             "planejamento" : formulario.planejamento,
@@ -205,7 +232,8 @@ def corrigir_relatorio(request, id):
             formulario.observacoes = form.cleaned_data['observacao']
             formulario.status = form.cleaned_data['status']
             formulario.save()
-            return HttpResponseRedirect('/avaliador/home')
+            print(request.GET.get("next", "/avaliador/home"))
+            return HttpResponseRedirect(request.GET.get("next", "/avaliador/home"))
 
 def mapa(request):
     territorios = Territorio.objects.all()

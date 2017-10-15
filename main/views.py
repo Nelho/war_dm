@@ -12,7 +12,7 @@ LIST_MODELS_AUTH = [[Gabinete_User, "/avaliador/home/"],
 
 # Create your views here.
 def login(request):
-	if request.method == "POST":
+	if request.method == "POST":		
 		form = LoginForm(request.POST)
 		
 		if form.is_valid():
@@ -22,12 +22,10 @@ def login(request):
 
 			if(user is not None):
 				login_authenticate(request, user)
-				for models in LIST_MODELS_AUTH:
-					try:
-						models[0].objects.get(user_id=request.user.id)
-						return HttpResponseRedirect(models[1])
-					except models[0].DoesNotExist:
-						print("Nao deu redirect ")
+				redirect_url = redirect(request)
+				if redirect_url != None:
+					return HttpResponseRedirect(redirect_url)
+
 				context = {"error": True, 
 				"msg_error": "Nenhum usuário cadastro no sistema!", 
 				"form": form}
@@ -38,10 +36,21 @@ def login(request):
 				"form": form}
 				return render(request, "main/login.html", context=context)
 	form = LoginForm()
-	context = {"form":form}
+	param = request.GET.get("next", None)
+	login_required =  param != None
+	context = {"form":form, "error":login_required, "msg_error": "É necessário realizar login para acessar a página solicitada!"}
 
 	return render(request, "main/login.html", context=context)
 
 def logout(request):
 	logout_request(request)
 	return HttpResponseRedirect("/")
+
+def redirect(request):
+	for models in LIST_MODELS_AUTH:
+		try:
+			models[0].objects.get(user_id=request.user.id)
+			return models[1]
+		except models[0].DoesNotExist:
+			pass
+	return None
