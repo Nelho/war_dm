@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from main.forms import LoginForm
 from django.contrib.auth import authenticate
@@ -8,7 +9,7 @@ from avaliador.models import Gabinete_User
 from capitulo.models import Capitulo_User
 
 LIST_MODELS_AUTH = [[Gabinete_User, "/avaliador/home/"],
-					[Capitulo_User, "/"]]
+					[Capitulo_User, "/capitulo/home"]]
 
 # Create your views here.
 def login(request):
@@ -18,13 +19,16 @@ def login(request):
 		if form.is_valid():
 			form_login = form.cleaned_data["login"]
 			form_senha = form.cleaned_data["senha"]
+			teste = User.objects.get(username=form_login)
+			print(teste.first_name)
 			user = authenticate(username=form_login, password=form_senha)
 
 			if(user is not None):
 				login_authenticate(request, user)
 				redirect_url = redirect(request)
 				if redirect_url != None:
-					return HttpResponseRedirect(redirect_url)
+					url_redirect_auth = request.GET.get("next", redirect_url)
+					return HttpResponseRedirect(url_redirect_auth)
 
 				context = {"error": True, 
 				"msg_error": "Nenhum usuário cadastro no sistema!", 
@@ -38,7 +42,7 @@ def login(request):
 	form = LoginForm()
 	param = request.GET.get("next", None)
 	login_required =  param != None
-	context = {"form":form, "error":login_required, "msg_error": "É necessário realizar login para acessar a página solicitada!"}
+	context = {"url_redirect": param ,"form":form, "error":login_required, "msg_error": "É necessário realizar login para acessar a página solicitada!"}
 
 	return render(request, "main/login.html", context=context)
 

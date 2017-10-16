@@ -11,6 +11,9 @@ class Capitulo_User(models.Model):
 
     class Meta:
         db_table = "capitulo_user"  # isso define o nome da tabela no banco
+        permissions = (
+            ('pode_cadastrar_relatorio', 'Pode cadastrar relatório'),
+        )
 
     REGIONS_CHOICES = (
         ("R1", "1º Região"),

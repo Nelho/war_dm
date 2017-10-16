@@ -1,4 +1,4 @@
-{% extends 'base_gerente.html' %}
+{% extends 'base_capitulo.html' %}
 {% load widget_tweaks %}
 
 {% block assets %}
@@ -6,8 +6,6 @@
 {% endblock %}
 
 {% block conteudo %}
-
-
 
     <div class="w3-container">
         <div class="w3-card-4 w3-gray-ligth">
@@ -19,7 +17,8 @@
                     <button class="w3-gray-ligth w3-button w3-show"></button>
                 </div>
                 <div class="w3-col m10">
-                    <form action="{% url 'cadastroFormulario' id_territorio %}" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'cadastroFormulario' id_territorio %}" method="POST"
+                          enctype="multipart/form-data">
                         {% csrf_token %}
 
                         <div class="w3-row-padding">
@@ -120,7 +119,5 @@
 
                 <div class="w3-col m1 w3-center w3-white"></div>
             </div>
-
         </div>
-
 {% endblock %}

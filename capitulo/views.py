@@ -1,13 +1,15 @@
 import datetime
+
+from django.contrib.auth.models import Permission
 from django.shortcuts import render, HttpResponseRedirect
 from capitulo.forms import CapituloUserForm, FormularioForm
 from main.models import *
-from mapa.models import Territorio
+from django.contrib.auth.decorators import permission_required, login_required
 from capitulo.models import *
+from main.views import redirect
 
-
+@login_required()
 def cadastrarCapitulo(request):
-
     if(request.method == 'POST'):
         form = CapituloUserForm(request.POST, request.FILES)
         print(form.is_valid())
@@ -21,7 +23,10 @@ def cadastrarCapitulo(request):
             print(senha)
             user = User(username=login, first_name=nomeCap , password=senha,
                         email='capitulo_'+str(numero)+'@demolaypb.com.br')
+            user.set_password(senha)
+            permission = Permission.objects.get(codename="pode_cadastrar_relatorio")
             user.save()
+            user.user_permissions.add(permission)
 
             telefone = form.cleaned_data['telefone']
             Contato(usuario=user, contato=telefone)
@@ -41,7 +46,12 @@ def cadastrarCapitulo(request):
     context = {"form" : form}
     return render(request, 'capitulo/cadastroCapitulo.html', context=context)
 
-def cadastrarFormulario(request, id):
+@login_required()
+def cadastrarRelatorio(request, id):
+    if not request.user.has_perm('capitulo.pode_cadastrar_relatorio'):
+        url_redirect = redirect(request)
+        context = {"url":request.build_absolute_uri(), "url_redirect": url_redirect}
+        return render(request, "acesso_negado.html", context=context)
     cadastro = False
     territorio = Territorio.objects.get(pk=id)
     if(request.method=="POST"):
@@ -63,6 +73,31 @@ def cadastrarFormulario(request, id):
                                    territorio=territorio,capitulo=capitulo_logado, conclusao=conclusao,arquivo_zip=arquivozip)
             relatorio.save()
             cadastro = True
+            if not request.user.has_perm('capitulo.pode_cadastrar_relatorio'):
+                url_redirect = redirect(request)
+                context = {"url": request.build_absolute_uri(), "url_redirect": url_redirect}
+                return render(request, "acesso_negado.html", context=context)
+            territorios = Territorio.objects.all()
+            capitulo = Capitulo_User.objects.get(user=request.user.pk)
+            context = {"cadastro": cadastro,"capitulo": capitulo, "capitulos": buscaCapitulos(), "territorios": territorios}
+            return render(request, "capitulo/capitulo_home.html", context=context)
+
     form = FormularioForm()
-    context = {"form":form, "cadastro" : cadastro ,"id_territorio" : id, "nome_territorio" : str.upper(territorio.nome)}
+    capitulo = Capitulo_User.objects.get(user=request.user.pk)
+    context = {"capitulo" : capitulo, "capitulos" : buscaCapitulos() ,"form":form, "cadastro" : cadastro ,"id_territorio" : id, "nome_territorio" : str.upper(territorio.nome)}
     return render(request, 'capitulo/relatorio_form.html', context= context)
+
+
+def buscaCapitulos():
+    capitulos = Capitulo_User.objects.all()
+    return capitulos
+@login_required()
+def home(request):
+    if not request.user.has_perm('capitulo.pode_cadastrar_relatorio'):
+        url_redirect = redirect(request)
+        context = {"url":request.build_absolute_uri(), "url_redirect": url_redirect}
+        return render(request, "acesso_negado.html", context=context)
+    territorios = Territorio.objects.all()
+    capitulo = Capitulo_User.objects.get(user=request.user.pk)
+    context = {"capitulo": capitulo ,"capitulos" : buscaCapitulos(), "territorios": territorios}
+    return render(request, "capitulo/capitulo_home.html", context=context)

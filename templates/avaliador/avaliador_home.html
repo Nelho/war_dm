@@ -38,7 +38,7 @@
 						<td>{{relatorio.capitulo.user.first_name}}</td>
 						<td>{{relatorio.data_envio}}</td>
 						<td>{{relatorio.territorio.nome}}</td>
-						<td><a href="{% url "corrigir_relatorio" relatorio.id %}" class="w3-btn w3-green">Abrir</a></td>
+						<td><a href="{% url "corrigir_relatorio" relatorio.id %}?next{{next}}" class="w3-btn w3-green">Abrir</a></td>
 					</tr>
 			    {% endfor%}
 			   </table>
@@ -58,7 +58,7 @@
 {% block capitulos%}
 	{% for capitulo in capitulos%}
 
-		<a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}} 
+		<a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}}
 		{% if capitulo.1 == 0%}
 
 		{%elif capitulo.1 < 5%}

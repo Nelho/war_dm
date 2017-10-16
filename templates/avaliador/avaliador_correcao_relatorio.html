@@ -22,7 +22,7 @@
                     <button class="w3-gray-ligth w3-button w3-show"></button>
                 </div>
                 <div class="w3-col m10">
-                    <form action="{% url 'corrigir_relatorio' id_relatorio %}" method="POST" enctype="multipart/form-data">
+                    <form action="{% url 'corrigir_relatorio' id_relatorio %}?next={{url_redirect}}" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
 
                         <div class="w3-row-padding">

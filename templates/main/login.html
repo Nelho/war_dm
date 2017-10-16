@@ -20,7 +20,7 @@
 
 			<div class="col-sm-4 col-md-4 col-lg-4 col-xl-4">
 				<div class="w3-card-4" id = "fundo_login" >
-					<img id="avatar" src="{% static "imagens/avatar-demolay.png" %}" class="img-circle" alt="Avatar DeMolay">
+					<img id="avatar" src="{% static "imagens/avatar-demolay.png" %}?next={{url_redirect}}" class="img-circle" alt="Avatar DeMolay">
 
 				  	<div class="w3-container w3-center">
 				    	<form action="{% url 'main:login' %}" method="POST">

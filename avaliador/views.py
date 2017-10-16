@@ -222,7 +222,9 @@ def corrigir_relatorio(request, id):
             "pontuacaoBonus" : formulario.pontuacao_bonus,
         }
         form = FormularioForm(initial=formulario_initial)
-        context = {'form' : form, "id_relatorio":id, "capitulos": capitulos_corrigir, "corretor": corretor}
+        url_redirect = request.GET.get("next", "/avaliador/home")
+        context = {'form' : form, "id_relatorio":id, "capitulos": capitulos_corrigir, "corretor": corretor, "next": request.path,
+                   "url_redirect":url_redirect}
         return render(request, 'avaliador/avaliador_correcao_relatorio.html', context=context)
     else:
         form = FormularioForm(request.POST, request.FILES)
