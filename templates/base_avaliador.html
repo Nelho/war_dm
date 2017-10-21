@@ -21,29 +21,8 @@
   <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
   <a id="link" href="{% url "avaliador_home" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
   <a id="link" href="{% url "profile_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
-  <!--
-  <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>
-  -->
+
 </div>
-<!-- Bloco comentado de trocho não utilizado-->
-<!--
-<div class="w3-container w3-black" id="top-container" style="z-index:4">
-  <div class="w3-bar w3-black w3-large">
-    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-    <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
-    <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
-    <a id="link" href="{% url "profile_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
-    <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
-    <div class="w3-dropdown-hover">
-      <a class="w3-bar-item w3-right w3-hover-blue">Dropdown</a>
-      <div class="w3-dropdown-content w3-bar-block w3-card-4" style="z-index:1000">
-        <a href="#" class="w3-bar-item w3-button">Editar Senha</a>
-        <a href="#" class="w3-bar-item w3-button">Editar Informações Básicas</a>
-      </div>
-    </div>
-  </div>
-</div>
--->
 <!-- Sidebar/menu -->
 <nav class="w3-sidebar w3-collapse w3-white" id="mySidebar"><br>
   <div class="w3-container w3-row">
@@ -53,7 +32,7 @@
     <div class="w3-col s8 w3-bar">
       <span>Bem-vindo, <strong>{{user.first_name}} </strong><a href="{% url "password_edit" %}"><i class="fa fa-cog"></i></a></span>
       
-      <span style="display: block;">MCA - PB</span>
+      <span style="display: block;">{{corretor.tipo_usuario}} - PB</span>
     </div>
   </div>
   <hr>
@@ -64,12 +43,20 @@
   <div class="w3-bar-block">
     {% block capitulos%}
     {% endblock%}
-    <!--
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-home fa-fw"></i>  Filhos do Imperador <span class="w3-badge w3-green">1</span></a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Defensores do Rio Vermelho <span class="w3-badge w3-red">8</span></a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Deus, pátria e familia <span class="w3-badge w3-orange">5</span></a>
-    <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  João Pessoa <span class="w3-badge w3-green">2</span></a>
-    -->
+    {% for capitulo in capitulos%}
+
+      <a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}}
+      {% if capitulo.1 == 0%}
+
+      {%elif capitulo.1 < 5%}
+        <span class="w3-badge w3-green">{{capitulo.1}}</span>
+      {% elif capitulo.1 < 10%}
+        <span class="w3-badge w3-orange">{{capitulo.1}}</span>
+      {%else %}
+        <span class="w3-badge w3-red">{{capitulo.1}}</span>
+      {%endif%}
+      </a>    
+    {% endfor %}
   </div>
 
 </nav>

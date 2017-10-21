@@ -8,6 +8,7 @@ urlpatterns = [
 	url(r'^edit/password$', views.password_edit, name="password_edit"),
 	url(r'^cap/(?P<numero_cap>[0-9]+)/$', views.avaliar_cap, name="cap_numero"),
 	url(r'^relatorio/(?P<id>\d+)/$', views.corrigir_relatorio, name="corrigir_relatorio"),
-	url(r'^mapa/$', views.mapa, name="mapa_avaliador")
+	url(r'^mapa/$', views.mapa, name='mapa'),
+	url(r'^relatorios/(?P<filtro>\w+)/$', views.filtro_relatorio, name="filtro_relatorio_geral")
 	
 ]

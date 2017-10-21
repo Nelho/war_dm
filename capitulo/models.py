@@ -15,6 +15,9 @@ class Capitulo_User(models.Model):
             ('pode_cadastrar_relatorio', 'Pode cadastrar relatório'),
         )
 
+    def natural_key(self):
+        return self.user.first_name
+
     REGIONS_CHOICES = (
         ("R1", "1º Região"),
         ("R2", "2º Região"),

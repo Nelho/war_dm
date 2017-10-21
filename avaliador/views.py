@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from avaliador.forms import AvaliadorForm, AvaliadorEditForm, AvaliadorEditPasswordForm
 from capitulo.forms import FormularioForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from avaliador.models import Gabinete_User
 from capitulo.models import Capitulo_User, Formulario
 from main.models import Contato
@@ -11,6 +11,10 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import permission_required, login_required
 from main.views import redirect
 from mapa.models import Territorio
+from django.http import HttpResponse
+from django.http import JsonResponse
+import json
+from django.core import serializers
 
 # Create your views here.
 def cadastro_avaliador(request):
@@ -36,8 +40,11 @@ def cadastro_avaliador(request):
                 form_foto = request.FILES["foto"]
             except MultiValueDictKeyError:
                 form_foto = ""
+
+            permission = Permission.objects.get(codename='pode_avaliar_capitulo')
             new_user = User.objects.create_user(form_login, password=form_senha,
                                         first_name=form_nome, last_name=form_sobrenome, email=form_email)
+            new_user.user_permissions.add(permission)
             new_user.save()
             new_usuario = Gabinete_User(user=new_user,
                                 regiao=form_regiao,
@@ -153,7 +160,7 @@ def password_edit(request):
     return render(request, "avaliador/avaliador_edit_password.html", context=context)
 
 # função criada para reutilização de código. Ela busca os capítulos e
-# quantos relatórios ele possui3
+# quantos relatórios ele possui
 ############################################
 def conf_home(request, corretor, status='S4'):
     capitulos = Capitulo_User.objects.all()
@@ -196,7 +203,8 @@ def avaliar_cap(request, numero_cap):
     capitulos_corrigir = conf_home(request, corretor)
     relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
     context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
-                "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor, "next": request.path}
+                "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor, "next": request.path,
+                "numero_cap": capitulo.numero}
     return render(request, "avaliador/avaliador_list_relatorio_cap.html", context=context)
 
 @login_required()
@@ -237,7 +245,51 @@ def corrigir_relatorio(request, id):
             print(request.GET.get("next", "/avaliador/home"))
             return HttpResponseRedirect(request.GET.get("next", "/avaliador/home"))
 
+## requests ajax
 def mapa(request):
-    territorios = Territorio.objects.all()
-    context = {"territorios": territorios}
-    return render(request, "avaliador/mapa.html", context=context)
+    if request.is_ajax():
+        territorios = Territorio.objects.all()
+        application = 'application/json'
+        return HttpResponse(serializers.serialize("json", territorios) , application)
+
+filtros_dict = {
+    "aprovado": "S1",
+    "rejeitado": "S2",
+    "correcao": "S3",
+    "enviado": "S4"
+
+}
+def filtro_relatorio(request, filtro):
+    if request.is_ajax():
+        application = "application/json"
+        numero_cap = request.GET.get("numero_cap", None)
+        if numero_cap == None: # se entrar no if, vai carregar os relatórios gerais dos capítulos
+            corretor = Gabinete_User.objects.get(user_id=request.user.id)
+            relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, 
+                status=filtros_dict[filtro]).only('capitulo').order_by('data_envio')
+            context = {"relatorios": conf_relatorios_ajax(relatorios_corrigir),
+                        "abrir_relatorio": True}
+            return HttpResponse(json.dumps(context), application)
+        else:
+            corretor = Gabinete_User.objects.get(user_id=request.user.id)
+            capitulo = Capitulo_User.objects.get(numero=numero_cap)
+            relatorios_corrigir = Formulario.objects.filter(status=filtros_dict[filtro], 
+                capitulo=numero_cap).order_by('data_envio')
+            context = {"relatorios": conf_relatorios_ajax(relatorios_corrigir),
+                        "abrir_relatorio": capitulo.regiao == corretor.regiao_correcao}
+            
+            return HttpResponse(json.dumps(context), application)
+
+def conf_relatorios_ajax(relatorios_corrigir):
+    lista = []
+    for relatorio in relatorios_corrigir:
+        aux = {"pk": relatorio.pk,
+        "capitulo": relatorio.capitulo.user.first_name,
+        "data_envio": str(relatorio.data_envio),
+        "territorio": relatorio.territorio.nome}
+        lista.append(aux)
+    return lista
+
+# função para deixar o datetime serializável
+def date_handler(obj):
+    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
