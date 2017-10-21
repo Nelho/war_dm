@@ -20,7 +20,7 @@
   <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
   <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
   <a id="link" href={% url 'capituloHome'%} class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
-  <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Editar Perfil</a>
+  <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
     <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
 
   <!--
@@ -36,7 +36,14 @@
 
     </div>
     <div class="w3-col s8 w3-bar">
-      <span>Bem-vindo, <strong>{{user.first_name}} </strong><a href="#"><i class="fa fa-cog"></i></a></span>
+      <span>Bem-vindo, <strong>{{capitulo.mestre_conselheiro}} </strong></span>
+         <div class="w3-dropdown-hover w3-right fa fa-cog">
+                <div style="right:0;" class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="{% url "editar_cap"%}" class="fa fa-address-card-o w3-bar-item w3-button w3-hover-red"> Alterar dados</a><hr
+                        style="margin:0px">
+                    <a href="{% url 'edit_senha' %}" class="fa fa-key w3-bar-item w3-button w3-hover-red"> Alterar senha</a>
+                </div>
+            </div>
 
       <span style="display: block;">Região: {{ capitulo.regiao}} </span>
     </div>

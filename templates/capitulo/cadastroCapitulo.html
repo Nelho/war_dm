@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
 
 {% endblock %}
-
+{{ form }}
 {% block conteudo %}
 
 
@@ -141,8 +141,9 @@
                                 <div class="w3-row w3-section">
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-key"></i></div>
                                     <div class="w3-rest">
-                                        <input class="w3-input w3-border" type="text" disabled id="senhaId"
+                                        <input class="w3-input w3-border" type="password" disabled id="senhaId"
                                                placeholder="Senha">
+                                        <input type="checkbox" onclick="myFunction()">Mostrar senha
                                     </div>
                                 </div>
                             </div>
@@ -210,6 +211,16 @@
 
             }, 1000 * segundos)
         };
+    </script>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("senhaId");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
     </script>
 
 

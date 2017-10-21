@@ -55,3 +55,16 @@ class FormularioForm(forms.Form):
     observacao = forms.CharField(label="observacao", max_length=256,  widget=forms.Textarea(), required=False)
     status = forms.ChoiceField(label="status",choices=STATUS_CHOICES, required=False)
 
+class CapituloEditForm(forms.Form):
+    mestreCosenheiro = forms.CharField(label="mestreConsenheiro", widget=forms.TextInput(
+        attrs={"class":"w3-input w3-border", "type":"text", "placeholder" : "Mestre consenheiro atual"}))
+    telefone = forms.CharField(label="telefone", widget=forms.TextInput(
+        attrs={"id":"telefone","class": "w3-input w3-border","placeholder": "Número de whatsapp"}))
+    foto = forms.ImageField(label='foto', required=False)
+    email = forms.CharField(label="email", required=False,  widget=forms.TextInput(
+        attrs={"id":"emailId","class": "w3-input w3-border","placeholder": "E-mail", "type" : "email"}))
+
+class CapituloEditSenhaForm(forms.Form):
+    senhaAtual = forms.CharField(label="senhaAtual", widget=forms.TextInput(attrs={"type":"password"}))
+    novaSenha = forms.CharField(label="novaSenha",widget=forms.TextInput(attrs={"type":"password"}))
+    confSenha = forms.CharField(label="confSenha",widget=forms.TextInput(attrs={"type":"password"}))
