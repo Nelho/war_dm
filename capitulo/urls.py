@@ -7,5 +7,7 @@ urlpatterns = [
 	url(r'^home/$', views.home, name="capituloHome"),
 	url(r'^edit/$', views.edit, name='editar_cap'),
 	url(r'^senha/$', views.alterarSenha, name='edit_senha'),
+	url(r'^regras/$', views.regras, name='regras'),
+	url(r'^avaliadores/$', views.avaliadores, name='avaliadores'),
 
 ]

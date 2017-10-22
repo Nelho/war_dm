@@ -20,8 +20,8 @@
   <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
   <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
   <a id="link" href={% url 'capituloHome'%} class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
-  <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
-    <a id="link" href="#" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
+  <a id="link" href="{% url "regras" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
+    <a id="link" href="{% url "avaliadores" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
 
   <!--
   <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>

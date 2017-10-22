@@ -6,6 +6,7 @@ from main.models import *
 from django.contrib.auth.decorators import permission_required, login_required
 from capitulo.models import *
 from main.views import redirect
+from avaliador.models import Gabinete_User
 
 @login_required()
 def cadastrarCapitulo(request):
@@ -143,8 +144,10 @@ def edit(request):
             capitulo.save()
             contato.save()
 
-            return HttpResponseRedirect('/capitulo/edit')
+            context = {"cadastro": True,"msgSucesso":"Dados alterados com sucesso!", "capitulo": capitulo, "capitulos": buscaCapitulos()}
+            return render(request, "capitulo/capitulo_home.html", context=context)
 
+@login_required()
 def alterarSenha(request):
     controle = controle_de_acesso(request)
     if controle != True:
@@ -178,6 +181,17 @@ def alterarSenha(request):
     senha_validada = True
     context = {"form": form, "capitulo": capitulo, "capitulos" : buscaCapitulos(), "senha_validada": senha_validada, "method": "GET"}
     return render(request, "capitulo/edit_senha_capitulo.html", context=context)
+
+def regras(request):
+    ##if(request.user.pk != None):
+    context = {"capitulos": buscaCapitulos()}
+    return render(request, "capitulo/regras_capitulo.html", context=context)
+
+def avaliadores(request):
+    ##if(request.user.pk != None):
+    avaliadoresMCR = Gabinete_User.objects.filter(tipo_usuario='AV')
+    context = {"capitulos": buscaCapitulos(), "avaliadores":avaliadoresMCR}
+    return render(request, "capitulo/avaliadores_capitulo.html", context=context)
 
 def controle_de_acesso(request):
     if not request.user.has_perm('capitulo.pode_cadastrar_relatorio'):

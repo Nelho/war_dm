@@ -1,0 +1,62 @@
+{% extends 'base_capitulo.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+{% block assets %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static "js/jquery.mask.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
+{% endblock %}
+
+{% block conteudo %}
+    <style>
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+    </style>
+
+    <div class="w3-card-4 w3-gray-ligth">
+        <div class="w3-container w3-red">
+            <h2>Avaliadores
+            </h2>
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-col m2 w3-center w3-gray-ligth">
+                <button class="w3-gray-ligth w3-button w3-show"></button>
+            </div>
+
+            <div class="w3-col m8 w3-gray-ligth">
+
+                {% for avaliador in avaliadores %}
+                <div class="w3-row-padding ">
+                    <div class="w3-col" style="width:50%">
+                        <div class="w3-row w3-section">
+                            <div class="w3-rest">
+                                <h4><b>Nome:</b> {{ avaliador.user.first_name }}</h4>
+                                <h4><b>Sua região:</b> {{ avaliador.regiao }}</h4>
+                                <h4><b>Região da correção:</b> {{ avaliador.regiao_correcao }}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-col" style="width:50%">
+                        <div class="w3-row w3-section">
+                            <div class="w3-rest">
+                                <img src="{{ avaliador.foto.url }}" style="width: 85%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <hr class="w3-gray w3-border">
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+    </div>
+
+{% endblock %}
