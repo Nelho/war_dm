@@ -9,9 +9,11 @@ function w3_open() {
     if (mySidebar.style.display === 'block') {
         mySidebar.style.display = 'none';
         overlayBg.style.display = "none";
+        resize_mapa();
     } else {
         mySidebar.style.display = 'block';
         overlayBg.style.display = "block";
+        resize_mapa();
     }
 }
 
@@ -19,13 +21,17 @@ function w3_open() {
 function w3_close() {
     mySidebar.style.display = "none";
     overlayBg.style.display = "none";
+    resize_mapa();
 }
 
 function controleDropdown(elementId) {
     var x = document.getElementById(elementId);
     if (x.className.indexOf("w3-show") == -1) {
         x.className += " w3-show";
+        resize_mapa();
     } else { 
         x.className = x.className.replace(" w3-show", "");
+        resize_mapa();
     }
 }
+

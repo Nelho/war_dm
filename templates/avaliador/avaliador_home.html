@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="{% static "js/avaliador_home.js" %}"></script>
+<!--<script src="{% static "js/avaliador_home.js" %}"></script>-->
 {% endblock %}
 
 {% block conteudo%}	
@@ -22,10 +22,10 @@
 	          <button class="w3-button fa fa-bars w3-hover-red w3-red w3-btn"></button>
 	          <div style="right:0;" class="w3-dropdown-content w3-bar-block w3-card-4">
 	              <a onclick="request_ajax_mapa()" class="fa fa-map-marker w3-bar-item w3-button w3-hover-red"> Mapa</a><hr style="margin:0px">
-	              <a onclick="request_ajax_relatorio('aprovado', 'Aprovados')"class="fa fa-check w3-bar-item w3-button w3-hover-red"> Relatórios aprovados</a><hr style="margin:0px">
-	              <a onclick="request_ajax_relatorio('correcao', 'Correção')" class="fa fa-exclamation-triangle w3-bar-item w3-button w3-hover-red"> Relatórios correção</a><hr style="margin:0px">
-	              <a onclick="request_ajax_relatorio('rejeitado', 'Rejeitados')" class="fa fa-window-close w3-bar-item w3-button w3-hover-red"> Relatórios rejeitados</a><hr style="margin:0px">
-	              <a onclick="request_ajax_relatorio('enviado', 'Enviados')" class="fa fa-envelope-open-o w3-bar-item w3-button w3-hover-red"> Relatórios enviados</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=aprovado&pagina=1" class="fa fa-check w3-bar-item w3-button w3-hover-red"> Relatórios aprovados</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=correcao&pagina=1" class="fa fa-exclamation-triangle w3-bar-item w3-button w3-hover-red"> Relatórios correção</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=rejeitado&pagina=1" class="fa fa-window-close w3-bar-item w3-button w3-hover-red"> Relatórios rejeitados</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=enviado&pagina=1" class="fa fa-envelope-open-o w3-bar-item w3-button w3-hover-red"> Relatórios enviados</a><hr style="margin:0px">
 	          </div>
 	      </div>
 	    </div>
@@ -50,11 +50,25 @@
 			    {% endfor%}
 			   </table>
 			</div>
+
+			    <div class="w3-container w3-center" style="margin-top:10px">
+					<div class="w3-bar w3-border w3-red">
+						<a href="?filtro={{filtro}}&pagina={{relatorios.number|add:'-1'}}" class="w3-bar-item w3-button">Anterior</a>
+						{%for i in relatorios.paginator.page_range%}
+							{%if i == relatorios.number%}
+								<a href="?filtro={{filtro}}&pagina={{i}}" class="w3-bar-item w3-button w3-gray">{{i}}</a>
+							{% elif i > relatorios.number|add:'-2' and i < relatorios.number|add:'2' %}
+								<a href="?filtro={{filtro}}&pagina={{i}}" class="w3-bar-item w3-button">{{i}}</a>
+							
+							{%endif%}
+							
+						{%endfor%}
+				  		<a href="?filtro={{filtro}}&pagina={{relatorios.number|add:'1'}}" class="w3-bar-item w3-button">Próximo</a>
+					</div>
+				</div>
+			  </div>
 			
 	    </div>
-		
-	  </div>
-	  
 	</div>
 
 {% endblock conteudo%}

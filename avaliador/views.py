@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 import json
 from django.core import serializers
+from django.core.paginator import Paginator, InvalidPage, EmptyPage
 
 # Create your views here.
 def cadastro_avaliador(request):
@@ -180,17 +181,49 @@ def controle_acesso(request):
         context = {"url":request.build_absolute_uri(), "url_redirect": url_redirect}
         return render(request, "acesso_negado.html", context=context)
     return True
+
+QTD_ELEMENTOS_POR_PAGINA = 2
+def paginator_conf(request, paginator):
+    #caso o valor passado como parâmetro no GET seja diferente de número
+    try:
+        pagina = int(request.GET.get('pagina', '1'))
+        pagina = 1 if pagina <= 0 else pagina
+    except ValueError:
+        pagina = 1
+
+    #caso o número de página passado como parâmetro não esteja dentro do interavalo da consulta no BD
+    try:
+        relatorios = paginator.page(pagina)
+    except (EmptyPage, InvalidPage):
+        relatorios = paginator.page(paginator.num_pages)
+    return relatorios
+
+filtros_dict = {
+    "aprovado": "S1",
+    "rejeitado": "S2",
+    "correcao": "S3",
+    "enviado": "S4"
+
+}
 ############################################
 @login_required()
 def avaliador_home(request):
-    ##request.user.email_user('TESTE',"TESTE")
     controle = controle_acesso(request)
     if controle != True:
         return controle
+
+    filtro = request.GET.get("filtro", "enviado")
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulos_corrigir = conf_home(request, corretor)
-    relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, status='S4').only('capitulo').order_by('data_envio') # '-data_envio'
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir, "corretor": corretor, "next": request.path}
+    relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, 
+        status=filtros_dict[filtro]).only('capitulo').order_by('data_envio') # '-data_envio'
+    paginator = Paginator(relatorios_corrigir, QTD_ELEMENTOS_POR_PAGINA)    
+    relatorios_paginados = paginator_conf(request, paginator)
+
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_paginados, 
+    "corretor": corretor, 
+    "next": request.path,
+    "filtro": filtro}
     return render(request, "avaliador/avaliador_home.html", context=context)
 
 @login_required()
@@ -198,13 +231,18 @@ def avaliar_cap(request, numero_cap):
     controle = controle_acesso(request)
     if controle != True:
         return controle
+
+    filtro = request.GET.get("filtro", "enviado")
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulo = Capitulo_User.objects.get(numero=numero_cap)
     capitulos_corrigir = conf_home(request, corretor)
-    relatorios_corrigir = Formulario.objects.filter(status='S4', capitulo=numero_cap).order_by('data_envio')
-    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_corrigir,
+    relatorios_corrigir = Formulario.objects.filter(status=filtros_dict[filtro], capitulo=numero_cap).order_by('data_envio')
+    paginator = Paginator(relatorios_corrigir, QTD_ELEMENTOS_POR_PAGINA)
+    relatorios_paginados = paginator_conf(request, paginator)
+    context = {"capitulos":capitulos_corrigir, "relatorios": relatorios_paginados,
                 "abrir": corretor.regiao_correcao == capitulo.regiao, "corretor": corretor, "next": request.path,
-                "numero_cap": capitulo.numero}
+                "numero_cap": capitulo.numero,
+                "filtro":filtro}
     return render(request, "avaliador/avaliador_list_relatorio_cap.html", context=context)
 
 @login_required()
@@ -252,13 +290,7 @@ def mapa(request):
         application = 'application/json'
         return HttpResponse(serializers.serialize("json", territorios) , application)
 
-filtros_dict = {
-    "aprovado": "S1",
-    "rejeitado": "S2",
-    "correcao": "S3",
-    "enviado": "S4"
-
-}
+# métodos desativados
 def filtro_relatorio(request, filtro):
     if request.is_ajax():
         application = "application/json"
@@ -289,7 +321,3 @@ def conf_relatorios_ajax(relatorios_corrigir):
         "territorio": relatorio.territorio.nome}
         lista.append(aux)
     return lista
-
-# função para deixar o datetime serializável
-def date_handler(obj):
-    return obj.isoformat() if hasattr(obj, 'isoformat') else obj
