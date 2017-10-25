@@ -12,9 +12,7 @@
             position: absolute;
         }
 
-        #img_point {
-            position: absolute;
-        }
+
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -77,7 +75,7 @@
                             pegarTerritorio('{{ territorio.nome }}','{{ territorio.descricao.lower }}','{{ territorio.pontuacao }}',
                             '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
                             '{{ territorio.pk }}','{{ territorio.foto.url }}')">
-                        <img style="position:absolute" id="{{ territorio.nome.upper }}"
+                        <img onerror="console.log('imagem não carregou')" style="position:absolute" id="{{ territorio.nome.upper }}"
                              largura="{{ territorio.coord_top }}" altura="{{ territorio.coord_left }}"
                              src="{% static "imagens/point.png" %}" width="2%" href="#"></a>
                 {% endfor %}
@@ -144,6 +142,12 @@
         }
 
         resize_mapa();
+
+        // solução gambiarra para solucionar bug dos points enfileirados em cima da tela :(
+        if(mapa.width != main.clientWidth){
+            window.location.reload();
+        }
+        
         window.onresize = resize_mapa;
     </script>
 
