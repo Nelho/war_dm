@@ -126,7 +126,7 @@
     			var date_split = table.children[i].children[3].innerText.split("-");
     			var data_encerramento = new Date(parseInt(date_split[2]), parseInt(date_split[1]) - 1, parseInt(date_split[0]));
     			var diffDays = Math.round(Math.abs((data_encerramento.getTime() - data_atual.getTime())/(oneDay)));
-    			diffDays += 1;
+    			//diffDays += 1;
     			console.log(diffDays);
     			if(diffDays <= 2){
     				table.children[i].children[4].innerHTML = "<label class='w3-red'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
