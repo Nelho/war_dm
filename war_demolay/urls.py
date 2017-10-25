@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^', include("main.urls", namespace="main")),
     url(r'^capitulo/', include("capitulo.urls")),
     url(r'^territorio/', include("mapa.urls")),
+    url(r'^inicio/', include('inicio.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
