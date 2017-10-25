@@ -9,5 +9,6 @@ urlpatterns = [
 	url(r'^senha/$', views.alterarSenha, name='edit_senha'),
 	url(r'^regras/$', views.regras, name='regras'),
 	url(r'^avaliadores/$', views.avaliadores, name='avaliadores'),
+	url(r'^legenda/$', views.legenda_territorios, name="legenda_territorios")
 
 ]

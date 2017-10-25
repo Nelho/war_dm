@@ -193,6 +193,18 @@ def avaliadores(request):
     context = {"capitulos": buscaCapitulos(), "avaliadores":avaliadoresMCR}
     return render(request, "capitulo/avaliadores_capitulo.html", context=context)
 
+def legenda_territorios(request):
+    print(datetime.date.today())
+    ##data_encerramento__gte gte significa maior ou igual
+    ##data_encerramento__lte lte significa menor ou igual
+    ## bigger then
+    ## less then
+    territorios = Territorio.objects.filter(data_encerramento__gte=datetime.date.today()).order_by("data_encerramento")
+    context = {"capitulos": buscaCapitulos(),
+                "territorios": territorios,
+                "data_atual": datetime.date.today()}
+    return render(request, "capitulo/legenda_territorios.html", context=context)
+
 def controle_de_acesso(request):
     if not request.user.has_perm('capitulo.pode_cadastrar_relatorio'):
         url_redirect = redirect(request)

@@ -18,3 +18,6 @@ class Territorio(models.Model):
 
     def natural_key(self):
         return self.nome
+
+    def __str__(self):
+        return self.nome
