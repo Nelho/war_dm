@@ -7,207 +7,74 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<body id="myPage">
+<body>
 
-<!-- Navbar -->
-		<div class="w3-top">
- 			<div class="w3-bar w3-theme-d2 w3-left-align">
- 				<a href="#" class="w3-bar-item w3-button w3-teal"><i class="fa fa-home w3-margin-right"></i>Inicio</a>
-  				<a href="#avaliadores" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Avaliadores</a>
-  				<a href="#regras" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Regras</a>
-  				<a href="#noticias" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Notícias</a>
-  				<a href="#mapa" class="w3-bar-item w3-button w3-hide-small w3-hover-white">Mapa</a>
-    			<div class="w3-dropdown-hover w3-hide-small">
-    				<button class="w3-button" title="Notifications">Capítulos <i class="fa fa-caret-down"></i></button>     
-    				<div class="w3-dropdown-content w3-card-4 w3-bar-block">
-     					<a href="#" class="w3-bar-item w3-button">Link</a>
-      					<a href="#" class="w3-bar-item w3-button">Link</a>
-      					<a href="#" class="w3-bar-item w3-button">Link</a>
-    				</div>
-  				</div>
- 			</div>
+  <div class="w3-row"><!--conteiner principal!-->
 
 
-		</div>
+    <div class="w3-col l2 m6 s4 w3-white w3-center"><!--container da barra lateral esquerda!--><p></p></div><!--final do conteiner da barra lateral esquerda!-->
 
-<!-- Image Header -->
-		<div class="w3-display-container w3-animate-opacity">
-  			<img src="/static/imagens/fundo.jpg" alt="boat" style="width:100%;min-height:350px;height:620px;">
-		</div>
+    
+    <div id="div_central" class="w3-col l8 m6 s4" style="margin-top: 100px"><!--container central!-->
 
-		<div class="w3-container w3-padding-64 w3-center" id="avaliadores" style="margin-top: 20px; margin-bottom: 80px ">
-			<h2>Avaliadores</h2>
 
-			<div class="w3-row"><br><br><br>
+      <!--Barra de navegação!-->
 
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-  					<h3>Johnny Walker</h3>
-  					<p>Web Designer</p>
-				</div>
+      <a href="#" class="w3-bar-item w3-button w3-hover-red"><i class="fa fa-home w3-margin-right"></i>Inicio</a>
+      <a href="#team" class="w3-bar-item w3-button w3-hover-red">Avaliadores</a>
+      <a href="#work" class="w3-bar-item w3-button w3-hover-red">Regras</a>
+      <a href="#pricing" class="w3-bar-item w3-button w3-hover-red">Notícias</a>
+      
+      <div class="w3-dropdown-hover w3-hide-small" style="float: right; margin-right: 10px;">   
+        <button class="w3-button w3-hover-red" title="Notifications">Dropdown <i class="fa fa-caret-down"></i></button>  
+        <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+          <a href="#" class="w3-bar-item w3-button">Link</a>
+          <a href="#" class="w3-bar-item w3-button">Link</a>
+          <a href="#" class="w3-bar-item w3-button">Link</a>
+        </div>
+      </div>
+      <!--Final da barra de navegação!-->
 
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-  				<h3>Rebecca Flex</h3>
-  				<p>Support</p>
-				</div>
 
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-  					<h3>Jan Ringo</h3>
-  					<p>Boss man</p>
-				</div>
+      <div class="w3-grey w3-center" style="margin-top: 50px">
 
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-  					<h3>Kai Ringo</h3>
-  					<p>Fixer</p>
-				</div>
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%; margin-top: 70px;" class="w3-circle w3-hover-opacity">
-  					<h3>Kai Ringo</h3>
-  					<p>Fixer</p>
-				</div>
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%; margin-top: 70px;" class="w3-circle w3-hover-opacity">
-  					<h3>Kai Ringo</h3>
-  					<p>Fixer</p>
-				</div>
-				<div class="w3-quarter">
-  					<img src="/w3images/avatar.jpg" alt="Boss" style="width:45%; margin-top: 70px;" class="w3-circle w3-hover-opacity">
-  					<h3>Kai Ringo</h3>
-  					<p>Fixer</p>
-				</div>
 
-			</div>
-		</div>
+        <p>Conteúdo</p>
 
-<!-- Work Row -->
-		<div class="w3-row-padding w3-padding-64 w3-theme-l1" id="regras">
+      </div>
 
-			<div class="w3-quarter">
-				<h2>Our Work</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-			</div>
-			<div class="w3-quarter" >
-				<div class="w3-card w3-white">
-  					<img src="/w3images/mountains.jpg" alt="Monterosso" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 3</h3>
-  						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
+    </div><!--final do conteiner central!-->
 
-			<div class="w3-quarter">
-				<div class="w3-card w3-white">
-  					<img src="/w3images/mountains.jpg" alt="Monterosso" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 3</h3>
-  						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
-
-			<div class="w3-quarter">
-				<div class="w3-card w3-white">
-  					<img src="/w3images/mountains.jpg" alt="Monterosso" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 3</h3>
-  						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
-
-			<div class="w3-quarter" style="margin-top: 20px">
-				<div class="w3-card w3-white">
-  					<img src="/w3images/fjords.jpg" alt="Vernazza" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 1</h3>
-  						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
-
-			<div class="w3-quarter" style="margin-top: 20px">
-				<div class="w3-card w3-white">
-  					<img src="/w3images/lights.jpg" alt="Cinque Terre" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 2</h3>
- 						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
-
-			<div class="w3-quarter" style="margin-top: 20px">
-				<div class="w3-card w3-white">
-  					<img src="/w3images/mountains.jpg" alt="Monterosso" style="width:100%">
-  					<div class="w3-container">
-  						<h3>Customer 3</h3>
-  						<h4>Trade</h4>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  						<p>Blablabla</p>
-  					</div>
-  				</div>
-			</div>
+    
 
 
 
-		</div>
-
-<!-- Pricing Row -->
-	<div class="w3-row-padding w3-center w3-padding-64" id="noticias">
-	    <h2>Notícias</h2>
- 	   <p>Choose a pricing plan that fits your needs.</p><br>
-
-	
-
-	</div>
-
-<!-- Contact Container -->
-	<div class="w3-container w3-center w3-padding-64 w3-theme-l5" id="mapa">
-		<h2>Mapa</h2>
-    	
 
 
 
-	</div>
 
 
-<!-- Footer -->
-	<footer class="w3-container w3-padding-32 w3-theme-d1 w3-center">
-		<h4>Follow Us</h4>
 
-  		<p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
 
-  		<div style="position:relative;bottom:100px;z-index:1;" class="w3-tooltip w3-right">
-    		<span class="w3-text w3-padding w3-teal w3-hide-small">Inicio</span>   
-    		<a class="w3-button w3-theme" href="#myPage"><span class="w3-xlarge">
-    		<i class="fa fa-chevron-circle-up"></i></span></a>
- 	 	</div>
-	</footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="w3-col l2 m3 s4 w3-grey w3-center"><!--conteiner da barra lateral direita!--></div><!--final do conteiner da barra lateral direita!-->
+
+
+
+
+  </div>
 
 </body>
 </html>
