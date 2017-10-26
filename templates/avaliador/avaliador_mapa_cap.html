@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-{% extends 'base_capitulo.html' %}
+{% extends 'base_avaliador.html' %}
 {% load staticfiles %}
 
-{% block assets %}
-    <style>
+{%block assets%}
+	<style>
         #principal {
             position: relative;
         }
@@ -16,24 +15,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
-        function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id, foto) {
+        function pegarTerritorio(nome, descricao, pontuacao, bonus, territorio_id, foto) {
             var url = window.location.protocol + "//" + window.location.host;
             var img = document.getElementById("profile_territorio");
             img.setAttribute("src", url + foto)
             document.getElementById("titulo_modal_id").innerHTML = nome.toUpperCase()
-            var href = document.getElementById("id_cadastrar").getAttribute('href')
-            console.log(href)
-            document.getElementById("id_cadastrar").setAttribute("href", href.substr(0, 21) + territorio_id)
             document.getElementById("modal_id").innerHTML = "" +
                 "                            <div class=\"w3-rest\">\n" +
                 "                            <div class=\"w3-topbar w3-large\"><b>Território: " + nome + "</b><br></div>" +
                 "                            <div class=\"w3-topbar w3-large\"><b>Descrição: " + descricao + "</b><br></div>" +
                 "                            <div class=\"w3-topbar w3-large\"><b>Pontuação: " + pontuacao + "</b><br></div>" +
-                "                            <div class=\"w3-topbar w3-large\"><b>Bônus: " + bonus + "</b><br></div>" +
-                "                            <div class=\"w3-topbar w3-large\"><b>Data abertura: " + data_abertura + "</b><br></div>" +
-                "                            <div class=\"w3-topbar w3-large\"><b>Data encerramento: " + data_encerramento + "</b><br>" +
-                "                            </div>" +
-                "                        </div>"
+                "                            <div class=\"w3-topbar w3-large\"><b>Bônus: " + bonus + "</b><br></div>";
+                                            
         }
 
         $(document).ready(function () {
@@ -44,16 +37,11 @@
             })
         })
     </script>
-{% endblock %}
-{% block conteudo %}
-    <div class="w3-container">
-        {% if cadastro == True %}
-            <div id="cadastro-sucesso" class="w3-animate-zoom">
-                <div class="w3-panel w3-green w3-card-4" style="margin-top:-10px">
-                    <p>{{ msgSucesso }} </p>
-                </div>
-            </div>
-        {% endif %}
+{%endblock assets%}
+
+{%block conteudo%}
+
+	<div class="w3-container">
         <div id="main" class="w3-container w3-red" style="padding: 8px">
             <h2 style="display:inline;">Territórios</h2>
             <div class="w3-dropdown-hover w3-right">
@@ -67,20 +55,24 @@
         </div>
         <div class="w3-row">
             <div id="principal">
-                <img  onload="console.log('imagem carregada'); resize_mapa(); var aux = true" id="img_mapa" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa" usemap="#mapa_war">
-                {% for territorio in territorios %}
+                <img  onload="console.log('imagem carregada'); resize_mapa();" id="img_mapa" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa" usemap="#mapa_war">
+                {% for conquista in conquistas %}
                     <a onclick="document.getElementById('id01').style.display='block',
-                            pegarTerritorio('{{ territorio.nome }}','{{ territorio.descricao.lower }}','{{ territorio.pontuacao }}',
-                            '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
-                            '{{ territorio.pk }}','{{ territorio.foto.url }}')">
-                        <img style="position:absolute;cursor: pointer" id="{{ territorio.nome.upper }}"
-                             largura="{{ territorio.coord_top }}" altura="{{ territorio.coord_left }}"
-                             src="{% static "imagens/point_disponivel.png" %}" width="3%" href="#"></a>
+                            pegarTerritorio('{{ conquista.territorio.nome }}','{{ conquista.territorio.descricao.lower }}','{{ conquista.territorio.pontuacao }}',
+                            '{{ conquista.pontuacao_bonus }}','{{ conquista.territorio.pk }}','{{ conquista.territorio.foto.url }}')">
+                        <img style="position:absolute;cursor: pointer; z-index:1" id="{{ conquista.territorio.nome.upper }}"
+                             largura="{{ conquista.territorio.coord_top }}" altura="{{ conquista.territorio.coord_left }}"
+                             src="{% static "imagens/bandeira_conquista.png" %}" width="3%" href="#"></a>
+
+                       {%if conquista.pontuacao_bonus > 0%}
+                       		<a><img style="position:absolute;cursor: pointer" id="{{ conquista.territorio.nome.upper }}"
+                       		                             largura="{{ conquista.territorio.coord_top|add:'-50' }}" altura="{{ conquista.territorio.coord_left|add:'-40' }}"
+                       		                             src="{% static "imagens/bandeira_bonus.png" %}" width="3%" href="#"></a>
+                       {%endif%}
                 {% endfor %}
             </div>
         </div>
     </div>
-
 
     <!-- Modal -->
     <div id="id01" class="w3-modal">
@@ -108,16 +100,13 @@
             <div class="w3-row-padding">
             </div>
             <div id="modal_barra_inferior_id" class="w3-container w3-light-grey w3-padding">
-                <a id="id_cadastrar" class="w3-btn w3-red w3-left w3-border w3-large w3-hover-red"
-                   href="{% url 'cadastroFormulario' 0 %}">Cadastrar relatório
-                </a>
+                
                 <button class="w3-btn w3-right w3-white w3-border "
                         onclick="document.getElementById('id01').style.display='none'">Fechar
                 </button>
             </div>
         </div>
     </div>
-
 
     <script>
         var mapa = document.getElementById("img_mapa");
@@ -129,6 +118,7 @@
             var porcentagem_altura = mapa.height / mapa.naturalHeight;
             for (i = 1; i < principal.children.length; i++) {
                 var point = principal.children[i].children[0];
+                console.log()
                 point.style.left = (parseInt(point.getAttribute("largura")) * porcentagem_largura) + "px";
                 point.style.top = (parseInt(point.getAttribute("altura")) * porcentagem_altura) + "px";
             }
@@ -148,14 +138,4 @@
         
         window.onresize = resize_mapa;
     </script>
-
-    <script>
-        window.onload = function () {
-            var segundos = 2;
-            setTimeout(function () {
-                $("#cadastro-sucesso").fadeOut("slow")
-            }, 1000 * segundos)
-        };
-    </script>
-
-{% endblock %}
+{%endblock conteudo%}

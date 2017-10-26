@@ -1,20 +1,21 @@
 from django.shortcuts import render
 from mapa.models import Territorio
+from capitulo.models import Formulario
 
 # Create your views here.
-
-def listTerritorios(request):
+def conquista_capitulo(numero_cap):
     territorios = Territorio.objects.all()
-    context = {"territorios": territorios}
-    return render(request, "mapa/war_territorios.html", context=context)
+    conquistas = []
+    for territorio in territorios:
+        relatorios = Formulario.objects.filter(capitulo=numero_cap, status="S1", territorio=territorio.id)
+        if relatorios.count() >= 1:
+            pacote = {"territorio": territorio}
+            pontuacao_bonus = 0
+            for relatorio in relatorios:
+                pontuacao_bonus += relatorio.pontuacao_bonus
+            pacote["pontuacao_bonus"] = pontuacao_bonus
+            pacote["pontuacao"] = territorio.pontuacao
+            conquistas.append(pacote)
+    return conquistas
 
-def territorioDetail(request, id):
-    territorio = Territorio.objects.get(pk=id)
-    print(territorio.descricao)
-    context = {"territorio" : territorio}
-    return render(request,"mapa/territorio_detail.html", context=context)
 
-def mapaTerritorios(request):
-    territorios = Territorio.objects.all()
-    context = {"brasil": territorios[0], "Japao" : territorios[1]}
-    return render(request, "mapa/war_territorios2.html", context=context)

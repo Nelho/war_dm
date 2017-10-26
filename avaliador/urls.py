@@ -9,6 +9,5 @@ urlpatterns = [
 	url(r'^cap/(?P<numero_cap>[0-9]+)/$', views.avaliar_cap, name="cap_numero"),
 	url(r'^relatorio/(?P<id>\d+)/$', views.corrigir_relatorio, name="corrigir_relatorio"),
 	url(r'^mapa/$', views.mapa, name='mapa'),
-	url(r'^relatorios/(?P<filtro>\w+)/$', views.filtro_relatorio, name="filtro_relatorio_geral")
-	
+	url(r'^cap/(?P<numero_cap>[0-9]+)/mapa/$', views.mapa_cap, name="mapa_cap"),
 ]

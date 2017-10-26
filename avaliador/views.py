@@ -11,11 +11,8 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import permission_required, login_required
 from main.views import redirect
 from mapa.models import Territorio
-from django.http import HttpResponse
-from django.http import JsonResponse
-import json
-from django.core import serializers
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
+from mapa.views import conquista_capitulo
 
 # Create your views here.
 def cadastro_avaliador(request):
@@ -283,41 +280,18 @@ def corrigir_relatorio(request, id):
             print(request.GET.get("next", "/avaliador/home"))
             return HttpResponseRedirect(request.GET.get("next", "/avaliador/home"))
 
-## requests ajax
 def mapa(request):
-    if request.is_ajax():
-        territorios = Territorio.objects.all()
-        application = 'application/json'
-        return HttpResponse(serializers.serialize("json", territorios) , application)
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulos_corrigir = conf_home(request, corretor)
+    context = {"capitulos": capitulos_corrigir,
+                "corretor":corretor}
+    return render(request, "avaliador/avaliador_mapa_geral.html", context=context)
 
-# métodos desativados
-def filtro_relatorio(request, filtro):
-    if request.is_ajax():
-        application = "application/json"
-        numero_cap = request.GET.get("numero_cap", None)
-        if numero_cap == None: # se entrar no if, vai carregar os relatórios gerais dos capítulos
-            corretor = Gabinete_User.objects.get(user_id=request.user.id)
-            relatorios_corrigir = Formulario.objects.filter(capitulo__regiao=corretor.regiao_correcao, 
-                status=filtros_dict[filtro]).only('capitulo').order_by('data_envio')
-            context = {"relatorios": conf_relatorios_ajax(relatorios_corrigir),
-                        "abrir_relatorio": True}
-            return HttpResponse(json.dumps(context), application)
-        else:
-            corretor = Gabinete_User.objects.get(user_id=request.user.id)
-            capitulo = Capitulo_User.objects.get(numero=numero_cap)
-            relatorios_corrigir = Formulario.objects.filter(status=filtros_dict[filtro], 
-                capitulo=numero_cap).order_by('data_envio')
-            context = {"relatorios": conf_relatorios_ajax(relatorios_corrigir),
-                        "abrir_relatorio": capitulo.regiao == corretor.regiao_correcao}
-            
-            return HttpResponse(json.dumps(context), application)
-
-def conf_relatorios_ajax(relatorios_corrigir):
-    lista = []
-    for relatorio in relatorios_corrigir:
-        aux = {"pk": relatorio.pk,
-        "capitulo": relatorio.capitulo.user.first_name,
-        "data_envio": str(relatorio.data_envio),
-        "territorio": relatorio.territorio.nome}
-        lista.append(aux)
-    return lista
+def mapa_cap(request, numero_cap):
+    corretor = Gabinete_User.objects.get(user_id=request.user.id)
+    capitulos_corrigir = conf_home(request, corretor)
+    conquistas = conquista_capitulo(numero_cap)
+    context = {"capitulos": capitulos_corrigir,
+                "corretor":corretor,
+                "conquistas": conquistas}
+    return render(request, "avaliador/avaliador_mapa_cap.html", context=context)
