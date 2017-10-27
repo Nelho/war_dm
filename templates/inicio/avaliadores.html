@@ -15,30 +15,18 @@
      			<div class="w3-container w3-padding-64 w3-center" id="team">
      			<div class="w3-row"><br>
 
+                    {% for avaliador in avaliadores %}
      			<div class="w3-quarter">
-     			  <img src="/static/imagens/avatar-demolay.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  <h3>Neto Breba</h3>
-     			  <p>Avaliador 1° Região</p>
-     			</div>
+     			  <img src="{{ avaliador.foto.url }}}" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
+     			  Nome<p>{{ avaliador.user }}</p>
+     			  Sua Região: <p>{{ avaliador.regiao }}</p>
+                      Região da Correção: <p>{{ avaliador.regiao_correcao }}</p>
+                    </div>
+                    {% endfor %}
 
-     			<div class="w3-quarter">
-     			  <img src="/static/imagens/avatar-demolay.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  <h3>Matheus Nícolas</h3>
-     			  <p>Avaliador 2° Região</p>
-     			</div>
+     			
 
-     			<div class="w3-quarter">
-     			  <img src="/static/imagens/avatar-demolay.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  <h3>Sergio Ewerton</h3>
-     			  <p>Avaliador 3° Região</p>
-     			</div>
-
-     			<div class="w3-quarter">
-     			  <img src="/static/imagens/avatar-demolay.png" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  <h3>Uélio Dornelas</h3>
-     			  <p>Avaliador 4° Região</p>
-     			</div>
-
+     			
      			</div>
      			</div>
 
