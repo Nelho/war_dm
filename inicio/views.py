@@ -5,3 +5,6 @@ def mapa_inicio(request):
 
 def regras_inicio(request):
     return render(request, 'inicio/regras.html')
+
+def avaliadores(request):
+	return render(request, 'inicio/avaliadores.html')
