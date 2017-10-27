@@ -1,99 +1,12 @@
+{% extends 'base_home.html' %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Início</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!--CSS DO INPUT DE BUSCA!-->
-<style> 
-input[type=text] {
-
-    margin-top: 30px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    width: 91%;
-    border: 2px solid #ffffff;
-    border-radius: 4px;
-    font-size: 15px;
-    background-color: white;
-    background-position: 10px 10px; 
-    background-repeat: no-repeat;
-    padding: 6px 15px 6px 15px;
-
-}
-</style>
-
-</head>
-  <body>
-
-    <div class="w3-row"><!--conteiner principal!-->
-
-
-      <div class="w3-col l2 m6 s4 w3-white w3-center"><!--container da barra lateral esquerda!--><p></p></div><!--final do conteiner da barra lateral esquerda!-->
-
-    
-      <div id="div_central" class="w3-col l8 m6 s4" style="margin-top: 100px"><!--container central!-->
-
-
-      <!--Barra de navegação!-->
-
-        <a href="#" class="w3-bar-item w3-button w3-hover-red"><i class="fa fa-home w3-margin-right"></i>Inicio</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Mapa</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Avaliadores</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Regras</a>
-        <button onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-hover-red" style="float: right;">Login</button>
-        <div id="id01" class="w3-modal">
-          <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:400px">
-            <div class="w3-center"><br>
-              <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-hover-red w3-display-topright" title="Close Modal">×</span>
-              <img  src="/static/imagens/avatar-demolay.png" alt="Avatar" style="width:25%; background-color: white;" class="w3-circle w3-margin-top">
-            </div>
-
-
-            <div class="w3-container" style="margin-top: 20px;">
-              
-              <form class="w3-container" action="/action_page.php">
-                <div class="w3-section">
-                  <input class="w3-input w3-border w3-margin-bottom" placeholder="Usuário" style="border-radius: 4px;">
-                  <input class="w3-input w3-border" placeholder="Senha" style="border-radius: 4px;">
-                  <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" style="border-radius: 4px;">Entrar</button>
-                  <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Lembrar-me
-                </div>
-              </form>
-
-            </div>
-          
-            <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
-              <button onclick="document.getElementById('id01').style.display='none'" type="button" class="w3-button w3-red" style="border-radius: 4px;">Cancelar</button>
-              <span class="w3-right w3-padding w3-hide-small">Esqueceu a <a href="#">senha?</a></span>
-            </div>
-          </div>
-        </div>
-
-
-
-      <!--Final da barra de navegação!-->
-
-
-        <div class="w3-red"> <!--Conteúdo!-->
-
-          <form >
-            <input type="text" name="search" placeholder="Buscar capítulo" ><button class="w3-bar-item w3-button w3-hover-white" style="border-radius: 4px; margin-bottom: 4px;"><i class="fa fa-search"></i></button>
-
-          </form>
-        </div><!--Final do Conteúdo!-->
-
-      </div><!--final do conteiner central!-->
-
-      <div class="w3-col l2 m3 s4 w3-grey w3-center"><!--conteiner da barra lateral direita!--></div><!--final do conteiner da barra lateral direita!-->
-    </div>
+	
 
     {% block conteudo %}
+     
     {% endblock %}
 
   </body>
