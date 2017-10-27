@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>início</title>
+	<title>War DeMolay - Mapa Geral</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -11,9 +11,6 @@
   <link rel="stylesheet" type="text/css" href="{% static "css/base_html_home.css" %}">
 
 <!--CSS DO INPUT DE BUSCA!-->
-<style> 
-
-</style>
 
 </head>
   <body>
@@ -67,21 +64,25 @@
       <!--Final da barra de navegação!-->
 
 
-        <div class="w3-red"> <!--Conteúdo!-->
+        <div class="w3-red" > <!--Conteúdo!-->
 
           <form >
             <input type="text" name="search" placeholder="Buscar capítulo" ><button class="w3-bar-item w3-button w3-hover-white" style="border-radius: 4px; margin-bottom: 4px;"><i class="fa fa-search"></i></button>
 
           </form>
+
+          {% block conteudo %}
+          {% endblock %}
         </div><!--Final do Conteúdo!-->
+
+       
 
       </div><!--final do conteiner central!-->
 
       <div class="w3-col l2 m3 s4 w3-grey w3-center"><!--conteiner da barra lateral direita!--></div><!--final do conteiner da barra lateral direita!-->
     </div>
 
-    {% block conteudo %}
-    {% endblock %}
+
 
   </body>
 </html>
