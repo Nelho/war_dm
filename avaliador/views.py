@@ -273,7 +273,7 @@ def corrigir_relatorio(request, id):
         form = FormularioForm(request.POST, request.FILES)
         if form.is_valid():
             formulario = Formulario.objects.get(pk=id)
-            formulario.pontuacao_bonus = form.cleaned_data['pontuacaoBonus']
+            formulario.pontuacao_bonus = form.cleaned_data['pontuacaoBonus'] if form.cleaned_data['pontuacaoBonus'] != None else 0
             formulario.observacoes = form.cleaned_data['observacao']
             formulario.status = form.cleaned_data['status']
             formulario.save()
