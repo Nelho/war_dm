@@ -27,9 +27,9 @@
       <!--Barra de navegação!-->
 
         <a href="#" class="w3-bar-item w3-button w3-hover-red"><i class="fa fa-home w3-margin-right"></i>Inicio</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Mapa</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Avaliadores</a>
-        <a href="#" class="w3-bar-item w3-button w3-hover-red">Regras</a>
+        <a href="{% url "mapa_inicio" %}" class="w3-bar-item w3-button w3-hover-red">Mapa</a>
+        <a href="{% url "avaliadores" %}" class="w3-bar-item w3-button w3-hover-red">Avaliadores</a>
+        <a href="{% url "regras_inicio" %}" class="w3-bar-item w3-button w3-hover-red">Regras</a>
         <button onclick="document.getElementById('id01').style.display='block'" class="w3-bar-item w3-button w3-hover-red" style="float: right;">Login</button>
         <div id="id01" class="w3-modal">
           <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:400px">
