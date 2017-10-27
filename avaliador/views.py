@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import permission_required, login_required
 from main.views import redirect
 from mapa.models import Territorio
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
-from mapa.views import conquista_capitulo
+from mapa.views import conquista_capitulo, mapa_geral
 
 # Create your views here.
 def cadastro_avaliador(request):
@@ -283,8 +283,10 @@ def corrigir_relatorio(request, id):
 def mapa(request):
     corretor = Gabinete_User.objects.get(user_id=request.user.id)
     capitulos_corrigir = conf_home(request, corretor)
+    conquistas = mapa_geral()
     context = {"capitulos": capitulos_corrigir,
-                "corretor":corretor}
+                "corretor":corretor,
+                "conquistas": conquistas}
     return render(request, "avaliador/avaliador_mapa_geral.html", context=context)
 
 def mapa_cap(request, numero_cap):

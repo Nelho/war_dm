@@ -33,7 +33,6 @@ def mapa_geral():
             soma_pontuacao_bonus = 0
             for relatorio in relatorios:
                 soma_pontuacao_bonus += relatorio.pontuacao_bonus
-            print(relatorios.count())
             if(relatorios.count() != 0):
                 if cont == 0:
                     cont += 1
