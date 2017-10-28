@@ -8,27 +8,32 @@
     {% block conteudo %}
 
      	<div class="w3-container w3-center" >
-     		<div class="w3-card-4 w3-white w3-round" style="margin-bottom: 20px;">
+     		<div class="w3-card-4 w3-white w3-round">
                     <header class="w3-container  w3-black" style="border-radius: 4px">
                          <h1><strong>Avaliadores</strong></h1>
                     </header>
-     			<div class="w3-container w3-padding-64 w3-center" id="team">
-     			<div class="w3-row"><br>
+     			    
+                    <!-- Team Container -->
+                    <div class="w3-container w3-padding-64 w3-center" id="team" style="align-content: center;">
 
-                    {% for avaliador in avaliadores %}
-     			<div class="w3-quarter">
-     			  <img src="{{ avaliador.foto.url }}}" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  Nome<p>{{ avaliador.user.first_name }}</p>
-     			  Sua Região: <p>{{ avaliador.regiao }}</p>
-                      Região da Correção: <p>{{ avaliador.regiao_correcao }}</p>
+
+                {% for avaliador in avaliadores %}
+                    <div class="w3-quarter">
+                        <img src="/static/imagens/avatar-demolay.png"  style="width:45%" class="w3-circle w3-hover-opacity">
+                        <h4>Avaliador: {{ avaliador.user }}</h4>
+                        <p>Sua Região: {{ avaliador.regiao }}</p>
+                        <p>Região da Correção: {{ avaliador.regiao_correcao }}</p>                       
                     </div>
-                    {% endfor %}
+                {% endfor %}
 
+                    
+
+                    </div>
+                    </div>
      			
 
      			
-     			</div>
-     			</div>
+     			
 
      		</div>
      		
