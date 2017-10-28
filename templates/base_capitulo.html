@@ -17,12 +17,13 @@
 
 <div id="top-container" class="w3-bar w3-top w3-black w3-large" style="z-index:4">
   <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i>  Menu</button>
-  <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
-  <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
-  <a id="link" href={% url 'capituloHome'%} class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
-  <a id="link" href="{% url "regras" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
-  <a id="link" href="{% url "avaliadores" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
-  <a id="link" href="{% url "legenda_territorios" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-book"></i> Legenda Territórios</a>
+    <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
+    <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
+    <a id="link" href={% url 'capituloHome'%} class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
+    <a id="link" href="{% url "mapa_geral_capitulo" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Mapa geral</a>
+    <a id="link" href="{% url "regras" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
+    <a id="link" href="{% url "avaliadores_capitulo" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
+    <a id="link" href="{% url "legenda_territorios" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-book"></i> Legenda Territórios</a>
 
   <!--
   <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>

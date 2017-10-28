@@ -1,46 +1,48 @@
 {% extends 'base_capitulo.html' %}
-{%block assets%}
-	<script>
-		function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id, foto) {
-		    var url = window.location.protocol + "//" + window.location.host;
-		    var img = document.getElementById("profile_territorio");
-		    img.setAttribute("src", url + foto)
-		    document.getElementById("titulo_modal_id").innerHTML = nome.toUpperCase()
-		    var href = document.getElementById("id_cadastrar").getAttribute('href')
-		    console.log(href)
-		    document.getElementById("id_cadastrar").setAttribute("href", href.substr(0, 21) + territorio_id)
-		    document.getElementById("modal_id").innerHTML = "" +
-		        "                            <div class=\"w3-rest\">\n" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Território: " + nome + "</b><br></div>" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Descrição: " + descricao + "</b><br></div>" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Pontuação: " + pontuacao + "</b><br></div>" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Bônus: " + bonus + "</b><br></div>" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Data abertura: " + data_abertura + "</b><br></div>" +
-		        "                            <div class=\"w3-topbar w3-large\"><b>Data encerramento: " + data_encerramento + "</b><br>" +
-		        "                            </div>" +
-		        "                        </div>"
-		}
-	</script>
+{% block assets %}
+    <script>
+        function pegarTerritorio(nome, descricao, pontuacao, bonus, data_abertura, data_encerramento, territorio_id, foto) {
+            var url = window.location.protocol + "//" + window.location.host;
+            var img = document.getElementById("profile_territorio");
+            img.setAttribute("src", url + foto)
+            document.getElementById("titulo_modal_id").innerHTML = nome.toUpperCase()
+            var href = document.getElementById("id_cadastrar").getAttribute('href')
+            console.log(href)
+            document.getElementById("id_cadastrar").setAttribute("href", href.substr(0, 21) + territorio_id)
+            document.getElementById("modal_id").innerHTML = "" +
+                "                            <div class=\"w3-rest\">\n" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Território: " + nome + "</b><br></div>" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Descrição: " + descricao + "</b><br></div>" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Pontuação: " + pontuacao + "</b><br></div>" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Bônus: " + bonus + "</b><br></div>" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Data abertura: " + data_abertura + "</b><br></div>" +
+                "                            <div class=\"w3-topbar w3-large\"><b>Data encerramento: " + data_encerramento + "</b><br>" +
+                "                            </div>" +
+                "                        </div>"
+        }
+    </script>
 
-	<style>
-		
-	table {
-	  width:760px;
-		}
-		#celula1 {
-	  width: 100px;
-	  padding:10px;
-		}
-		#celula2 {
-	  width: 200px;
-	  padding:10px;
-		}
-	</style>
-{%endblock assets%}
+    <style>
 
-{%block conteudo%}
+        table {
+            width: 760px;
+        }
 
-	<div id="id01" class="w3-modal">
+        #celula1 {
+            width: 100px;
+            padding: 10px;
+        }
+
+        #celula2 {
+            width: 200px;
+            padding: 10px;
+        }
+    </style>
+{% endblock assets %}
+
+{% block conteudo %}
+
+    <div id="id01" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
             <header class="w3-container w3-red">
                     <span onclick="document.getElementById('id01').style.display='none'"
@@ -75,71 +77,82 @@
         </div>
     </div>
 
-	<div id="informacao_envio" class="w3-container">
+    <div id="informacao_envio" class="w3-container">
         <div class="w3-container w3-red" style="padding: 8px">
             <h2 style="display:inline;">Informações para Envio de Relatórios</h2>
+            <div class="w3-dropdown-hover w3-right">
+                <button class="w3-button fa fa-bars w3-hover-red w3-red w3-btn"></button>
+                <div style="right:0;" class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="{% url 'capituloHome' %}" class="fa fa-map-marker w3-bar-item w3-button w3-hover-red"> Mapa</a><hr style="margin:0px">
+                    <a href="{% url 'mapa_cap_individual' capitulo.numero %}" class="fa fa-trophy w3-bar-item w3-button w3-hover-red"> Minhas conquistas</a><hr style="margin:0px">
+                    <a href="{% url 'legenda_territorios' %}" class="fa fa-list-alt w3-bar-item w3-button w3-hover-red"> Legenda</a>
+                </div>
+            </div>
         </div>
-        <div class="w3-responsive w3-row"> 
-			   <table class="w3-table-all w3-hoverable">
-			     <thead>
-			       <tr class="w3-light-gray">
-			         <th>Nome</th>
-			         <th>Descrição</th>
-			         <th>Data Abertura</th>
-			         <th>Data Encerramento</th>
-			         <th>Restam</th>
-			         <th>Ação</th>
-			       </tr>
-			     </thead>
-			     <tbody id="body_table">
-			    {%for territorio in territorios%}
-					<tr>
-						<td id="celula1">{{territorio.nome}}</td>
-						<td id="celula1">{{territorio.descricao}}</td>
-						<td >{{territorio.data_abertura|date:"d-m-20y"}}</td>
-						<td>{{territorio.data_encerramento|date:"d-m-20y"}}</td>
-						<td>{{data_atual|date:"d-m-20y"}}</td>
-						<td><button onclick="document.getElementById('id01').style.display='block',
-                            pegarTerritorio('{{ territorio.nome }}','{{ territorio.descricao.lower }}','{{ territorio.pontuacao }}',
-                            '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
-                            '{{ territorio.pk }}','{{ territorio.foto.url }}')" class="w3-btn w3-green">Abrir</button></td>
-					</tr>
-			    {% endfor%}
-			    </tbody>
-			   </table>
+        <div class="w3-responsive w3-row">
+            <table class="w3-table-all w3-hoverable">
+                <thead>
+                <tr class="w3-light-gray">
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Data Abertura</th>
+                    <th>Data Encerramento</th>
+                    <th>Restam</th>
+                    <th>Ação</th>
+                </tr>
+                </thead>
+                <tbody id="body_table">
+                {% for territorio in territorios %}
+                    <tr>
+                        <td id="celula1">{{ territorio.nome }}</td>
+                        <td id="celula1">{{ territorio.descricao }}</td>
+                        <td>{{ territorio.data_abertura|date:"d-m-20y" }}</td>
+                        <td>{{ territorio.data_encerramento|date:"d-m-20y" }}</td>
+                        <td>{{ data_atual|date:"d-m-20y" }}</td>
+                        <td>
+                            <button onclick="document.getElementById('id01').style.display='block',
+                                    pegarTerritorio('{{ territorio.nome }}','{{ territorio.descricao.lower }}','{{ territorio.pontuacao }}',
+                                    '{{ territorio.bonus_max }}','{{ territorio.data_abertura }}','{{ territorio.data_encerramento }}',
+                                    '{{ territorio.pk }}','{{ territorio.foto.url }}')" class="w3-btn w3-green">Abrir
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
 
 
     <script>
-    	var oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
-    	var firstDate = new Date(2017,10,24);
-    	var secondDate = new Date(2017,10,25);
+        var oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+        var firstDate = new Date(2017, 10, 24);
+        var secondDate = new Date(2017, 10, 25);
 
-    	var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime())/(oneDay)));
+        var diffDays = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
 
-    	function diasRestantesAtividades(){
-    		var data_atual = new Date();
-    		var table = document.getElementById("body_table");
-    		for(i = 0; i < table.children.length; i++){
-    			var date_split = table.children[i].children[3].innerText.split("-");
-    			var data_encerramento = new Date(parseInt(date_split[2]), parseInt(date_split[1]) - 1, parseInt(date_split[0]));
-    			var diffDays = Math.round(Math.abs((data_encerramento.getTime() - data_atual.getTime())/(oneDay)));
-    			//diffDays += 1;
-    			console.log(diffDays);
-    			if(diffDays <= 2){
-    				table.children[i].children[4].innerHTML = "<label class='w3-red'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
-    			}else if(diffDays <= 5){
-    				table.children[i].children[4].innerHTML = "<label class='w3-orange'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
-    			}else{
-    				table.children[i].children[4].innerHTML = "<label class='w3-green'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
-    			}
-    		}
-    	}
+        function diasRestantesAtividades() {
+            var data_atual = new Date();
+            var table = document.getElementById("body_table");
+            for (i = 0; i < table.children.length; i++) {
+                var date_split = table.children[i].children[3].innerText.split("-");
+                var data_encerramento = new Date(parseInt(date_split[2]), parseInt(date_split[1]) - 1, parseInt(date_split[0]));
+                var diffDays = Math.round(Math.abs((data_encerramento.getTime() - data_atual.getTime()) / (oneDay)));
+                //diffDays += 1;
+                console.log(diffDays);
+                if (diffDays <= 2) {
+                    table.children[i].children[4].innerHTML = "<label class='w3-red'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
+                } else if (diffDays <= 5) {
+                    table.children[i].children[4].innerHTML = "<label class='w3-orange'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
+                } else {
+                    table.children[i].children[4].innerHTML = "<label class='w3-green'><strong>" + (diffDays + 1) + " dias" + "</strong></label>";
+                }
+            }
+        }
 
-    	diasRestantesAtividades();
+        diasRestantesAtividades();
 
 
     </script>
-{%endblock conteudo%}
+{% endblock conteudo %}
