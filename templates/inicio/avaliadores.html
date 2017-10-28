@@ -18,7 +18,7 @@
                     {% for avaliador in avaliadores %}
      			<div class="w3-quarter">
      			  <img src="{{ avaliador.foto.url }}}" alt="Boss" style="width:45%" class="w3-circle w3-hover-opacity">
-     			  Nome<p>{{ avaliador.user }}</p>
+     			  Nome<p>{{ avaliador.user.first_name }}</p>
      			  Sua Região: <p>{{ avaliador.regiao }}</p>
                       Região da Correção: <p>{{ avaliador.regiao_correcao }}</p>
                     </div>
