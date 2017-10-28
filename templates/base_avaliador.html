@@ -51,17 +51,22 @@
     {% endblock%}
     {% for capitulo in capitulos%}
 
-      <a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}}
-      {% if capitulo.1 == 0%}
+      {%if capitulo.2 == True%}
+        <a href="{% url "cap_numero" capitulo.0.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}}
+        {% if capitulo.1 == 0%}
 
-      {%elif capitulo.1 < 5%}
-        <span class="w3-badge w3-green">{{capitulo.1}}</span>
-      {% elif capitulo.1 < 10%}
-        <span class="w3-badge w3-orange">{{capitulo.1}}</span>
-      {%else %}
-        <span class="w3-badge w3-red">{{capitulo.1}}</span>
-      {%endif%}
-      </a>    
+        {%elif capitulo.1 < 5%}
+          <span class="w3-badge w3-green">{{capitulo.1}}</span>
+        {% elif capitulo.1 < 10%}
+          <span class="w3-badge w3-orange">{{capitulo.1}}</span>
+        {%else %}
+          <span class="w3-badge w3-red">{{capitulo.1}}</span>
+        {%endif%}
+        </a>
+
+      {%else%}  
+        <a href="{% url "mapa_cap" capitulo.0.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.0.user.first_name}}</a>
+      {%endif%}   
     {% endfor %}
   </div>
 

@@ -48,7 +48,7 @@ def login(request):
 
 def logout(request):
 	logout_request(request)
-	return HttpResponseRedirect("/")
+	return HttpResponseRedirect("/inicio/mapa")
 
 def redirect(request):
 	for models in LIST_MODELS_AUTH:

@@ -165,10 +165,10 @@ def conf_home(request, corretor, status='S4'):
     capitulos_corrigir = []
     for capitulo in capitulos:
         if capitulo.regiao == corretor.regiao_correcao:
-            aux = [capitulo, Formulario.objects.filter(capitulo=capitulo.numero, status=status).count()]
+            aux = [capitulo, Formulario.objects.filter(capitulo=capitulo.numero, status=status).count(), True]
             capitulos_corrigir.append(aux)
         else:
-            aux = [capitulo, 0]
+            aux = [capitulo, 0, False]
             capitulos_corrigir.append(aux)
     return capitulos_corrigir
 
@@ -295,5 +295,6 @@ def mapa_cap(request, numero_cap):
     conquistas = conquista_capitulo(numero_cap)
     context = {"capitulos": capitulos_corrigir,
                 "corretor":corretor,
-                "conquistas": conquistas}
+                "conquistas": conquistas,
+                "numero_cap":numero_cap}
     return render(request, "avaliador/avaliador_mapa_cap.html", context=context)

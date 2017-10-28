@@ -13,17 +13,6 @@
         }
 
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            $(document).keypress(function (e) {
-                if (e.wich == 13 || e.keyCode == 13) {
-                    document.getElementById('id01').style.display = 'none';
-                }
-            })
-        })
-    </script>
 {%endblock assets%}
 
 {%block conteudo%}
@@ -99,6 +88,7 @@
 
         function resize_mapa() {
             mapa.width = main.clientWidth;
+
             ajuste_points();
         }
 
@@ -110,8 +100,12 @@
         }
         
         window.onresize = resize_mapa;
-
-        var main_template_base = document.getElementById("main_template_base");
-        main_template_base.style.height = (main_template_base.clientHeight + mapa.height + 15) + "px";
+        function ajuste_backgroud(){
+            var main_template_base = document.getElementById("main_template_base");
+            main_template_base.style.height = (main_template_base.clientHeight + mapa.height + 15) + "px";
+            main_template_base.style.marginBottom = "15px";
+        }
+        ajuste_backgroud();
+        
     </script>
 {%endblock conteudo%}

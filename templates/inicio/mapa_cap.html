@@ -1,9 +1,10 @@
-{% extends 'base_avaliador.html' %}
+{% extends 'base_home.html' %}
+
 {% load staticfiles %}
 
 {%block assets%}
-	<style>
-        #principal {
+    <style>
+        #principal_mapa {
             position: relative;
         }
 
@@ -12,7 +13,6 @@
         }
 
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script>
         function pegarTerritorio(nome, descricao, pontuacao, bonus, foto) {
@@ -32,7 +32,7 @@
         $(document).ready(function () {
             $(document).keypress(function (e) {
                 if (e.wich == 13 || e.keyCode == 13) {
-                    document.getElementById('id01').style.display = 'none';
+                    document.getElementById('modal_cap').style.display = 'none';
                 }
             })
         })
@@ -41,16 +41,17 @@
 
 {%block conteudo%}
 
-	<div class="w3-container">
-        <div id="main" class="w3-container w3-red" style="padding: 8px">
-            <h2 style="display:inline;">Conquistas do Capítulo {{numero_cap}}</h2>
-            
+    <div class="w3-container">
+        <div id="main" class="w3-card-4 w3-white w3-round" style="margin-bottom: 20px;">
+                <header class="w3-container w3-center  w3-black" style="border-radius: 4px">
+                    <h1><strong>Conquistas do Capítulo <strong>{{capitulo.user.first_name}}</strong></h1>
+                </header>
         </div>
         <div class="w3-row">
-            <div id="principal">
+            <div id="principal_mapa">
                 <img  onload="console.log('imagem carregada'); resize_mapa();" id="img_mapa" src="{% static "imagens/WarDM_map.png" %}" alt="Mapa" usemap="#mapa_war">
                 {% for conquista in conquistas %}
-                    <a onclick="document.getElementById('id01').style.display='block',
+                    <a onclick="document.getElementById('modal_cap').style.display='block',
                             pegarTerritorio('{{ conquista.territorio.nome }}','{{ conquista.territorio.descricao.lower }}','{{ conquista.territorio.pontuacao }}',
                             '{{ conquista.pontuacao_bonus }}','{{ conquista.territorio.foto.url }}')">
                         <img style="position:absolute;cursor: pointer; z-index:1" id="{{ conquista.territorio.nome.upper }}"
@@ -58,9 +59,9 @@
                              src="{% static "imagens/bandeira_conquista.png" %}" width="3%" href="#"></a>
 
                        {%if conquista.pontuacao_bonus > 0%}
-                       		<a><img style="position:absolute;cursor: pointer" id="{{ conquista.territorio.nome.upper }}"
-                       		                             largura="{{ conquista.territorio.coord_top|add:'-50' }}" altura="{{ conquista.territorio.coord_left|add:'-40' }}"
-                       		                             src="{% static "imagens/bandeira_bonus.png" %}" width="3%" href="#"></a>
+                            <a><img style="position:absolute;cursor: pointer" id="{{ conquista.territorio.nome.upper }}"
+                                                         largura="{{ conquista.territorio.coord_top|add:'-50' }}" altura="{{ conquista.territorio.coord_left|add:'-40' }}"
+                                                         src="{% static "imagens/bandeira_bonus.png" %}" width="3%" href="#"></a>
                        {%endif%}
                 {% endfor %}
             </div>
@@ -68,10 +69,10 @@
     </div>
 
     <!-- Modal -->
-    <div id="id01" class="w3-modal">
+    <div id="modal_cap" class="w3-modal">
         <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:550px">
             <header class="w3-container w3-red">
-                    <span onclick="document.getElementById('id01').style.display='none'"
+                    <span onclick="document.getElementById('modal_cap').style.display='none'"
                           class="w3-btn w3-red w3-hover-red w3-xxlarge w3-display-topright">&times;</span>
                 <h1 id="titulo_modal_id"></h1>
             </header>
@@ -95,7 +96,7 @@
             <div id="modal_barra_inferior_id" class="w3-container w3-light-grey w3-padding">
                 
                 <button class="w3-btn w3-right w3-white w3-border "
-                        onclick="document.getElementById('id01').style.display='none'">Fechar
+                        onclick="document.getElementById('modal_cap').style.display='none'">Fechar
                 </button>
             </div>
         </div>
@@ -104,11 +105,12 @@
     <script>
         var mapa = document.getElementById("img_mapa");
         var main = document.getElementById("main");
-        var principal = document.getElementById("principal");
+        var principal = document.getElementById("principal_mapa");
 
         function ajuste_points() {
             var porcentagem_largura = mapa.width / mapa.naturalWidth;
             var porcentagem_altura = mapa.height / mapa.naturalHeight;
+            console.log(porcentagem_altura + " - " + porcentagem_largura)
             for (i = 1; i < principal.children.length; i++) {
                 var point = principal.children[i].children[0];
                 console.log()
@@ -119,6 +121,7 @@
 
         function resize_mapa() {
             mapa.width = main.clientWidth;
+
             ajuste_points();
         }
 
@@ -129,6 +132,12 @@
             console.log("era pra dar erro");
         }
         
-        window.onresize = resize_mapa;
+        //window.onresize = resize_mapa;
+        function ajuste_backgroud(){
+            var main_template_base = document.getElementById("main_template_base");
+            main_template_base.style.height = (main_template_base.clientHeight + mapa.height + 15) + "px";
+            main_template_base.style.marginBottom = "15px";
+        }
+        ajuste_backgroud();
     </script>
 {%endblock conteudo%}
