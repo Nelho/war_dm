@@ -1,0 +1,74 @@
+{% extends 'base_capitulo.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+
+{% block assets %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="{% static "js/jquery.mask.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
+    <style>
+
+
+        #celula1 {
+            height: 10px;
+            width: 500px;
+        }
+
+        #celula2{
+
+        }
+
+
+    </style>
+{% endblock %}
+
+{% block conteudo %}
+    <style>
+        p {
+            text-align: justify;
+            text-justify: inter-word;
+        }
+    </style>
+
+    <div class="w3-card-4 w3-gray-ligth">
+        <div class="w3-container w3-red">
+            <h2 style="text-shadow:1px 1px 0 #444">Avaliadores </h2>
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-col m12 w3-gray-ligth">
+                <table class="w3-table-all w3-hoverable">
+                    <thead>
+                    <tr class="w3-light-gray">
+                        <th>Território</th>
+                        <th>Descrição</th>
+                        <th>Data Envio</th>
+                        <th>Status</th>
+                        <th>Ação</th>
+                    </tr>
+                    </thead>
+                    <tbody id="body_table">
+                    {% for relatorio in relatorios %}
+                        <tr>
+                            <td>{{ relatorio.territorio.nome }}</td>
+                            <td id="celula1">{{ relatorio.territorio.descricao }}</td>
+                            <td>{{ relatorio.data_envio|date:"d-m-20y" }}</td>
+                            <td id="celula2">{{ relatorio.status }}</td>
+                            <td>
+                                <a href="{% url 'relatorio_detalhe' relatorio.id %}" class="w3-btn w3-green">
+                                    Abrir
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

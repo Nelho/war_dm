@@ -10,7 +10,7 @@
     <div class="w3-container">
         <div class="w3-card-4 w3-gray-ligth">
             <div class="w3-container w3-red">
-                <h2>Cadastro de Formulário - {{ nome_territorio }}</h2>
+                <h2 style="text-shadow:1px 1px 0 #444">Cadastro de Formulário - {{ nome_territorio }}</h2>
             </div>
             <div class="w3-row">
                 <div class="w3-col m1 w3-center w3-gray-ligth">
@@ -27,7 +27,7 @@
                                     <div class="w3-col" style="width:50px"><i
                                             class="w3-xxlarge fa fa-file-text-o"></i></div>
                                     <div class="w3-rest">
-                                        {{ form.resumo|add_class:"w3-input w3-border" |attr:"placeholder:Resumo" | attr:"style: resize:none" | attr:"rows: 3" }}
+                                        {{ form.resumo|add_class:"w3-input w3-border" |attr:"required" |attr:"placeholder:Resumo" | attr:"style: resize:none" | attr:"rows: 3" }}
                                     </div>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
                                     </div>
                                     <div class="w3-rest">
-                                        {{ form.planejamento|add_class:"w3-input w3-border"|attr:"placeholder:Planejamento" | attr:"style: resize:none" | attr:"rows: 3" }}
+                                        {{ form.planejamento|add_class:"w3-input w3-border" |attr:"required" |attr:"placeholder:Planejamento" | attr:"style: resize:none" | attr:"rows: 3" }}
                                     </div>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
                                     </div>
                                     <div class="w3-rest">
-                                        {{ form.abrangencia|add_class:"w3-input w3-border"|attr:"placeholder:Abrangencia"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                        {{ form.abrangencia|add_class:"w3-input w3-border" |attr:"required" |attr:"placeholder:Abrangencia"| attr:"style: resize:none" | attr:"rows: 3" }}
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
                                     </div>
                                     <div class="w3-rest">
-                                        {{ form.resultado|add_class:"w3-input w3-border"|attr:"placeholder:Resultados" | attr:"style: resize:none" | attr:"rows: 3" }}
+                                        {{ form.resultado|add_class:"w3-input w3-border" |attr:"required" |attr:"placeholder:Resultados" | attr:"style: resize:none" | attr:"rows: 3" }}
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
                                     </div>
                                     <div class="w3-rest">
-                                        {{ form.conclusao|add_class:"w3-input w3-border"|attr:"placeholder:Conclusão"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                        {{ form.conclusao|add_class:"w3-input w3-border" |attr:"required" |attr:"placeholder:Conclusão"| attr:"style: resize:none" | attr:"rows: 3" }}
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                     <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i>
                                     </div>
                                     <div class="w3-rest">
-                                        {{ form.dataRealizacao| add_class:"w3-input w3-border" }}<b>Data da
+                                        {{ form.dataRealizacao |attr:"required" |add_class:"w3-input w3-border" }}<b>Data da
                                         realização</b>
                                     </div>
                                 </div>

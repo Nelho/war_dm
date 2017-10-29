@@ -1,0 +1,145 @@
+{% extends 'base_capitulo.html' %}
+{% load widget_tweaks %}
+
+{% block assets %}
+
+{% endblock %}
+
+{% block conteudo %}
+
+    <div class="w3-container">
+        <div class="w3-card-4 w3-gray-ligth">
+            <div class="w3-container w3-red">
+                <h2 style="text-shadow:1px 1px 0 #444">Relatório - {{ titulo_relatorio }}</h2>
+            </div>
+            <div class="w3-row">
+                <div class="w3-col m1 w3-center w3-gray-ligth">
+                    <button class="w3-gray-ligth w3-button w3-show"></button>
+                </div>
+                <div class="w3-col m10">
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i
+                                        class="w3-xxlarge fa fa-file-text-o"></i></div>
+                                <div class="w3-rest">
+                                    {{ relatorio.resumo|add_class:"w3-input w3-border" |attr:"disabled" |attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.planejamento|add_class:"w3-input w3-border" |attr:"disabled" | attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-half" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.abrangencia |add_class:"w3-input w3-border" |attr:"disabled" |attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.resultado|add_class:"w3-input w3-border" |attr:"disabled" |attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.conclusao|add_class:"w3-input w3-border" |attr:"disabled" |attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:50%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-calendar"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.dataRealizacao |attr:"disabled" |add_class:"w3-input w3-border" }}<b>Data
+                                    da
+                                    realização</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w3-col" style="width:50%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-picture-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.arquivozip  |attr:"disabled" |add_class:"w3-input w3-border" }}<b>Anexar
+                                    zip com fotos</b>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:100%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.observacao|add_class:"w3-input w3-border" |attr:"disabled" |attr:"placeholder:Observação"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-col" style="width:50%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.pontuacaoBonus|add_class:"w3-input w3-border" |attr:"disabled" |attr:"placeholder:Pontuação bônus"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w3-col" style="width:50%">
+                            <div class="w3-row w3-section">
+                                <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-file-text-o"></i>
+                                </div>
+                                <div class="w3-rest">
+                                    {{ relatorio.status|add_class:"w3-input w3-border" |attr:"disabled" |attr:"placeholder:Status"| attr:"style: resize:none" | attr:"rows: 3" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-col m1 w3-center w3-white"></div>
+            </div>
+            <div class="w3-row w3-center">
+                <br>
+                <a href="{% url 'cap_relatorios' %}" class="w3-button w3-red" style="margin-bottom: 20px" >Voltar para os relatórios</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

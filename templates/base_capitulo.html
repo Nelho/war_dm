@@ -20,10 +20,10 @@
     <a id="link" href="{% url "main:logout" %}" class="w3-bar-item w3-right w3-hover-blue"><i class="fa fa-sign-out"></i> Logout</a>
     <span class="w3-bar-item w3-left"><strong>War DM</strong></span>
     <a id="link" href={% url 'capituloHome'%} class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-home"></i> Inicio</a>
-    <a id="link" href="{% url "mapa_geral_capitulo" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Mapa geral</a>
+    <a id="link" href="{% url "cap_relatorios" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-book"></i> Meus relatório</a>
+    <a id="link" href="{% url "mapa_geral_capitulo" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-map-marker"></i> Mapa geral</a>
     <a id="link" href="{% url "regras" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-wpforms"></i> Regras</a>
     <a id="link" href="{% url "avaliadores_capitulo" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-user"></i> Avaliadores</a>
-    <a id="link" href="{% url "legenda_territorios" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-book"></i> Legenda Territórios</a>
 
   <!--
   <a id="link" href="{% url "password_edit" %}" class="w3-bar-item w3-left w3-hover-blue"><i class="fa fa-key"></i> Editar Senha</a>
@@ -53,11 +53,11 @@
   <hr>
 
   <div class="w3-container">
-    <h5>Capítulos</h5>
+    <h5 ><b>Capítulos</b></h5>
   </div>
     <div class="w3-bar-block">
     {% for capitulo in capitulos %}
-        <a href="#" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.user.first_name}}</a>
+        <a href="{% url 'mapa_cap_individual' capitulo.numero %}" class="w3-hover-red w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  {{capitulo.user.first_name}}</a>
     {% endfor %}
     </div>
     <!--

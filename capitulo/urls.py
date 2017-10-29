@@ -12,5 +12,7 @@ urlpatterns = [
 	url(r'^legenda/$', views.legenda_territorios, name="legenda_territorios"),
 	url(r'^mapa/$', views.mapaGeral, name="mapa_geral_capitulo"),
 	url(r'^conquistas/(?P<numero_cap>[0-9]+)$', views.mapa_cap_individual, name="mapa_cap_individual"),
+	url(r'^relatorios/$', views.meus_relatorios, name='cap_relatorios'),
+	url(r'^relatorio/(?P<id_relatorio>[0-9]+)$', views.relatorios_detalhes, name="relatorio_detalhe"),
 
 ]

@@ -83,7 +83,7 @@ def cadastrarRelatorio(request, id):
     form = FormularioForm()
     capitulo = Capitulo_User.objects.get(user=request.user.pk)
     context = {"capitulo" : capitulo, "capitulos" : buscaCapitulos() ,"form":form, "cadastro" : cadastro ,"id_territorio" : id, "nome_territorio" : str.upper(territorio.nome)}
-    return render(request, 'capitulo/relatorio_form.html', context= context)
+    return render(request, 'capitulo/capitulo_relatorio_form.html', context= context)
 
 @login_required()
 def home(request):
@@ -114,7 +114,7 @@ def edit(request):
         }
         capituloEdit = CapituloEditForm(initial= form_initial)
         context = {"form" : capituloEdit, "capitulo" : capitulo,"capitulos" : buscaCapitulos()}
-        return render(request, "capitulo/edit_dados_capitulo.html", context=context)
+        return render(request, "capitulo/capitulo_edit_dados.html", context=context)
     else:
         form = CapituloEditForm(request.POST, request.FILES)
         if(form.is_valid()):
@@ -156,7 +156,7 @@ def alterarSenha(request):
             if nova_senha != conf_senha:
                 senhaValida = False
                 context = {"form": CapituloEditSenhaForm(),"capitulos" : buscaCapitulos(), "capitulo": capitulo, "error": True, "msgError": "Senhas diferentes!"}
-                return render(request, "capitulo/edit_senha_capitulo.html", context=context)
+                return render(request, "capitulo/capitulo_edit_senha.html", context=context)
             else:
                 if user.check_password(senha_atual):
                     user.set_password(nova_senha)
@@ -168,11 +168,11 @@ def alterarSenha(request):
                 else:
                     senhaValida = False
                     context = {"form": CapituloEditSenhaForm(),"capitulo": capitulo, "capitulos" : buscaCapitulos(),"error": True, "msgError": "Senha atual incorreta!"}
-                return render(request, "capitulo/edit_senha_capitulo.html", context=context)
+                return render(request, "capitulo/capitulo_edit_senha.html", context=context)
     form = CapituloEditSenhaForm()
     senha_validada = True
     context = {"form": form, "capitulo": capitulo, "capitulos" : buscaCapitulos(), "senha_validada": senha_validada, "method": "GET"}
-    return render(request, "capitulo/edit_senha_capitulo.html", context=context)
+    return render(request, "capitulo/capitulo_edit_senha.html", context=context)
 
 @login_required()
 def regras(request):
@@ -181,7 +181,7 @@ def regras(request):
         if controle != True:
             return controle
     context = {"capitulos": buscaCapitulos(),"capitulo":cap_logado(request)}
-    return render(request, "capitulo/regras_capitulo.html", context=context)
+    return render(request, "capitulo/capitulo_regras.html", context=context)
 
 @login_required()
 def avaliadores(request):
@@ -191,7 +191,7 @@ def avaliadores(request):
     avaliadoresMCR = Gabinete_User.objects.filter(tipo_usuario='AV')
 
     context = {"capitulos": buscaCapitulos(), "capitulo":cap_logado(request), "avaliadores":avaliadoresMCR}
-    return render(request, "capitulo/avaliadores_capitulo.html", context=context)
+    return render(request, "capitulo/capitulo_avaliadores.html", context=context)
 
 @login_required()
 def legenda_territorios(request):
@@ -204,7 +204,7 @@ def legenda_territorios(request):
     ## less then
     territorios = Territorio.objects.filter(data_encerramento__gte=datetime.date.today()).order_by("data_encerramento")
     context = {"capitulos": buscaCapitulos(), "territorios": territorios, "data_atual": datetime.date.today(), "capitulo":cap_logado(request)}
-    return render(request, "capitulo/legenda_territorios.html", context=context)
+    return render(request, "capitulo/capitulo_legenda_territorios.html", context=context)
 
 @login_required()
 def mapaGeral(request):
@@ -215,12 +215,50 @@ def mapaGeral(request):
     context = {"capitulos" : buscaCapitulos(), "capitulo":cap_logado(request), "conquistas" : conquistas}
     return render(request, "capitulo/capitulo_mapa_geral.html", context=context)
 
+@login_required()
 def mapa_cap_individual(request, numero_cap):
+    controle = controle_de_acesso(request)
+    if controle != True:
+        return controle
     conquistas = conquista_capitulo(numero_cap)
     context = {"capitulos": buscaCapitulos(),
                "capitulo" : cap_logado(request),
                 "conquistas": conquistas}
     return render(request, "capitulo/capitulo_mapa_individual.html", context=context)
+
+@login_required()
+def meus_relatorios(request):
+    controle = controle_de_acesso(request)
+    if controle != True:
+        return controle
+    relatorios = Formulario.objects.filter(capitulo=cap_logado(request)).order_by('status')
+    context = {"capitulos" : buscaCapitulos(), "capitulo":cap_logado(request), "relatorios": relatorios}
+    return render(request, "capitulo/capitulo_meus_relatorios.html", context=context)
+
+@login_required()
+def relatorios_detalhes(request, id_relatorio):
+    controle = controle_de_acesso(request)
+    if controle != True:
+        return controle
+    try:
+        relatorio = Formulario.objects.get(capitulo=cap_logado(request), id=id_relatorio)
+        relatorio_initial = {
+            "resumo" : relatorio.resumo,
+            "planejamento" : relatorio.planejamento,
+            "abrangencia" : relatorio.abrangencia,
+            "resultado" : relatorio.resultado,
+            "data_realizacao" : relatorio.data_realizacao,
+            "conclusao" : relatorio.conclusao,
+            "arquivo_zip" : relatorio.arquivo_zip,
+            "observacoes" : relatorio.observacoes,
+            "status" : relatorio.status,
+            "pontuacao_bonus" : relatorio.pontuacao_bonus
+        }
+        relatorio_form = FormularioForm(initial=relatorio_initial)
+        context = {"capitulos": buscaCapitulos(), "capitulo": cap_logado(request), "relatorio": relatorio_form, "titulo_relatorio" : relatorio.territorio.nome}
+        return render(request, 'capitulo/capitulo_relatorio_detalhe.html', context=context)
+    except:
+        return HttpResponseRedirect('/capitulo/relatorios/')
 
 def cap_logado(request):
     user = User.objects.get(pk=request.user.pk)
