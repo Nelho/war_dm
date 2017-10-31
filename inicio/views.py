@@ -69,3 +69,6 @@ def auto_complete(request):
 		data = json.dumps(data)
 
 		return HttpResponse(data, mimetype)
+
+def edicoes(request):
+	return render(request,'inicio/edicoes.html')

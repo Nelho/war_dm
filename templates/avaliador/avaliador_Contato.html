@@ -1,0 +1,74 @@
+{% extends 'base_avaliador.html' %}
+{% load widget_tweaks %}
+{% load staticfiles%}
+
+{% block assets%}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static "js/jquery.mask.js" %}"></script>
+<link rel="stylesheet" href="{% static "css/form_cadastro.css" %}">
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!--<script src="{% static "js/avaliador_home.js" %}"></script>-->
+{% endblock %}
+
+{% block conteudo%}	
+	<div class="w3-container">	
+	  <div id="container_principal" class="w3-card-4 w3-gray-ligth">
+	    <div id="main" class="w3-container w3-red" style="padding:8px">
+	      <h2 id="title_conteudo" style="display:inline;">Lista de Relatórios Geral</h2>
+	      <div class="w3-dropdown-hover w3-right">
+	          <button class="w3-button fa fa-bars w3-hover-red w3-red w3-btn"></button>
+	          <div style="right:0;" class="w3-dropdown-content w3-bar-block w3-card-4">
+	             
+	              <a href="{% url 'avaliador_home' %}?filtro=aprovado&pagina=1" class="fa fa-check w3-bar-item w3-button w3-hover-red"> Relatórios aprovados</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=correcao&pagina=1" class="fa fa-exclamation-triangle w3-bar-item w3-button w3-hover-red"> Relatórios correção</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=rejeitado&pagina=1" class="fa fa-window-close w3-bar-item w3-button w3-hover-red"> Relatórios rejeitados</a><hr style="margin:0px">
+	              <a href="{% url 'avaliador_home' %}?filtro=enviado&pagina=1" class="fa fa-envelope-open-o w3-bar-item w3-button w3-hover-red"> Relatórios enviados</a><hr style="margin:0px">
+	          </div>
+	      </div>
+	    </div>
+			<div id="container_relatorios" class="w3-row">
+ 
+			   <table class="w3-table-all w3-hoverable">
+			     <thead>
+			       <tr class="w3-light-gray">
+			         <th>Capítulo</th>
+			         <th>Data Envio</th>
+			         <th>Território</th>
+			         <th>Ação</th>
+			       </tr>
+			     </thead>
+			    {%for relatorio in relatorios%}
+					<tr>
+						<td>{{relatorio.capitulo.user.first_name}}</td>
+						<td>{{relatorio.data_envio|date:"d-m-20y"}}</td>
+						<td>{{relatorio.territorio.nome}}</td>
+						<td><a href="{% url "corrigir_relatorio" relatorio.id %}?next={{next}}" class="w3-btn w3-green">Abrir</a></td>
+					</tr>
+			    {% endfor%}
+			   </table>
+			</div>
+
+			    <div class="w3-container w3-center" style="margin-top:10px">
+					<div class="w3-bar w3-border w3-red">
+						<a href="?filtro={{filtro}}&pagina={{relatorios.number|add:'-1'}}" class="w3-bar-item w3-button">Anterior</a>
+						{%for i in relatorios.paginator.page_range%}
+							{%if i == relatorios.number%}
+								<a href="?filtro={{filtro}}&pagina={{i}}" class="w3-bar-item w3-button w3-gray">{{i}}</a>
+							{% elif i > relatorios.number|add:'-3' and i < relatorios.number|add:'3' %}
+								<a href="?filtro={{filtro}}&pagina={{i}}" class="w3-bar-item w3-button">{{i}}</a>
+							
+							{%endif%}
+							
+						{%endfor%}
+				  		<a href="?filtro={{filtro}}&pagina={{relatorios.number|add:'1'}}" class="w3-bar-item w3-button">Próximo</a>
+					</div>
+				</div>
+			  </div>
+			
+	    </div>
+	</div>
+
+{% endblock conteudo%}

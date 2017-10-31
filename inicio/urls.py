@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^regras/', views.regras_inicio, name='regras_inicio'),
     url(r'^avaliadores/', views.avaliadores, name='avaliadores'),
     url(r'^login/$', views.login_ajax, name="login_ajax"),
-    url(r'^autocomplete/$', views.auto_complete, name="auto_complete")
+    url(r'^autocomplete/$', views.auto_complete, name="auto_complete"),
+    url(r'^contato/$',views.edicoes,name='edicoes')
 ]
